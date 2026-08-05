@@ -56,7 +56,23 @@
       margin: 20px auto;
       padding: 0 15px;
     }
+/* Light Theme Fix */
+body.light-theme {
+  background-color: #f4f4f9 !important;
+  color: #121212 !important;
+}
 
+body.light-theme #profile-card, 
+body.light-theme section {
+  background-color: #ffffff !important;
+  color: #121212 !important;
+}
+
+body.light-theme h2, 
+body.light-theme h3 {
+  color: #121212 !important;
+}
+    
     /* Buttons */
     .controls {
       display: flex;
@@ -261,15 +277,14 @@
         image: "https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d",
         tagline: "All-Rounder | Wicket-keeper | Left-Hand Bat & Left-Arm Slow Spinner",
         dob: "05 March 2014"
-      },
-      krishna: {
-        name: "Krishna Satyapal Yadav",
-        image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36", // Updated with Krishna's photo
-        tagline: "Young Emerging Player & Learner",
-        dob: "30 April 2011" // Replace with actual DOB
-      }
-    };
-
+     },
+    krishna: {
+      name: "Krishna Satyapal Yadav",
+      image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36", /* <-- यह रहा Krishna का Image URL */
+      tagline: "Young Emerging Player & Learner",
+      dob: "30 April 2011"
+    }
+  };
     // Switch Profile Function
     function switchProfile(person) {
       const data = profiles[person];
@@ -290,6 +305,9 @@
       }
       document.getElementById(tabName).style.display = "block";  
     }
+    function toggleTheme() {
+  document.body.classList.toggle('light-theme');
+}
   </script>
 </body>
 </html>
