@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Om & Krishna Satyapal Yadav - Official Profiles</title>
+  <style>
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* फोटो को गोल बनाने के लिए */
+  border: 4px solid var(--secondary-color); /* फोटो के चारों तरफ पीला बॉर्डर */
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+    /* Global Styles & Variables */
+    :root {
+      --bg-color: #f4f7f6;
+      --card-bg: #ffffff;
+      --text-color: #333333;
+      --accent-color: #0056b3;
+      --secondary-color: #ffd700;
+      --border-color: #dddddd;
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --text-color: #f4f7f6;
+      --accent-color: #375a7f;
+      --secondary-color: #f39c12;
+      --border-color: #333333;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+      background-color: var(--accent-color);
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      background-color: var(--secondary-color);
+      color: #333;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-btn {
+      background-color: #fff;
+      color: var(--accent-color);
+    }
+
+    .profile-btn.active {
+      background-color: var(--secondary-color);
+      color: #000;
+    }
+
+    /* Layout Components */
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .hero-banner {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1200x400') no-repeat center center/cover;
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 5px;
+      color: var(--accent-color);
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .stat-box {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    .stat-box h3 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid var(--border-color);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .private-badge {
+      background-color: #d9534f;
+      color: white;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      border-radius: 3px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--accent-color);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      margin: 3px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--accent-color);
+      color: white;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header & Navigation -->
+  <header>
+    <h1 id="headerTitle">Om Satyapal Yadav</h1>
+    <nav>
+      <a href="#about">Profile</a>
+      <a href="#activities">Activities</a>
+      <a href="#stats">Stats</a>
+      <a href="#documents">Documents</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="controls">
+      <!-- Profile Switching Buttons -->
+      <button class="btn profile-btn active" id="btnOm" onclick="switchProfile('om')">Om Profile</button>
+      <button class="btn profile-btn" id="btnKrishna" onclick="switchProfile('krishna')">Krishna Profile</button>
+      <button class="btn" onclick="toggleDarkMode()">🌙 Theme</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- HERO BANNER -->
+    <section class="hero-banner">
+<!-- फोटो का टैग यहाँ जोड़ा गया है -->
+<img id="profileImage" src="om-photo.jpg" alt="Profile Photo" class="profile-img">
+      <h2 id="heroName" style="color:#fff; border:none;">Om Satyapal Yadav</h2>
+      <p id="heroTagline">All-Rounder | Left-Hand Bat & Left-Arm Slow Spinner</p>
+    </section>
+
+    <!-- QUICK STATS -->
+    <section class="grid-4">
+      <div class="stat-box">
+        <h3 id="matchCount">0</h3>
+        <p>Matches</p>
+      </div>
+      <div class="stat-box">
+        <h3 id="runCount">0</h3>
+        <p>Total Runs</p>
+      </div>
+      <div class="stat-box">
+        <h3 id="awardCount">0</h3>
+        <p>Awards</p>
+      </div>
+      <div class="stat-box">
+        <h3>100+</h3>
+        <p>Photos & Videos</p>
+      </div>
+    </section>
+
+    <br>
+
+    <!-- PROFILE & EDUCATION -->
+    <div class="grid-2" id="about">
+      <div class="card">
+        <h2>👤 Personal Profile</h2>
+        <p><strong>Full Name:</strong> <span id="pFullName">Om Satyapal Yadav</span></p>
+        <p><strong>Date of Birth:</strong> <span id="pDob">05 March 2014</span></p>
+        <p><strong>Primary Role:</strong> <span id="pRole">All-Rounder (Keeper,Batsman, Bowler, )</span></p>
+        <p><strong>Batting Style:</strong> <span id="pBatting">Left-Hand Bat</span></p>
+        <p><strong>Bowling Style:</strong> <span id="pBowling">Left-Arm Slow Spinner</span></p>
+      </div>
+
+      <div class="card">
+        <h2>🎓 Academic Information</h2>
+        <p><strong>School / Academy:</strong> <span id="pSchool">Seth Juggilal Poddar Academy</span></p>
+        <p><strong>Nationality:</strong> Indian</p>
+        <p><strong>City:</strong> Mumbai, Maharashtra</p>
+      </div>
+    </div>
+
+    <!-- OTHER ACTIVITIES -->
+    <section class="card" id="activities">
+      <h2>🎨 Other Talents & Activities</h2>
+      <div id="activityTags">
+        <!-- Tags will load dynamically -->
+      </div>
+    </section>
+
+    <!-- CAREER STATISTICS -->
+    <section class="card" id="stats">
+      <h2>📈 Career Statistics</h2>
+      <p><i>* आँकड़े (Stats) जल्द ही अपडेट किए जाएँगे।</i></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Matches</th>
+            <th>Innings</th>
+            <th>Runs</th>
+            <th>Wickets</th>
+            <th>Highest Score</th>
+            <th>Best Bowling</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="statMatches">-</td>
+            <td id="statInnings">-</td>
+            <td id="statRuns">-</td>
+            <td id="statWickets">-</td>
+            <td id="statHighest">-</td>
+            <td id="statBest">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- DOCUMENTS (PRIVATE SECTION) -->
+    <section class="card" id="documents">
+      <h2>🗂 Documents Verification <span class="private-badge">Private</span></h2>
+      <p>Official records on file for School & District Sports registrations:</p>
+      <ul>
+        <li><strong>Aadhaar Card:</strong> Verified (`[Aadhaar Redacted]`)</li>
+        <li><strong>Birth Certificate:</strong> On File (Verified)</li>
+        <li><strong>School Bonafide:</strong> Active Student</li>
+      </ul>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="card" id="contact">
+      <h2>📞 Contact Information</h2>
+      <p>For match queries, trial invitations, or coaching contact:</p>
+      <p><strong>Email:</strong> contact@satyapalyadav.local</p>
+      <p><strong>Location:</strong> Mumbai, Maharashtra, India</p>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Om & Krishna Satyapal Yadav Official Website. All Rights Reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Profiles Data Object
+    const profiles = {
+      om: {
+       name: "Om Satyapal Yadav",
+    image: "om-photo.jpg", // (image path)
+    tagline: "All-Rounder | Left-Hand Bat & Left-Arm Slow Spinner",
+    dob: "05 March 2014",
+    role: "All-Rounder (Batsman, Bowler, Keeper)",
+    batting: "Left-Hand Bat",
+    bowling: "Left-Arm Slow Spinner",
+    school: "Seth Juggilal Poddar Academy",
+    activities: ["Dance 🕺", "Acting 🎭", "School Band 🥁", "Flute / बांसुरी 🪈"],
+    matches: 0,
+    runs: 0,
+    awards: 0
+      },
+      krishna: {
+       name: "Krishna Satyapal Yadav",
+    image: "krishna-photo.jpg", // Krishna की फोटो का पाथ
+    tagline: "Right-Hand Batsman | Sports Enthusiast",
+    dob: "30 March 2011",
+    role: "Batsman",
+    batting: "Right-Hand Bat",
+    bowling: "N/A",
+    school: "Sharada Gyan Peeth International School",
+    activities: ["Running 🏃‍♂️", "Gaming 🎮"],
+    matches: 0,
+    runs: 0,
+    awards: 0
+      }
+    };
+
+    // Switch Profile Function
+    function switchProfile(profileKey) {
+      const data = profiles[profileKey];
+document.getElementById("profileImage").src = data.image;
+
+      // Update UI Text
+      document.getElementById("headerTitle").innerText = data.name;
+      document.getElementById("heroName").innerText = data.name;
+      document.getElementById("heroTagline").innerText = data.tagline;
+      document.getElementById("pFullName").innerText = data.name;
+      document.getElementById("pDob").innerText = data.dob;
+      document.getElementById("pRole").innerText = data.role;
+      document.getElementById("pBatting").innerText = data.batting;
+      document.getElementById("pBowling").innerText = data.bowling;
+      document.getElementById("pSchool").innerText = data.school;
+
+      // Update Active Buttons
+      document.getElementById("btnOm").classList.toggle("active", profileKey === 'om');
+      document.getElementById("btnKrishna").classList.toggle("active", profileKey === 'krishna');
+
+      // Render Activity Tags
+      const activityContainer = document.getElementById("activityTags");
+      activityContainer.innerHTML = "";
+      data.activities.forEach(act => {
+        const span = document.createElement("span");
+        span.className = "tag";
+        span.innerText = act;
+        activityContainer.appendChild(span);
+      });
+
+      // Animate Stats
+      animateCounter("matchCount", data.matches, 50);
+      animateCounter("runCount", data.runs, 20);
+      animateCounter("awardCount", data.awards, 100);
+    }
+
+    // Dark Mode Toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // Animated Counters
+    function animateCounter(id, target, speed) {
+      let element = document.getElementById(id);
+      if(target === 0) {
+        element.innerText = "0";
+        return;
+      }
+      let count = 0;
+      let step = Math.ceil(target / (1000 / speed));
+
+      let timer = setInterval(() => {
+        count += step;
+        if (count >= target) {
+          element.innerText = target;
+          clearInterval(timer);
+        } else {
+          element.innerText = count;
+        }
+      }, speed);
+    }
+
+    // Default Load (Om's Profile)
+    window.onload = function() {
+      switchProfile('om');
+    };
+  </script>
+</body>
+</html>
