@@ -15,24 +15,28 @@
   margin-bottom: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
-    /* Global Styles & Variables */
-    :root {
-      --bg-color: #f4f7f6;
-      --card-bg: #ffffff;
-      --text-color: #333333;
-      --accent-color: #0056b3;
-      --secondary-color: #ffd700;
-      --border-color: #dddddd;
-    }
+    /* --- नया स्टेडियम थीम कोड --- */
+:root {
+  --sports-bg: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=1920&auto=format&fit=crop');
+  --header-text-main: #ffcc00;
+  --header-text-nav: #ffffff;
+  --card-bg-sports: rgba(30, 30, 30, 0.85);
+  --card-text-main: #ffffff;
+  --card-text-sub: #dddddd;
+  --active-btn-bg: #ffca28;
+  --active-btn-text: #111111;
+}
 
-    body.dark-mode {
-      --bg-color: #121212;
-      --card-bg: #1e1e1e;
-      --text-color: #f4f7f6;
-      --accent-color: #375a7f;
-      --secondary-color: #f39c12;
-      --border-color: #333333;
-    }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: var(--sports-bg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--card-text-main);
+}
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -44,19 +48,21 @@
     }
 
     header {
-      background-color: var(--accent-color);
-      color: #fff;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+header h1 {
+  color: #ffcc00;
+}
     nav a {
       color: #fff;
       margin: 0 10px;
