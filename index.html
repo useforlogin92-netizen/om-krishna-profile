@@ -284,51 +284,62 @@ body.light-theme p {
 
   <!-- JavaScript Code -->
   <script>
-    // Profiles Data Object
-    const profiles = {
-      om: {
-        name: "Om Satyapal Yadav",
-        image: "https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d",
-        tagline: "All-Rounder | Wicket-keeper | Left-Hand Bat & Left-Arm Slow Spinner",
-        dob: "05 March 2014"
-     },
+    <script>
+  // Profile Data
+  const profiles = {
+    om: {
+      name: "Om Satyapal Yadav",
+      image: "https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d",
+      tagline: "All-Rounder | Wicket-keeper | Left-Hand Bat & Left-Arm Slow Spinner",
+      dob: "05 March 2014"
+    },
     krishna: {
       name: "Krishna Satyapal Yadav",
-      image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36", /* <-- यह रहा Krishna का Image URL */
+      image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36",
       tagline: "Young Emerging Player & Learner",
       dob: "30 April 2011"
     }
   };
-    // Switch Profile Function
- function switchProfile(person) {
-  const data = profiles[person];
-  if (data) {
-    document.getElementById('profile-name').innerText = data.name;
-    document.getElementById('profile-img').src = data.image;
-    document.getElementById('profile-tagline').innerText = data.tagline;
-    document.getElementById('profile-dob').innerText = data.dob;
 
-    // Links Toggle Logic
-    if (person === 'om') {
-      document.getElementById('om-links').style.display = 'block';
-      document.getElementById('krishna-links').style.display = 'none';
-    } else if (person === 'krishna') {
-      document.getElementById('om-links').style.display = 'none';
-      document.getElementById('krishna-links').style.display = 'block';
+  // Switch Profile Function
+  function switchProfile(person) {
+    const data = profiles[person];
+    if (data) {
+      if(document.getElementById('profile-name')) document.getElementById('profile-name').innerText = data.name;
+      if(document.getElementById('profile-img')) document.getElementById('profile-img').src = data.image;
+      if(document.getElementById('profile-tagline')) document.getElementById('profile-tagline').innerText = data.tagline;
+      if(document.getElementById('profile-dob')) document.getElementById('profile-dob').innerText = data.dob;
+
+      // Links Toggle
+      const omLinks = document.getElementById('om-links');
+      const krishnaLinks = document.getElementById('krishna-links');
+
+      if (person === 'om') {
+        if(omLinks) omLinks.style.display = 'block';
+        if(krishnaLinks) krishnaLinks.style.display = 'none';
+      } else if (person === 'krishna') {
+        if(omLinks) omLinks.style.display = 'none';
+        if(krishnaLinks) krishnaLinks.style.display = 'block';
+      }
     }
   }
-    // Switch Study Material Tabs
-    function openTab(tabName) {
-      var i;
-      var x = document.getElementsByClassName("study-tab-content");
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";  
-      }
-      document.getElementById(tabName).style.display = "block";  
+
+  // Switch Study Material Tabs
+  function openTab(tabName) {
+    var i;
+    var x = document.getElementsByClassName("study-tab-content");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
     }
-    function toggleTheme() {
-  document.body.classList.toggle('light-theme');
-}
-  </script>
+    if(document.getElementById(tabName)) {
+      document.getElementById(tabName).style.display = "block";
+    }
+  }
+
+  // Theme Toggle Function
+  function toggleTheme() {
+    document.body.classList.toggle('light-theme');
+  }
+</script>
 </body>
 </html>
