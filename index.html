@@ -352,6 +352,70 @@
 
   </div>
 </section>
+  <!-- Study Material & Daily Tracking Section -->
+<section id="study-material" style="margin: 40px auto; max-width: 1000px; padding: 20px;">
+  <h2 style="text-align: center; color: #ffffff; margin-bottom: 30px;">Study Material & Daily Tracking</h2>
+
+  <!-- Buttons to switch between Om & Krishna -->
+  <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 25px;">
+    <button onclick="openTab('om-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #007bff; color: white; cursor: pointer; font-weight: bold;">Om's Study</button>
+    <button onclick="openTab('krishna-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #28a745; color: white; cursor: pointer; font-weight: bold;">Krishna's Study</button>
+  </div>
+
+  <!-- OM STUDY MATERIAL -->
+  <div id="om-study" class="study-tab-content" style="display: block; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+    <h3 style="color: #61dafb; margin-bottom: 15px;">Om's Daily Tracker & Resources</h3>
+    <ul style="list-style-type: none; padding: 0;">
+      <!-- Document / PDF / Word File -->
+      <li style="margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; color: #ffffff;">
+        📄 <strong>Maths Worksheet (PDF / Word):</strong> 
+        <a href="https://drive.google.com/file/d/YOUR_DRIVE_FILE_ID/view" target="_blank" style="color: #ffca28; margin-left: 10px;">Open File</a>
+      </li>
+      <!-- Website Link -->
+      <li style="margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; color: #ffffff;">
+        🌐 <strong>Educational Website:</strong> 
+        <a href="https://www.khanacademy.org" target="_blank" style="color: #ffca28; margin-left: 10px;">Visit Website</a>
+      </li>
+      <!-- YouTube Video -->
+      <li style="margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; color: #ffffff;">
+        🎥 <strong>Science Lesson Video:</strong> 
+        <a href="https://youtu.be/YOUR_VIDEO_ID" target="_blank" style="color: #ffca28; margin-left: 10px;">Watch Video</a>
+      </li>
+      <!-- Image File -->
+      <li style="margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; color: #ffffff;">
+        🖼️ <strong>Daily Handwriting/Notes Image:</strong> 
+        <a href="https://drive.google.com/file/d/YOUR_IMAGE_ID/view" target="_blank" style="color: #ffca28; margin-left: 10px;">View Image</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- KRISHNA STUDY MATERIAL -->
+  <div id="krishna-study" class="study-tab-content" style="display: none; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+    <h3 style="color: #72ff72; margin-bottom: 15px;">Krishna's Daily Tracker & Resources</h3>
+    <ul style="list-style-type: none; padding: 0;">
+      <li style="margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; color: #ffffff;">
+        📄 <strong>English Notes (PDF / Word):</strong> 
+        <a href="https://drive.google.com/file/d/YOUR_DRIVE_FILE_ID/view" target="_blank" style="color: #ffca28; margin-left: 10px;">Open File</a>
+      </li>
+      <li style="margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; color: #ffffff;">
+        🎥 <strong>Learning Video:</strong> 
+        <a href="https://youtu.be/YOUR_VIDEO_ID" target="_blank" style="color: #ffca28; margin-left: 10px;">Watch Video</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Tab Switch Script -->
+<script>
+function openTab(tabName) {
+  var i;
+  var x = document.getElementsByClassName("study-tab-content");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  document.getElementById(tabName).style.display = "block";  
+}
+</script>
   <footer>
     <p>&copy; 2026 Om & Krishna Satyapal Yadav Official Website. All Rights Reserved.</p>
   </footer>
