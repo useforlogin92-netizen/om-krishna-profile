@@ -3,344 +3,617 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Om & Krishna Satyapal Yadav - Official Website</title>
+  <title>OM KRISHNA GROUP - Official Website</title>
   <style>
-    /* Global Variables */
+    /* CSS Variables */
     :root {
-      --bg-color: #121212;
-      --card-bg: #1e1e1e;
-      --text-color: #ffffff;
-      --sub-text: #b3b3b3;
-      --accent-color: #ffca28;
-      --header-bg: #0056b3;
+      --bg-dark: #0a0b0e;
+      --card-bg: #14171f;
+      --card-border: rgba(212, 175, 55, 0.25);
+      --gold-primary: #d4af37;
+      --gold-light: #f3e5ab;
+      --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+      --text-white: #ffffff;
+      --text-muted: #a5adba;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* Header */
-    header {
-      background-color: var(--header-bg);
-      color: white;
-      padding: 15px 20px;
+    /* Full-Screen Hero Section */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(180deg, rgba(10, 11, 14, 0.4) 0%, rgba(10, 11, 14, 0.95) 100%),
+                  url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .hero-overlay-lighting {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      animation: pulseGlow 4s infinite alternate;
+    }
+
+    .hero-heading {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin: 0;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .hero-subheading {
+      font-size: 1.5rem;
+      color: var(--text-white);
+      margin: 15px 0 10px 0;
+      font-weight: 400;
+      letter-spacing: 1px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .hero-tagline {
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 35px;
+      animation: fadeInUp 1.4s ease-out;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
       flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 1.6s ease-out;
+    }
+
+    .btn-hero {
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-gold {
+      background: var(--gold-gradient);
+      color: #000;
+      border: none;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+    }
+
+    .btn-outline {
+      background: rgba(0, 0, 0, 0.5);
+      color: var(--gold-primary);
+      border: 2px solid var(--gold-primary);
+      backdrop-filter: blur(5px);
+    }
+
+    .btn-outline:hover {
+      background: var(--gold-primary);
+      color: #000;
+      transform: translateY(-3px);
+    }
+
+    /* Header Sticky Navigation */
+    header {
       position: sticky;
       top: 0;
       z-index: 1000;
+      background: rgba(10, 11, 14, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: #ffffff;
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      letter-spacing: 2px;
     }
 
-    header nav a {
-      color: white;
+    nav a {
+      color: var(--text-white);
       text-decoration: none;
-      margin: 0 10px;
-      font-weight: bold;
+      margin-left: 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--gold-primary);
     }
 
     /* Main Container */
     .container {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 0 15px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
-    /* Light Theme Fix */
-    body.light-theme {
-      background-color: #f4f4f9 !important;
-      color: #121212 !important;
-    }
-
-    body.light-theme #profile-card, 
-    body.light-theme section,
-    body.light-theme div {
-      background-color: #ffffff !important;
-      color: #121212 !important;
-    }
-
-    body.light-theme h1,
-    body.light-theme h2, 
-    body.light-theme h3,
-    body.light-theme p {
-      color: #121212 !important;
-    }
-    
-    /* Buttons */
-    .controls {
+    /* Controls Switcher */
+    .profile-switcher {
       display: flex;
       justify-content: center;
       gap: 15px;
-      margin-bottom: 25px;
+      margin-bottom: 40px;
     }
 
-    .btn {
-      padding: 10px 20px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn-primary {
-      background-color: #ffca28 !important;
-      color: #111111 !important;
-    }
-
-    .btn-secondary {
-      background-color: #ffffff !important;
-      color: #0056b3 !important;
-      border: 1px solid #0056b3;
-    }
-
-    /* Profile Card */
-    #profile-card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 30px;
+    /* Profile Hero Display */
+    .profile-hero-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px 20px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+      margin-bottom: 40px;
     }
 
-    #profile-img {
-      width: 140px;
-      height: 140px;
+    .avatar-wrapper {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 20px auto;
+    }
+
+    .profile-avatar {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid var(--accent-color);
+      border: 4px solid var(--gold-primary);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+    }
+
+    .player-name {
+      font-size: 2.4rem;
+      margin: 10px 0;
+      color: var(--gold-primary);
+    }
+
+    .badges-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .badge {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Grid Layout for Profile Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 25px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold-primary);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      color: var(--gold-primary);
+      margin-top: 0;
       margin-bottom: 15px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding-bottom: 8px;
     }
 
-    #profile-name {
-      margin: 10px 0 5px 0;
-      font-size: 1.8rem;
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
-    #profile-tagline {
-      color: var(--sub-text);
-      font-size: 1.05rem;
-      margin-bottom: 15px;
+    .card-list li {
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
     }
 
-    /* Section Boxes */
-    section {
-      background-color: var(--card-bg);
-      margin: 30px 0;
-      padding: 20px;
+    .card-list li strong {
+      color: var(--text-white);
+    }
+
+    .card-full {
+      grid-column: 1 / -1;
+    }
+
+    /* Media Grid */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .media-card {
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
-    /* Footer */
+    .media-card img, .media-card iframe {
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+    }
+
+    /* Action Portal Links Box */
+    .portal-box {
+      background: var(--card-bg);
+      border: 1px solid var(--gold-primary);
+      border-radius: 18px;
+      padding: 30px;
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .portal-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      margin: 8px;
+      background: var(--gold-gradient);
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 25px;
+      transition: transform 0.3s;
+    }
+
+    .portal-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes pulseGlow {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+      100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     footer {
       text-align: center;
-      padding: 20px;
-      background-color: #000;
-      color: #888;
-      margin-top: 40px;
+      padding: 30px;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      background: #050507;
+    }
+
+    @media (max-width: 768px) {
+      .hero-heading { font-size: 2.2rem; }
+      .hero-subheading { font-size: 1.1rem; }
+      .hero-tagline { font-size: 0.95rem; }
+      header { flex-direction: column; gap: 10px; }
+      nav a { margin: 0 6px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header Section -->
+  <!-- Full-Screen Hero Section -->
+  <div class="hero-section">
+    <div class="hero-overlay-lighting"></div>
+    <h1 class="hero-heading">OM KRISHNA GROUP</h1>
+    <div class="hero-subheading">Official Website of Om Satyapal Yadav</div>
+    <div class="hero-tagline">Dream • Discipline • Dedication</div>
+    <div class="hero-buttons">
+      <a href="#profile-section" class="btn-hero btn-gold">View Profile</a>
+      <a href="#stats-section" class="btn-hero btn-outline">Career Statistics</a>
+    </div>
+  </div>
+
+  <!-- Sticky Navbar -->
   <header>
-    <h1>Om & Krishna</h1>
+    <div class="brand-title">OM & KRISHNA</div>
     <nav>
-      <a href="#profile-card">Profile</a>
+      <a href="#profile-section">Profile</a>
+      <a href="#stats-section">Statistics</a>
+      <a href="#portals">Portals</a>
+      <a href="#gallery">Gallery</a>
       <a href="#videos">Videos</a>
-      <a href="#study-material">Study Material</a>
-      <a href="#contact-section">Contact</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <div class="container">
-    
-    <!-- Profile Switch Controls -->
-    <div class="controls">
-      <button type="button" class="btn btn-primary" onclick="switchProfile('om')">Om Profile</button>
-      <button type="button" class="btn btn-secondary" onclick="switchProfile('krishna')">Krishna Profile</button>
-      <button type="button" class="btn btn-primary" onclick="toggleTheme()">🌙 Theme</button>
+
+    <!-- Profile Switch Buttons -->
+    <div class="profile-switcher">
+      <button class="btn-hero btn-gold" onclick="switchProfile('om')">Om Profile</button>
+      <button class="btn-hero btn-outline" onclick="switchProfile('krishna')">Krishna Profile</button>
     </div>
 
-    <!-- Profile Display Card -->
-    <div id="profile-card">
-      <img id="profile-img" src="https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d" alt="Profile Image">
-      <h2 id="profile-name">Om Satyapal Yadav</h2>
-      <p id="profile-tagline">All-Rounder | Wicket-keeper | Left-Hand Bat & Left-Arm Slow Spinner</p>
-      <p><strong>DOB:</strong> <span id="profile-dob">05 March 2014</span></p>
-      <p><strong>Location:</strong> Mumbai, Maharashtra, India</p>
+    <!-- Active Player Profile Hero -->
+    <div id="profile-section" class="profile-hero-card">
+      <div class="avatar-wrapper">
+        <img id="profile-img" class="profile-avatar" src="https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d" alt="Profile Picture">
+      </div>
+      <h2 id="profile-name" class="player-name">Om Satyapal Yadav</h2>
+      
+      <div id="profile-badges" class="badges-container">
+        <span class="badge">Wicket-Keeper Batter</span>
+        <span class="badge">Left-Hand Opening Batter</span>
+        <span class="badge">Left-Arm Slow Spinner</span>
+        <span class="badge">Student Athlete</span>
+        <span class="badge">Future Team India Player</span>
+      </div>
     </div>
 
-    <!-- Videos Section -->
-    <section id="videos" style="text-align: center;">
-      <h2 style="color: #ffffff; margin-bottom: 20px;">Videos Section</h2>
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px;">
-        
-        <!-- Video 1 -->
-        <div style="max-width: 100%; width: 400px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
-          <h3 style="color: #ffffff; margin-bottom: 10px;">Cricket Practice (YouTube)</h3>
-          <iframe width="100%" height="225" src="https://www.youtube.com/embed/a0C4gcz322M" frameborder="0" allowfullscreen style="border-radius: 8px;"></iframe>
-        </div>
-
-        <!-- Video 2 -->
-        <div style="max-width: 100%; width: 400px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
-          <h3 style="color: #ffffff; margin-bottom: 10px;">Dance Performance (Google Drive)</h3>
-          <iframe src="https://drive.google.com/file/d/12cmTnkmqv8kR2s167XP0NTOduBgzvt-K/preview" width="100%" height="225" allow="autoplay" style="border-radius: 8px;"></iframe>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Study Material & Daily Tracking Section -->
-    <section id="study-material">
-      <h2 style="text-align: center; color: #ffffff; margin-bottom: 25px;">Study Material & Daily Tracking</h2>
-
-      <!-- Switch Tabs -->
-      <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 25px;">
-        <button type="button" onclick="openTab('om-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #007bff; color: white; cursor: pointer; font-weight: bold;">Om's Study</button>
-        <button type="button" onclick="openTab('krishna-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #28a745; color: white; cursor: pointer; font-weight: bold;">Krishna's Study</button>
-      </div>
-
-      <!-- OM STUDY MATERIAL -->
-      <div id="om-study" class="study-tab-content" style="display: block; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px;">
-        <h3 style="color: #61dafb; margin-bottom: 15px;">Om's Daily Tracker & Resources</h3>
-        <ul style="list-style-type: none; padding: 0;">
-          <li style="margin-bottom: 12px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px;">
-            📄 <strong>Maths Worksheet (PDF / Word):</strong> 
-            <a href="https://drive.google.com/file/d/YOUR_DRIVE_FILE_ID/view" target="_blank" style="color: #ffca28; margin-left: 10px;">Open File</a>
-          </li>
-          <li style="margin-bottom: 12px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px;">
-            🌐 <strong>Educational Website:</strong> 
-            <a href="https://www.khanacademy.org" target="_blank" style="color: #ffca28; margin-left: 10px;">Visit Website</a>
-          </li>
-          <li style="margin-bottom: 12px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px;">
-            🎥 <strong>Science Lesson Video:</strong> 
-            <a href="https://youtu.be/YOUR_VIDEO_ID" target="_blank" style="color: #ffca28; margin-left: 10px;">Watch Video</a>
-          </li>
+    <!-- Details Grid for OM -->
+    <div id="om-details" class="cards-grid">
+      <div class="card">
+        <h3 class="card-title">👤 Personal Information</h3>
+        <ul class="card-list">
+          <li><strong>Full Name:</strong> Om Satyapal Yadav</li>
+          <li><strong>DOB:</strong> 05 March 2014</li>
+          <li><strong>Location:</strong> Mumbai, Maharashtra, India</li>
         </ul>
       </div>
 
-      <!-- KRISHNA STUDY MATERIAL -->
-      <div id="krishna-study" class="study-tab-content" style="display: none; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px;">
-        <h3 style="color: #72ff72; margin-bottom: 15px;">Krishna's Daily Tracker & Resources</h3>
-        <ul style="list-style-type: none; padding: 0;">
-          <li style="margin-bottom: 12px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px;">
-            📄 <strong>English Notes (PDF / Word):</strong> 
-            <a href="https://drive.google.com/file/d/YOUR_DRIVE_FILE_ID/view" target="_blank" style="color: #ffca28; margin-left: 10px;">Open File</a>
-          </li>
-          <li style="margin-bottom: 12px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px;">
-            🎥 <strong>Learning Video:</strong> 
-            <a href="https://youtu.be/YOUR_VIDEO_ID" target="_blank" style="color: #ffca28; margin-left: 10px;">Watch Video</a>
-          </li>
+      <div class="card">
+        <h3 class="card-title">🎓 Education</h3>
+        <ul class="card-list">
+          <li><strong>School:</strong> St. Joseph's Academy</li>
+          <li><strong>Role:</strong> Student Athlete</li>
         </ul>
       </div>
-    </section>
 
-    <!-- Contact & Connect Section -->
-    <section id="contact-section" style="text-align: center;">
-      <h2 style="color: #ffffff; margin-bottom: 15px;">Contact & Connect</h2>
-      <p style="color: #cccccc; margin-bottom: 20px;">Reach out via WhatsApp or Email:</p>
-
-      <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <!-- WhatsApp Button -->
-        <a href="https://wa.me/91YOUR_PHONE_NUMBER?text=Hello%20Om%20and%20Krishna%20Team," target="_blank" style="background-color: #25D366; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
-          💬 Chat on WhatsApp
-        </a>
-
-        <!-- Email Button -->
-        <a href="mailto:your-email@gmail.com" style="background-color: #ea4335; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 8px;">
-          ✉️ Send Email
-        </a>
+      <div class="card">
+        <h3 class="card-title">🏏 Cricket Profile</h3>
+        <ul class="card-list">
+          <li><strong>Role:</strong> Wicket-Keeper Batter</li>
+          <li><strong>Batting:</strong> Left-Hand Opening Batter</li>
+          <li><strong>Bowling:</strong> Left-Arm Slow Spinner</li>
+        </ul>
       </div>
-    </section>
 
-    <!-- Om's Important Links -->
-    <div id="om-links" style="text-align: center; margin: 20px 0;">
-      <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Om</h3>
-      <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
-      <a href="https://sjpa.edusprint.in/sjpa/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Om)</a>
+      <div class="card">
+        <h3 class="card-title">🚀 Career Journey</h3>
+        <ul class="card-list">
+          <li>Passionate cricketer with daily professional training in Mumbai.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">🏆 Achievements</h3>
+        <ul class="card-list">
+          <li>Best Wicket-Keeper in Inter-School Tournament</li>
+        </ul>
+      </div>
+
+      <div id="stats-section" class="card">
+        <h3 class="card-title">📊 Statistics</h3>
+        <ul class="card-list">
+          <li><strong>Matches:</strong> 50+</li>
+          <li><strong>Runs:</strong> 1200+</li>
+          <li><strong>Dismissals:</strong> 35+</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">💪 Fitness</h3>
+        <ul class="card-list">
+          <li>Daily Agility, Reflex, and Core Conditioning Sessions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">🎒 Equipment</h3>
+        <ul class="card-list">
+          <li>Grade-1 English Willow Bat & Pro Wicketkeeping Kit</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">🌟 Dream</h3>
+        <ul class="card-list">
+          <li>To represent the Indian National Cricket Team internationally.</li>
+        </ul>
+      </div>
     </div>
 
-    <!-- Krishna's Important Links -->
-    <div id="krishna-links" style="text-align: center; margin: 20px 0; display: none;">
-      <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Krishna</h3>
-      <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
-      <a href="https://sgpis.edusprint.in/sgpis/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Krishna)</a>
+    <!-- Details Grid for KRISHNA (Hidden Initial) -->
+    <div id="krishna-details" class="cards-grid" style="display: none;">
+      <div class="card">
+        <h3 class="card-title">👤 Personal Information</h3>
+        <ul class="card-list">
+          <li><strong>Full Name:</strong> Krishna Satyapal Yadav</li>
+          <li><strong>DOB:</strong> 30 April 2011</li>
+          <li><strong>Location:</strong> Mumbai, Maharashtra, India</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">🎓 Education & Sports</h3>
+        <ul class="card-list">
+          <li><strong>School:</strong> SGPIS</li>
+          <li><strong>Role:</strong> Young Emerging Player & Learner</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- Portals & Important External Links -->
+    <div id="portals" class="portal-box">
+      <h2 style="color: var(--gold-primary); margin-top: 0;">🔗 Important Links & Educational Portals</h2>
+      
+      <!-- Om Portals -->
+      <div id="om-links">
+        <a href="https://www.khanacademy.org" target="_blank" class="portal-btn">Khan Academy</a>
+        <a href="https://sjpa.edusprint.in/sjpa/Security" target="_blank" class="portal-btn">EduSprint Portal (Om)</a>
+      </div>
+
+      <!-- Krishna Portals -->
+      <div id="krishna-links" style="display: none;">
+        <a href="https://www.khanacademy.org" target="_blank" class="portal-btn">Khan Academy</a>
+        <a href="https://sgpis.edusprint.in/sgpis/Security" target="_blank" class="portal-btn">EduSprint Portal (Krishna)</a>
+      </div>
+    </div>
+
+    <!-- Media Sections -->
+    <div id="gallery" class="card card-full">
+      <h3 class="card-title">📸 Gallery</h3>
+      <div class="media-grid">
+        <div class="media-card">
+          <img src="https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d" alt="Om Practice" style="height: 220px; object-fit: cover;">
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Cricket Practice Session</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="videos" class="card card-full" style="margin-top: 25px;">
+      <h3 class="card-title">🎥 Practice Videos</h3>
+      <div class="media-grid">
+        <div class="media-card">
+          <iframe height="200" src="https://www.youtube.com/embed/a0C4gcz322M" allowfullscreen></iframe>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">YouTube Match Practice</p>
+        </div>
+        <div class="media-card">
+          <iframe height="200" src="https://drive.google.com/file/d/12cmTnkmqv8kR2s167XP0NTOduBgzvt-K/preview"></iframe>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Google Drive Video</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parent Message -->
+    <div class="card card-full" style="margin-top: 25px;">
+      <h3 class="card-title">❤️ Parents' Message</h3>
+      <p style="font-style: italic; color: var(--gold-light); line-height: 1.8;">
+        "Om's dedication, discipline, and endless love for cricket at such a young age fills our hearts with pride. We stand by him in every step of his journey towards achieving his dream of playing for Team India!"
+      </p>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" style="text-align: center; margin: 40px 0;">
+      <h2 style="color: var(--gold-primary);">💬 Connect With Us</h2>
+      <a href="https://wa.me/91YOUR_PHONE_NUMBER" target="_blank" class="portal-btn" style="background: #25D366; color: white;">WhatsApp Chat</a>
+      <a href="mailto:your-email@gmail.com" class="portal-btn" style="background: #ea4335; color: white;">Send Email</a>
+    </div>
+
   </div>
 
-  <!-- Footer Section -->
   <footer>
-    <p>&copy; 2026 Om & Krishna Satyapal Yadav Official Website. All Rights Reserved.</p>
+    &copy; 2026 OM KRISHNA GROUP. Official Website. All Rights Reserved.
   </footer>
 
-  <!-- JavaScript Code -->
+  <!-- Profile Switcher JS -->
   <script>
-    // Profile Data
     const profiles = {
       om: {
         name: "Om Satyapal Yadav",
         image: "https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d",
-        tagline: "All-Rounder | Wicket-keeper | Left-Hand Bat & Left-Arm Slow Spinner",
-        dob: "05 March 2014"
+        badges: ["Wicket-Keeper Batter", "Left-Hand Opening Batter", "Left-Arm Slow Spinner", "Student Athlete", "Future Team India Player"]
       },
       krishna: {
         name: "Krishna Satyapal Yadav",
         image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36",
-        tagline: "Young Emerging Player & Learner",
-        dob: "30 April 2011"
+        badges: ["Young Emerging Player", "Student Athlete", "Cricket Learner"]
       }
     };
 
-    // Switch Profile Function
     function switchProfile(person) {
       const data = profiles[person];
       if (data) {
-        if(document.getElementById('profile-name')) document.getElementById('profile-name').innerText = data.name;
-        if(document.getElementById('profile-img')) document.getElementById('profile-img').src = data.image;
-        if(document.getElementById('profile-tagline')) document.getElementById('profile-tagline').innerText = data.tagline;
-        if(document.getElementById('profile-dob')) document.getElementById('profile-dob').innerText = data.dob;
+        document.getElementById('profile-name').innerText = data.name;
+        document.getElementById('profile-img').src = data.image;
 
-        // Links Toggle
-        const omLinks = document.getElementById('om-links');
-        const krishnaLinks = document.getElementById('krishna-links');
+        const badgesContainer = document.getElementById('profile-badges');
+        badgesContainer.innerHTML = '';
+        data.badges.forEach(b => {
+          const span = document.createElement('span');
+          span.className = 'badge';
+          span.innerText = b;
+          badgesContainer.appendChild(span);
+        });
 
         if (person === 'om') {
-          if(omLinks) omLinks.style.display = 'block';
-          if(krishnaLinks) krishnaLinks.style.display = 'none';
-        } else if (person === 'krishna') {
-          if(omLinks) omLinks.style.display = 'none';
-          if(krishnaLinks) krishnaLinks.style.display = 'block';
+          document.getElementById('om-details').style.display = 'grid';
+          document.getElementById('krishna-details').style.display = 'none';
+          document.getElementById('om-links').style.display = 'block';
+          document.getElementById('krishna-links').style.display = 'none';
+        } else {
+          document.getElementById('om-details').style.display = 'none';
+          document.getElementById('krishna-details').style.display = 'grid';
+          document.getElementById('om-links').style.display = 'none';
+          document.getElementById('krishna-links').style.display = 'block';
         }
       }
-    }
-
-    // Switch Study Material Tabs
-    function openTab(tabName) {
-      var i;
-      var x = document.getElementsByClassName("study-tab-content");
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-      }
-      if(document.getElementById(tabName)) {
-        document.getElementById(tabName).style.display = "block";
-      }
-    }
-
-    // Theme Toggle Function
-    function toggleTheme() {
-      document.body.classList.toggle('light-theme');
     }
   </script>
 </body>
