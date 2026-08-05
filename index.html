@@ -263,7 +263,18 @@ body.light-theme p {
         </a>
       </div>
     </section>
-
+<!-- Om's Important Links -->
+<div id="om-links" style="text-align: center; margin: 20px 0;">
+  <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Om</h3>
+  <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
+  <a href="https://sjpa.edusprint.in/sjpa/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Om)</a>
+</div>
+    <!-- Krishna's Important Links -->
+<div id="krishna-links" style="text-align: center; margin: 20px 0; display: none;">
+  <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Krishna</h3>
+  <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
+  <a href="https://sgpis.edusprint.in/sgpis/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Krishna)</a>
+</div>
   </div>
 
   <!-- Footer Section -->
@@ -289,15 +300,23 @@ body.light-theme p {
     }
   };
     // Switch Profile Function
-    function switchProfile(person) {
-      const data = profiles[person];
-      if (data) {
-        document.getElementById('profile-name').innerText = data.name;
-        document.getElementById('profile-img').src = data.image;
-        document.getElementById('profile-tagline').innerText = data.tagline;
-        document.getElementById('profile-dob').innerText = data.dob;
-      }
+ function switchProfile(person) {
+  const data = profiles[person];
+  if (data) {
+    document.getElementById('profile-name').innerText = data.name;
+    document.getElementById('profile-img').src = data.image;
+    document.getElementById('profile-tagline').innerText = data.tagline;
+    document.getElementById('profile-dob').innerText = data.dob;
+
+    // Links Toggle Logic
+    if (person === 'om') {
+      document.getElementById('om-links').style.display = 'block';
+      document.getElementById('krishna-links').style.display = 'none';
+    } else if (person === 'krishna') {
+      document.getElementById('om-links').style.display = 'none';
+      document.getElementById('krishna-links').style.display = 'block';
     }
+  }
 
     // Switch Study Material Tabs
     function openTab(tabName) {
