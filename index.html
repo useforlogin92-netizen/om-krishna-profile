@@ -56,25 +56,26 @@
       margin: 20px auto;
       padding: 0 15px;
     }
-/* Light Theme Fix */
-body.light-theme {
-  background-color: #f4f4f9 !important;
-  color: #121212 !important;
-}
 
-body.light-theme #profile-card, 
-body.light-theme section,
-body.light-theme div {
-  background-color: #ffffff !important;
-  color: #121212 !important;
-}
+    /* Light Theme Fix */
+    body.light-theme {
+      background-color: #f4f4f9 !important;
+      color: #121212 !important;
+    }
 
-body.light-theme h1,
-body.light-theme h2, 
-body.light-theme h3,
-body.light-theme p {
-  color: #121212 !important;
-}
+    body.light-theme #profile-card, 
+    body.light-theme section,
+    body.light-theme div {
+      background-color: #ffffff !important;
+      color: #121212 !important;
+    }
+
+    body.light-theme h1,
+    body.light-theme h2, 
+    body.light-theme h3,
+    body.light-theme p {
+      color: #121212 !important;
+    }
     
     /* Buttons */
     .controls {
@@ -93,15 +94,15 @@ body.light-theme p {
     }
 
     .btn-primary {
-  background-color: #ffca28 !important;
-  color: #111111 !important;
-}
+      background-color: #ffca28 !important;
+      color: #111111 !important;
+    }
 
-.btn-secondary {
-  background-color: #ffffff !important;
-  color: #0056b3 !important;
-  border: 1px solid #0056b3;
-}
+    .btn-secondary {
+      background-color: #ffffff !important;
+      color: #0056b3 !important;
+      border: 1px solid #0056b3;
+    }
 
     /* Profile Card */
     #profile-card {
@@ -167,10 +168,10 @@ body.light-theme p {
     
     <!-- Profile Switch Controls -->
     <div class="controls">
-  <button class="btn btn-primary" onclick="switchProfile('om')">Om Profile</button>
-<button class="btn btn-secondary" onclick="switchProfile('krishna')">Krishna Profile</button>
-<button class="btn btn-primary" onclick="toggleTheme()">🌙 Theme</button>
-</div>
+      <button type="button" class="btn btn-primary" onclick="switchProfile('om')">Om Profile</button>
+      <button type="button" class="btn btn-secondary" onclick="switchProfile('krishna')">Krishna Profile</button>
+      <button type="button" class="btn btn-primary" onclick="toggleTheme()">🌙 Theme</button>
+    </div>
 
     <!-- Profile Display Card -->
     <div id="profile-card">
@@ -207,8 +208,8 @@ body.light-theme p {
 
       <!-- Switch Tabs -->
       <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 25px;">
-        <button onclick="openTab('om-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #007bff; color: white; cursor: pointer; font-weight: bold;">Om's Study</button>
-        <button onclick="openTab('krishna-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #28a745; color: white; cursor: pointer; font-weight: bold;">Krishna's Study</button>
+        <button type="button" onclick="openTab('om-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #007bff; color: white; cursor: pointer; font-weight: bold;">Om's Study</button>
+        <button type="button" onclick="openTab('krishna-study')" style="padding: 10px 25px; border-radius: 20px; border: none; background: #28a745; color: white; cursor: pointer; font-weight: bold;">Krishna's Study</button>
       </div>
 
       <!-- OM STUDY MATERIAL -->
@@ -263,18 +264,20 @@ body.light-theme p {
         </a>
       </div>
     </section>
-<!-- Om's Important Links -->
-<div id="om-links" style="text-align: center; margin: 20px 0;">
-  <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Om</h3>
-  <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
-  <a href="https://sjpa.edusprint.in/sjpa/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Om)</a>
-</div>
+
+    <!-- Om's Important Links -->
+    <div id="om-links" style="text-align: center; margin: 20px 0;">
+      <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Om</h3>
+      <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
+      <a href="https://sjpa.edusprint.in/sjpa/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Om)</a>
+    </div>
+
     <!-- Krishna's Important Links -->
-<div id="krishna-links" style="text-align: center; margin: 20px 0; display: none;">
-  <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Krishna</h3>
-  <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
-  <a href="https://sgpis.edusprint.in/sgpis/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Krishna)</a>
-</div>
+    <div id="krishna-links" style="text-align: center; margin: 20px 0; display: none;">
+      <h3 style="color: #f1c40f; margin-bottom: 10px;">Important Links for Krishna</h3>
+      <a href="https://www.khanacademy.org" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">Khan Academy</a>
+      <a href="https://sgpis.edusprint.in/sgpis/Security" target="_blank" style="display: inline-block; padding: 10px 18px; margin: 5px; background-color: #f1c40f; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px;">EduSprint Portal (Krishna)</a>
+    </div>
   </div>
 
   <!-- Footer Section -->
@@ -284,62 +287,61 @@ body.light-theme p {
 
   <!-- JavaScript Code -->
   <script>
-    <script>
-  // Profile Data
-  const profiles = {
-    om: {
-      name: "Om Satyapal Yadav",
-      image: "https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d",
-      tagline: "All-Rounder | Wicket-keeper | Left-Hand Bat & Left-Arm Slow Spinner",
-      dob: "05 March 2014"
-    },
-    krishna: {
-      name: "Krishna Satyapal Yadav",
-      image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36",
-      tagline: "Young Emerging Player & Learner",
-      dob: "30 April 2011"
-    }
-  };
+    // Profile Data
+    const profiles = {
+      om: {
+        name: "Om Satyapal Yadav",
+        image: "https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d",
+        tagline: "All-Rounder | Wicket-keeper | Left-Hand Bat & Left-Arm Slow Spinner",
+        dob: "05 March 2014"
+      },
+      krishna: {
+        name: "Krishna Satyapal Yadav",
+        image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36",
+        tagline: "Young Emerging Player & Learner",
+        dob: "30 April 2011"
+      }
+    };
 
-  // Switch Profile Function
-  function switchProfile(person) {
-    const data = profiles[person];
-    if (data) {
-      if(document.getElementById('profile-name')) document.getElementById('profile-name').innerText = data.name;
-      if(document.getElementById('profile-img')) document.getElementById('profile-img').src = data.image;
-      if(document.getElementById('profile-tagline')) document.getElementById('profile-tagline').innerText = data.tagline;
-      if(document.getElementById('profile-dob')) document.getElementById('profile-dob').innerText = data.dob;
+    // Switch Profile Function
+    function switchProfile(person) {
+      const data = profiles[person];
+      if (data) {
+        if(document.getElementById('profile-name')) document.getElementById('profile-name').innerText = data.name;
+        if(document.getElementById('profile-img')) document.getElementById('profile-img').src = data.image;
+        if(document.getElementById('profile-tagline')) document.getElementById('profile-tagline').innerText = data.tagline;
+        if(document.getElementById('profile-dob')) document.getElementById('profile-dob').innerText = data.dob;
 
-      // Links Toggle
-      const omLinks = document.getElementById('om-links');
-      const krishnaLinks = document.getElementById('krishna-links');
+        // Links Toggle
+        const omLinks = document.getElementById('om-links');
+        const krishnaLinks = document.getElementById('krishna-links');
 
-      if (person === 'om') {
-        if(omLinks) omLinks.style.display = 'block';
-        if(krishnaLinks) krishnaLinks.style.display = 'none';
-      } else if (person === 'krishna') {
-        if(omLinks) omLinks.style.display = 'none';
-        if(krishnaLinks) krishnaLinks.style.display = 'block';
+        if (person === 'om') {
+          if(omLinks) omLinks.style.display = 'block';
+          if(krishnaLinks) krishnaLinks.style.display = 'none';
+        } else if (person === 'krishna') {
+          if(omLinks) omLinks.style.display = 'none';
+          if(krishnaLinks) krishnaLinks.style.display = 'block';
+        }
       }
     }
-  }
 
-  // Switch Study Material Tabs
-  function openTab(tabName) {
-    var i;
-    var x = document.getElementsByClassName("study-tab-content");
-    for (i = 0; i < x.length; i++) {
-      x[i].style.display = "none";
+    // Switch Study Material Tabs
+    function openTab(tabName) {
+      var i;
+      var x = document.getElementsByClassName("study-tab-content");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      if(document.getElementById(tabName)) {
+        document.getElementById(tabName).style.display = "block";
+      }
     }
-    if(document.getElementById(tabName)) {
-      document.getElementById(tabName).style.display = "block";
-    }
-  }
 
-  // Theme Toggle Function
-  function toggleTheme() {
-    document.body.classList.toggle('light-theme');
-  }
-</script>
+    // Theme Toggle Function
+    function toggleTheme() {
+      document.body.classList.toggle('light-theme');
+    }
+  </script>
 </body>
 </html>
