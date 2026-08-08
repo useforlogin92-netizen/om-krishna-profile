@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OM Krishna Group - Admin Login</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #111827;
+    }
+
+    .logo p {
+      margin-top: 8px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 15px;
+      margin-bottom: 18px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #111827;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 9px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #000;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .success {
+      color: #15803d;
+    }
+
+    .error {
+      color: #dc2626;
+    }
+
+    .dashboard {
+      display: none;
+      text-align: center;
+    }
+
+    .dashboard h2 {
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .dashboard p {
+      color: #6b7280;
+    }
+
+    .logout {
+      margin-top: 25px;
+      background: #dc2626;
+    }
+
+    .logout:hover {
+      background: #b91c1c;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+
+    <!-- LOGIN -->
+    <div id="loginSection">
+
+      <div class="logo">
+        <h1>OM Krishna Group</h1>
+        <p>Admin Login</p>
+      </div>
+
+      <form id="loginForm">
+
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter admin email"
+          required
+        >
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter password"
+          required
+        >
+
+        <button type="submit" id="loginButton">
+          Login
+        </button>
+
+      </form>
+
+      <div id="message"></div>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+    <div id="dashboardSection" class="dashboard">
+
+      <div class="logo">
+        <h1>OM Krishna Group</h1>
+        <p>Admin Dashboard</p>
+      </div>
+
+      <h2>Welcome, Admin</h2>
+
+      <p id="adminEmail"></p>
+
+      <button class="logout" id="logoutButton">
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       SUPABASE CONFIGURATION
+       ========================================= */
+
+    const SUPABASE_URL =
+      "https://keehbqlaxiojtkpldgry.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =========================================
+       ELEMENTS
+       ========================================= */
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const message =
+      document.getElementById("message");
+
+    const loginSection =
+      document.getElementById("loginSection");
+
+    const dashboardSection =
+      document.getElementById("dashboardSection");
+
+    const adminEmail =
+      document.getElementById("adminEmail");
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+
+    /* =========================================
+       SHOW MESSAGE
+       ========================================= */
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = type;
+    }
+
+
+    /* =========================================
+       ADMIN LOGIN
+       ========================================= */
+
+    loginForm.addEventListener("submit", async function(e) {
+
+      e.preventDefault();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      loginButton.disabled = true;
+      loginButton.textContent = "Logging in...";
+
+      showMessage("", "");
+
+
+      try {
+
+        /* AUTHENTICATION */
+
+        const { data, error } =
+          await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        const user = data.user;
+
+
+        if (!user) {
+          throw new Error("User not found.");
+        }
+
+
+        /* =========================================
+           CHECK ADMIN PROFILE
+           ========================================= */
+
+        const { data: profile, error: profileError } =
+          await supabaseClient
+            .from("profiles")
+            .select("id, full_name, role, status")
+            .eq("id", user.id)
+            .single();
+
+
+        if (profileError) {
+
+          await supabaseClient.auth.signOut();
+
+          throw new Error(
+            "Admin profile not found."
+          );
+        }
+
+
+        /* ADMIN + APPROVED CHECK */
+
+        if (
+          profile.role !== "admin" ||
+          profile.status !== "approved"
+        ) {
+
+          await supabaseClient.auth.signOut();
+
+          throw new Error(
+            "You are not authorized to access the Admin Panel."
+          );
+        }
+
+
+        /* =========================================
+           SUCCESS
+           ========================================= */
+
+        loginSection.style.display = "none";
+        dashboardSection.style.display = "block";
+
+        adminEmail.textContent =
+          profile.full_name +
+          " • " +
+          user.email;
+
+      }
+
+      catch (error) {
+
+        showMessage(
+          error.message || "Login failed.",
+          "error"
+        );
+
+      }
+
+      finally {
+
+        loginButton.disabled = false;
+        loginButton.textContent = "Login";
+
+      }
+
+    });
+
+
+    /* =========================================
+       LOGOUT
+       ========================================= */
+
+    logoutButton.addEventListener("click", async function() {
+
+      await supabaseClient.auth.signOut();
+
+      dashboardSection.style.display = "none";
+      loginSection.style.display = "block";
+
+      loginForm.reset();
+
+      showMessage(
+        "You have been logged out.",
+        "success"
+      );
+
+    });
+
+
+    /* =========================================
+       CHECK EXISTING SESSION
+       ========================================= */
+
+    async function checkSession() {
+
+      const {
+        data: {
+          session
+        }
+      } = await supabaseClient.auth.getSession();
+
+
+      if (!session) {
+        return;
+      }
+
+
+      const user = session.user;
+
+
+      const { data: profile } =
+        await supabaseClient
+          .from("profiles")
+          .select("id, full_name, role, status")
+          .eq("id", user.id)
+          .single();
+
+
+      if (
+        profile &&
+        profile.role === "admin" &&
+        profile.status === "approved"
+      ) {
+
+        loginSection.style.display = "none";
+        dashboardSection.style.display = "block";
+
+        adminEmail.textContent =
+          profile.full_name +
+          " • " +
+          user.email;
+
+      }
+
+    }
+
+
+    checkSession();
+
+  </script>
+
+</body>
+</html>
