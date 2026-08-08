@@ -419,6 +419,135 @@
       header { flex-direction: column; gap: 10px; }
       nav a { margin: 0 6px; }
     }
+    /* ==============================
+   OM ACTIVITY JOURNAL
+   ============================== */
+
+.activity-intro {
+    color: var(--text-muted);
+    margin: 0 0 24px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.activity-list {
+    position: relative;
+    margin-top: 20px;
+    padding-left: 28px;
+}
+
+.activity-list::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gold-primary);
+    opacity: 0.5;
+}
+
+.activity-item {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 18px;
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.activity-item::before {
+    content: "";
+    position: absolute;
+    left: -27px;
+    top: 28px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold-primary);
+    border: 3px solid var(--bg-dark);
+    box-shadow: 0 0 0 2px var(--gold-primary);
+}
+
+.activity-item:hover {
+    transform: translateX(5px);
+    border-color: var(--gold-primary);
+}
+
+.activity-date {
+    min-width: 85px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--gold-primary);
+    height: fit-content;
+}
+
+.activity-date strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.activity-date span {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-content h3 {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+    color: var(--text-white);
+}
+
+.activity-content p {
+    margin: 0 0 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.activity-tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--gold-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .activity-list {
+        padding-left: 20px;
+    }
+
+    .activity-item {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .activity-item::before {
+        left: -19px;
+    }
+
+    .activity-date {
+        min-width: auto;
+        width: fit-content;
+        text-align: left;
+    }
+}
   </style>
 </head>
 <body>
@@ -677,88 +806,125 @@
 
     <!-- Om Activity Journal -->
 <section id="om-activity" class="card">
-    <h2 class="card-title">📅 Om's Latest Activities</h2>
 
-    <ul class="card-list">
+    <h2 class="card-title">📅 Om's Activity Journal</h2>
 
-        <li>
-            <strong>🏏 Cricket Practice</strong><br>
-            Practice updates, match practice and training activities will be added here.
-        </li>
+    <p class="activity-intro">
+        A record of Om's cricket training, matches, school activities,
+        tournaments, achievements and important moments.
+    </p>
 
-        <li>
-            <strong>🏆 Match Results</strong><br>
-            Match results and performances will be added whenever available.
-        </li>
+    <div class="activity-list">
 
-        <li>
-            <strong>🎓 School Activities</strong><br>
-            School cricket, competitions, events and other activities will be updated here.
-        </li>
+        <!-- Cricket Practice -->
+        <div class="activity-item">
+            <div class="activity-date">
+                <strong>2026</strong>
+                <span>ONGOING</span>
+            </div>
 
-        <li>
-            <strong>🏅 Tournaments & Awards</strong><br>
-            Tournament participation, awards, trophies and medals will be recorded here.
-        </li>
+            <div class="activity-content">
+                <h3>🏏 Cricket Practice</h3>
+                <p>
+                    Regular cricket practice, batting, wicket-keeping,
+                    bowling, fielding and skill-development sessions.
+                </p>
+                <span class="activity-tag">Cricket Training</span>
+            </div>
+        </div>
 
-        <li>
-            <strong>📸 New Photos & Videos</strong><br>
-            New cricket, school, practice and achievement media will be added here.
-        </li>
+        <!-- Match Practice -->
+        <div class="activity-item">
+            <div class="activity-date">
+                <strong>2026</strong>
+                <span>ONGOING</span>
+            </div>
 
-        <li>
-            <strong>📝 Blog / Updates</strong><br>
-            Important updates from Om's cricket and student journey will be posted here.
-        </li>
+            <div class="activity-content">
+                <h3>🏏 Match Practice</h3>
+                <p>
+                    Match practice and performance records will be added
+                    as official data becomes available.
+                </p>
+                <span class="activity-tag">Matches</span>
+            </div>
+        </div>
 
-    </ul>
+        <!-- School Activities -->
+        <div class="activity-item">
+            <div class="activity-date">
+                <strong>2026</strong>
+                <span>SCHOOL</span>
+            </div>
+
+            <div class="activity-content">
+                <h3>🎓 School Activities</h3>
+                <p>
+                    School cricket, competitions, team activities,
+                    events and other important school moments.
+                </p>
+                <span class="activity-tag">School</span>
+            </div>
+        </div>
+
+        <!-- Tournaments -->
+        <div class="activity-item">
+            <div class="activity-date">
+                <strong>2026</strong>
+                <span>ONGOING</span>
+            </div>
+
+            <div class="activity-content">
+                <h3>🏆 Tournaments & Awards</h3>
+                <p>
+                    Tournament participation, trophies, medals,
+                    awards and achievements will be recorded here.
+                </p>
+                <span class="activity-tag">Achievements</span>
+            </div>
+        </div>
+
+        <!-- Photos & Videos -->
+        <div class="activity-item">
+            <div class="activity-date">
+                <strong>MEDIA</strong>
+                <span>UPDATES</span>
+            </div>
+
+            <div class="activity-content">
+                <h3>📸 Photos & Videos</h3>
+                <p>
+                    Cricket practice, matches, school events,
+                    performances and achievement media.
+                </p>
+                <span class="activity-tag">Media</span>
+            </div>
+        </div>
+
+        <!-- Future Updates -->
+        <div class="activity-item">
+            <div class="activity-date">
+                <strong>+</strong>
+                <span>FUTURE</span>
+            </div>
+
+            <div class="activity-content">
+                <h3>📝 Latest Updates</h3>
+                <p>
+                    New activities and important updates from Om's
+                    cricket and student journey will be added here.
+                </p>
+                <span class="activity-tag">Updates</span>
+            </div>
+        </div>
+
+    </div>
+
 </section>
 
     </div>  <!-- Om का पिछला card -->
 
-<!-- Om Activity Journal -->
-<section id="om-activity" class="card">
-
-    <h2 class="card-title">📅 Om's Activity Journal</h2>
-
-    <ul class="card-list">
-
-        <li>
-            <strong>🏏 Cricket Practice:</strong><br>
-            Practice sessions, match practice and training updates.
-        </li>
-
-        <li>
-            <strong>🏆 Match Results:</strong><br>
-            Match results, scores and individual performances.
-        </li>
-
-        <li>
-            <strong>🎓 School Activities:</strong><br>
-            School cricket, competitions, events and other activities.
-        </li>
-
-        <li>
-            <strong>🏅 Tournaments & Awards:</strong><br>
-            Tournament participation, trophies, medals and awards.
-        </li>
-
-        <li>
-            <strong>📸 Photos & Videos:</strong><br>
-            Cricket practice, matches, school events and achievements.
-        </li>
-
-        <li>
-            <strong>📝 Blog / Updates:</strong><br>
-            Important updates from Om's cricket and student journey.
-        </li>
-
-    </ul>
-
-</section>
-
-    
-    <!-- Details Grid for KRISHNA (Hidden Initial) -->
+      <!-- Details Grid for KRISHNA (Hidden Initial) -->
     <div id="krishna-details" class="cards-grid" style="display: none;">
       <div class="card">
         <h3 class="card-title">👤 Personal Information</h3>
