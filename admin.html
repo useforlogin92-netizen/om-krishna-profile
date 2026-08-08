@@ -306,12 +306,15 @@
 
         if (profileError) {
 
-          await supabaseClient.auth.signOut();
+  console.error("PROFILE ERROR:", profileError);
 
-          throw new Error(
-            "Admin profile not found."
-          );
-        }
+  await supabaseClient.auth.signOut();
+
+  throw new Error(
+    "Profile Error: " +
+    (profileError.message || "Unknown error")
+  );
+}
 
 
         /* ADMIN + APPROVED CHECK */
