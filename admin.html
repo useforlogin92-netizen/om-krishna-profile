@@ -167,6 +167,12 @@
 
       </form>
 
+<div class="forgot-password">
+  <button type="button" id="forgotPasswordButton">
+    Forgot Password?
+  </button>
+</div>
+      
       <div id="message"></div>
 
     </div>
@@ -252,6 +258,60 @@
        ADMIN LOGIN
        ========================================= */
 
+// ========================================
+// FORGOT PASSWORD - EMAIL RESET
+// ========================================
+
+const forgotPasswordButton =
+  document.getElementById("forgotPasswordButton");
+
+forgotPasswordButton.addEventListener("click", async function () {
+
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    showMessage("Please enter your email address first.", "error");
+    document.getElementById("email").focus();
+    return;
+  }
+
+  try {
+
+    forgotPasswordButton.disabled = true;
+    forgotPasswordButton.textContent = "Sending...";
+
+    const { error } =
+      await supabaseClient.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + "/admin.html"
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    showMessage(
+      "Password reset link has been sent to your email.",
+      "success"
+    );
+
+  } catch (error) {
+
+    console.error("PASSWORD RESET ERROR:", error);
+
+    showMessage(
+      error.message || "Unable to send password reset email.",
+      "error"
+    );
+
+  } finally {
+
+    forgotPasswordButton.disabled = false;
+    forgotPasswordButton.textContent = "Forgot Password?";
+
+  }
+
+});
+    
     loginForm.addEventListener("submit", async function(e) {
 
       e.preventDefault();
