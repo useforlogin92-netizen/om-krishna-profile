@@ -136,6 +136,62 @@
       transform: translateY(-3px);
     }
 
+/* ================================
+   OM SKILLS & DEVELOPMENT
+   ================================ */
+
+.skills-card {
+    position: relative;
+}
+
+.skill-item {
+    margin: 18px 0;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.skill-header strong {
+    font-size: 15px;
+    color: var(--text-white);
+}
+
+.skill-score {
+    color: var(--gold-primary);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.skill-bar {
+    width: 100%;
+    height: 9px;
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: var(--gold-gradient);
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
+    transition: width 0.8s ease;
+}
+
+.skills-note {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--card-border);
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    font-style: italic;
+}
+    
     /* Header Sticky Navigation */
     header {
       position: sticky;
@@ -502,29 +558,92 @@
     <ul class="card-list">
         <li><strong>Matches:</strong> To be updated</li>
         <li><strong>Runs:</strong> To be updated</li>
-        <li><strong>Highest Score:</strong> 130</li>
+        <li><strong>Highest Score:</strong> To be updated</li>
         <li><strong>Wicket-Keeping Dismissals:</strong> To be updated</li>
         <li><strong>Bowling Wickets:</strong> To be updated</li>
     </ul>
 </div>
 
-<div class="card">
-    <h3 class="card-title">⭐ Skills Rating</h3>
-    <ul class="card-list">
-        <li><strong>Batting:</strong> Developing</li>
-        <li><strong>Wicket Keeping:</strong> Developing</li>
-        <li><strong>Bowling:</strong> Developing</li>
-        <li><strong>Fitness:</strong> Developing</li>
-        <li><strong>Running:</strong> Developing</li>
-        <li><strong>Fielding:</strong> Developing</li>
-        <li><strong>Leadership:</strong> Developing</li>
-        <li><strong>Communication:</strong> Developing</li>
-    </ul>
+<div class="card skills-card">
+    <h3 class="card-title">⭐ Skills & Development</h3>
+
+    <div class="skill-item">
+        <div class="skill-header">
+            <strong>🏏 Batting</strong>
+            <span>10/10</span>
+        </div>
+        <div class="skill-bar">
+            <div class="skill-fill" style="width: 100%;"></div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <div class="skill-header">
+            <strong>🧤 Wicket Keeping</strong>
+            <span>10/10</span>
+        </div>
+        <div class="skill-bar">
+            <div class="skill-fill" style="width: 100%;"></div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <div class="skill-header">
+            <strong>🎯 Bowling</strong>
+            <span>5/10</span>
+        </div>
+        <div class="skill-bar">
+            <div class="skill-fill" style="width: 50%;"></div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <div class="skill-header">
+            <strong>💪 Fitness</strong>
+            <span>10/10</span>
+        </div>
+        <div class="skill-bar">
+            <div class="skill-fill" style="width: 100%;"></div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <div class="skill-header">
+            <strong>🏃 Running</strong>
+            <span>10/10</span>
+        </div>
+        <div class="skill-bar">
+            <div class="skill-fill" style="width: 100%;"></div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <div class="skill-header">
+            <strong>👑 Leadership</strong>
+            <span>10/10</span>
+        </div>
+        <div class="skill-bar">
+            <div class="skill-fill" style="width: 100%;"></div>
+        </div>
+    </div>
+
+    <div class="skill-item">
+        <div class="skill-header">
+            <strong>🗣️ Communication</strong>
+            <span>7/10</span>
+        </div>
+        <div class="skill-bar">
+            <div class="skill-fill" style="width: 70%;"></div>
+        </div>
+    </div>
+
+    <p class="skills-note">
+        Skills ratings are personal development indicators and will be updated as Om's cricket journey progresses.
+    </p>
 </div>
       
       <div class="card">
-        <div class="card">
-    <h3 class="card-title">💪 Fitness</h3>
+            <h3 class="card-title">💪 Fitness</h3>
     <ul class="card-list">
         <li><strong>Training Focus:</strong> Running, Agility, Reflex, Core Strength & Conditioning</li>
         <li><strong>Running Distance:</strong> 500 metres</li>
