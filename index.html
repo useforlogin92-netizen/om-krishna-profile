@@ -1054,5 +1054,239 @@
       }
     }
   </script>
+  <!-- ================================
+     SUPABASE ADMIN LOGIN
+     ================================ -->
+
+<style>
+  .admin-login-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 10px 18px;
+    border-radius: 25px;
+    border: 1px solid #d4af37;
+    background: rgba(10, 11, 14, 0.90);
+    color: #d4af37;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .admin-login-btn:hover {
+    background: #d4af37;
+    color: #000;
+  }
+
+  .login-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 400px;
+    background: #14171f;
+    border: 1px solid #d4af37;
+    border-radius: 18px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  }
+
+  .login-box h2 {
+    text-align: center;
+    color: #d4af37;
+    margin-top: 0;
+  }
+
+  .login-box input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    margin: 8px 0 14px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background: #0a0b0e;
+    color: white;
+    font-size: 15px;
+  }
+
+  .login-submit {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728);
+    color: #000;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  .login-close {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 25px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+  }
+
+  #login-message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+</style>
+
+<button class="admin-login-btn" onclick="openAdminLogin()">
+  🔐 Admin Login
+</button>
+
+<div id="adminLoginOverlay" class="login-overlay">
+  <div class="login-box">
+
+    <h2>🔐 Admin Login</h2>
+
+    <input
+      type="email"
+      id="adminEmail"
+      placeholder="Admin Email"
+      autocomplete="email"
+    >
+
+    <input
+      type="password"
+      id="adminPassword"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button class="login-submit" onclick="adminLogin()">
+      Login
+    </button>
+
+    <button class="login-close" onclick="closeAdminLogin()">
+      Cancel
+    </button>
+
+    <div id="login-message"></div>
+
+  </div>
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+  /* ==========================================
+     SUPABASE CONFIGURATION
+     ========================================== */
+
+  const SUPABASE_URL =
+  "https://keehbqlaxiojtkpldgry.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  /* ==========================================
+     OPEN / CLOSE LOGIN
+     ========================================== */
+
+  function openAdminLogin() {
+    document.getElementById("adminLoginOverlay").style.display = "flex";
+    document.getElementById("login-message").innerText = "";
+  }
+
+  function closeAdminLogin() {
+    document.getElementById("adminLoginOverlay").style.display = "none";
+  }
+
+
+  /* ==========================================
+     ADMIN LOGIN
+     ========================================== */
+
+  async function adminLogin() {
+
+    const email =
+      document.getElementById("adminEmail").value.trim();
+
+    const password =
+      document.getElementById("adminPassword").value;
+
+    const message =
+      document.getElementById("login-message");
+
+    if (!email || !password) {
+      message.style.color = "#ff6b6b";
+      message.innerText =
+        "Please enter email and password.";
+      return;
+    }
+
+    message.style.color = "#d4af37";
+    message.innerText = "Logging in...";
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+    if (error) {
+
+      message.style.color = "#ff6b6b";
+      message.innerText =
+        "Login failed: " + error.message;
+
+      return;
+    }
+
+    if (data.user) {
+
+      message.style.color = "#4ade80";
+      message.innerText = "Login successful...";
+
+      setTimeout(function() {
+        window.location.href = "admin.html";
+      }, 800);
+    }
+  }
+
+
+  /* ==========================================
+     ENTER KEY LOGIN
+     ========================================== */
+
+  document
+    .getElementById("adminPassword")
+    .addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+        adminLogin();
+      }
+
+    });
+
+</script>
 </body>
 </html>
