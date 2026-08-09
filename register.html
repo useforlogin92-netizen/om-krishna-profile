@@ -1,778 +1,1049 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>OM Krishna Group - Registration</title>
+    <title>OM Krishna Group - Registration</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #111827, #1f2937);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #111827, #1f2937);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    .register-box {
-      width: 100%;
-      max-width: 520px;
-      background: white;
-      border-radius: 18px;
-      padding: 35px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    }
+        .register-box {
+            width: 100%;
+            max-width: 520px;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
 
-    .logo {
-      text-align: center;
-      margin-bottom: 28px;
-    }
+        .logo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
 
-    .logo h1 {
-      margin: 0;
-      font-size: 28px;
-      color: #111827;
-    }
+        .logo h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #111827;
+        }
 
-    .logo p {
-      margin-top: 8px;
-      color: #6b7280;
-      font-size: 14px;
-    }
+        .logo p {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 14px;
+        }
 
-    .form-group {
-      margin-bottom: 18px;
-    }
+        .notice {
+            margin-bottom: 20px;
+            padding: 13px 14px;
+            background: #f3f4f6;
+            border-radius: 9px;
+            color: #4b5563;
+            font-size: 13px;
+            line-height: 1.5;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: 600;
-      color: #374151;
-    }
+        .form-group {
+            margin-bottom: 18px;
+        }
 
-    input,
-    select {
-      width: 100%;
-      padding: 13px 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      font-size: 15px;
-      outline: none;
-      background: white;
-    }
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: #374151;
+        }
 
-    input:focus,
-    select:focus {
-      border-color: #111827;
-    }
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            background: #ffffff;
+        }
 
-    .help-text {
-      margin-top: 6px;
-      font-size: 12px;
-      color: #6b7280;
-    }
+        input:focus,
+        select:focus {
+            border-color: #111827;
+            box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.08);
+        }
 
-    .friend-box {
-      display: none;
-      margin-top: 10px;
-      padding: 16px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-    }
+        input.input-error,
+        select.input-error {
+            border-color: #dc2626;
+        }
 
-    .friend-box.show {
-      display: block;
-    }
+        .help-text {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }
 
-    .friend-title {
-      margin: 0 0 12px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #111827;
-    }
+        .password-wrapper {
+            position: relative;
+        }
 
-    .check-option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 0;
-      cursor: pointer;
-    }
+        .password-wrapper input {
+            padding-right: 85px;
+        }
 
-    .check-option input {
-      width: auto;
-      margin: 0;
-    }
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 5px 8px;
+            background: transparent;
+            color: #374151;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+        }
 
-    .check-option span {
-      color: #374151;
-      font-size: 14px;
-    }
+        .show-password:hover {
+            background: transparent;
+            color: #111827;
+        }
 
-    button {
-      width: 100%;
-      padding: 14px;
-      border: 0;
-      border-radius: 9px;
-      background: #111827;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-    }
+        .friend-box {
+            display: none;
+            margin-top: 10px;
+            margin-bottom: 18px;
+            padding: 16px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+        }
 
-    button:hover {
-      background: #000;
-    }
+        .friend-box.show {
+            display: block;
+        }
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+        .friend-title {
+            margin: 0 0 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #111827;
+        }
 
-    #message {
-      margin-top: 18px;
-      text-align: center;
-      font-size: 14px;
-      min-height: 22px;
-      line-height: 1.5;
-    }
+        .check-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 0;
+            cursor: pointer;
+        }
 
-    .success {
-      color: #15803d;
-    }
+        .check-option input {
+            width: auto;
+            margin: 0;
+        }
 
-    .error {
-      color: #dc2626;
-    }
+        .check-option span {
+            color: #374151;
+            font-size: 14px;
+        }
 
-    .login-link {
-      text-align: center;
-      margin-top: 22px;
-      font-size: 14px;
-      color: #6b7280;
-    }
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            border: 0;
+            border-radius: 9px;
+            background: #111827;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-    .login-link a {
-      color: #111827;
-      font-weight: 700;
-      text-decoration: none;
-    }
+        button[type="submit"]:hover {
+            background: #000000;
+        }
 
-    .login-link a:hover {
-      text-decoration: underline;
-    }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-    .notice {
-      margin-bottom: 20px;
-      padding: 12px 14px;
-      background: #f3f4f6;
-      border-radius: 9px;
-      color: #4b5563;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+        #message {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 14px;
+            min-height: 22px;
+            line-height: 1.5;
+        }
 
-    @media (max-width: 600px) {
-      .register-box {
-        padding: 25px 20px;
-      }
+        .success {
+            color: #15803d;
+        }
 
-      .logo h1 {
-        font-size: 24px;
-      }
-    }
-  </style>
+        .error {
+            color: #dc2626;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .login-link a {
+            color: #111827;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .security-note {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .register-box {
+                padding: 25px 20px;
+            }
+
+            .logo h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="register-box">
+<div class="register-box">
 
+    <!-- LOGO / TITLE -->
     <div class="logo">
-      <h1>OM Krishna Group</h1>
-      <p>Create Your Account</p>
+        <h1>OM Krishna Group</h1>
+        <p>Create Your Account</p>
     </div>
 
+    <!-- INFORMATION -->
     <div class="notice">
-      Please select how you are connected with the OM Krishna Group.
-      This information helps us manage your account and access appropriately.
+        Please select how you are connected with the OM Krishna Group.
+        This information helps us manage your account and access appropriately.
     </div>
 
+    <!-- REGISTRATION FORM -->
     <form id="registerForm">
 
-      <!-- FULL NAME -->
-      <div class="form-group">
-        <label for="fullName">Full Name</label>
+        <!-- FULL NAME -->
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
 
-        <input
-          type="text"
-          id="fullName"
-          placeholder="Enter your full name"
-          required
-        >
-      </div>
-
-
-<!-- MOBILE NUMBER -->
-<div class="form-group">
-  <label for="mobileNumber">Mobile Number</label>
-
-  <input
-    type="tel"
-    id="mobileNumber"
-    placeholder="Enter your 10-digit mobile number"
-    inputmode="numeric"
-    maxlength="10"
-    pattern="[0-9]{10}"
-    required
-  >
-
-  <div class="help-text">
-    Your mobile number is required for account contact and future verification.
-  </div>
-</div>
-      
-      
-      <!-- EMAIL -->
-      <div class="form-group">
-        <label for="email">Email Address</label>
-
-        <input
-          type="email"
-          id="email"
-          placeholder="Enter your email address"
-          required
-        >
-      </div>
-
-
-      <!-- PASSWORD -->
-      <div class="form-group">
-        <label for="password">Password</label>
-
-        <input
-          type="password"
-          id="password"
-          placeholder="Create a password"
-          minlength="6"
-          required
-        >
-
-        <div class="help-text">
-          Minimum 6 characters.
-        </div>
-      </div>
-
-
-      <!-- CONFIRM PASSWORD -->
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-
-        <input
-          type="password"
-          id="confirmPassword"
-          placeholder="Enter password again"
-          required
-        >
-      </div>
-
-
-      <!-- GROUP -->
-      <div class="form-group">
-
-        <label for="groupType">
-          How do you know OM Krishna Group?
-        </label>
-
-        <select id="groupType" required>
-
-          <option value="">
-            Select your relationship
-          </option>
-
-          <option value="family">
-            👨‍👩‍👧 Family
-          </option>
-
-          <option value="friend">
-            🤝 Friend
-          </option>
-
-          <option value="relative">
-            👪 Relative
-          </option>
-
-          <option value="public">
-            🌐 Public
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <!-- FRIEND SELECTION -->
-      <div id="friendBox" class="friend-box">
-
-        <p class="friend-title">
-          Which profile are you a friend of?
-        </p>
-
-        <label class="check-option">
-
-          <input
-            type="checkbox"
-            id="friendOm"
-          >
-
-          <span>👦 Om</span>
-
-        </label>
-
-
-        <label class="check-option">
-
-          <input
-            type="checkbox"
-            id="friendKrishna"
-          >
-
-          <span>👦 Krishna</span>
-
-        </label>
-
-        <div class="help-text">
-          You can select Om, Krishna, or both.
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                maxlength="100"
+                required
+            >
         </div>
 
-      </div>
+
+        <!-- MOBILE NUMBER -->
+        <div class="form-group">
+            <label for="mobileNumber">Mobile Number</label>
+
+            <input
+                type="tel"
+                id="mobileNumber"
+                placeholder="Enter your 10-digit mobile number"
+                inputmode="numeric"
+                autocomplete="tel"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                required
+            >
+
+            <div class="help-text">
+                Your mobile number is required for account contact and future verification.
+            </div>
+        </div>
 
 
-      <!-- SUBMIT -->
-      <button
-        type="submit"
-        id="registerButton"
-      >
-        Create Account
-      </button>
+        <!-- EMAIL -->
+        <div class="form-group">
+            <label for="email">Email Address</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+                maxlength="150"
+                required
+            >
+        </div>
+
+
+        <!-- PASSWORD -->
+        <div class="form-group">
+            <label for="password">Password</label>
+
+            <div class="password-wrapper">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    minlength="6"
+                    maxlength="100"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    id="showPasswordButton"
+                >
+                    Show
+                </button>
+
+            </div>
+
+            <div class="help-text">
+                Minimum 6 characters.
+            </div>
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+
+            <div class="password-wrapper">
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Enter password again"
+                    autocomplete="new-password"
+                    minlength="6"
+                    maxlength="100"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    id="showConfirmPasswordButton"
+                >
+                    Show
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- GROUP TYPE -->
+        <div class="form-group">
+
+            <label for="groupType">
+                How do you know OM Krishna Group?
+            </label>
+
+            <select id="groupType" required>
+
+                <option value="">
+                    Select your relationship
+                </option>
+
+                <option value="family">
+                    👨‍👩‍👧 Family
+                </option>
+
+                <option value="friend">
+                    🤝 Friend
+                </option>
+
+                <option value="relative">
+                    👪 Relative
+                </option>
+
+                <option value="public">
+                    🌐 Public
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- FRIEND DETAILS -->
+        <div id="friendBox" class="friend-box">
+
+            <p class="friend-title">
+                Which profile are you a friend of?
+            </p>
+
+            <label class="check-option">
+
+                <input
+                    type="checkbox"
+                    id="friendOm"
+                >
+
+                <span>👦 Om</span>
+
+            </label>
+
+
+            <label class="check-option">
+
+                <input
+                    type="checkbox"
+                    id="friendKrishna"
+                >
+
+                <span>👦 Krishna</span>
+
+            </label>
+
+            <div class="help-text">
+                You can select Om, Krishna, or both.
+            </div>
+
+        </div>
+
+
+        <!-- SUBMIT BUTTON -->
+        <button
+            type="submit"
+            id="registerButton"
+        >
+            Create Account
+        </button>
 
     </form>
 
 
+    <!-- MESSAGE -->
     <div id="message"></div>
 
 
+    <!-- LOGIN LINK -->
     <div class="login-link">
-      Already have an account?
-      <a href="login.html">Login</a>
+
+        Already have an account?
+
+        <a href="login.html">
+            Login
+        </a>
+
     </div>
 
-  </div>
+
+    <!-- SECURITY NOTE -->
+    <div class="security-note">
+        Your account will remain pending until it is approved by an administrator.
+    </div>
+
+</div>
 
 
 <script>
 
-  /* =========================================
-     SUPABASE CONFIGURATION
-     Same project used by Admin Panel
-     ========================================= */
+/* =========================================================
+   SUPABASE CONFIGURATION
+   ========================================================= */
 
-  const SUPABASE_URL =
+const SUPABASE_URL =
     "https://keehbqlaxiojtkpldgry.supabase.co";
 
-  const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
 
-  const supabaseClient =
+
+/* =========================================================
+   CREATE SUPABASE CLIENT
+   ========================================================= */
+
+const supabaseClient =
     window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
     );
 
 
-  /* =========================================
-     ELEMENTS
-     ========================================= */
+/* =========================================================
+   GET HTML ELEMENTS
+   ========================================================= */
 
-  const registerForm =
+const registerForm =
     document.getElementById("registerForm");
 
-  const registerButton =
+const registerButton =
     document.getElementById("registerButton");
 
-  const message =
+const message =
     document.getElementById("message");
 
-  const groupType =
+const fullNameInput =
+    document.getElementById("fullName");
+
+const mobileNumberInput =
+    document.getElementById("mobileNumber");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const confirmPasswordInput =
+    document.getElementById("confirmPassword");
+
+const groupType =
     document.getElementById("groupType");
 
-  const friendBox =
+const friendBox =
     document.getElementById("friendBox");
 
-  const friendOm =
+const friendOm =
     document.getElementById("friendOm");
 
-  const friendKrishna =
+const friendKrishna =
     document.getElementById("friendKrishna");
 
+const showPasswordButton =
+    document.getElementById("showPasswordButton");
 
-  /* =========================================
-     SHOW MESSAGE
-     ========================================= */
+const showConfirmPasswordButton =
+    document.getElementById("showConfirmPasswordButton");
 
-  function showMessage(text, type) {
+
+/* =========================================================
+   MESSAGE FUNCTION
+   ========================================================= */
+
+function showMessage(text, type) {
 
     message.textContent = text;
 
     message.className = type || "";
 
-  }
-
-
-  /* =========================================
-     GROUP CHANGE
-     ========================================= */
-
-  groupType.addEventListener("change", function() {
-
-    if (this.value === "friend") {
-
-      friendBox.classList.add("show");
-
-    } else {
-
-      friendBox.classList.remove("show");
-
-      friendOm.checked = false;
-
-      friendKrishna.checked = false;
-
-    }
-
-  });
-
-
-  /* =========================================
-     REGISTRATION
-     ========================================= */
-
-  registerForm.addEventListener(
-    "submit",
-    async function(e) {
-
-      e.preventDefault();
-
-
-      const fullName =
-  document.getElementById("fullName")
-    .value
-    .trim();
-
-const mobileNumber =
-  document.getElementById("mobileNumber")
-    .value
-    .trim();
-
-const email =
-  document.getElementById("email")
-    .value
-    .trim()
-    .toLowerCase();
-
-
-      const password =
-        document.getElementById("password")
-          .value;
-
-
-      const confirmPassword =
-        document.getElementById("confirmPassword")
-          .value;
-
-
-      const selectedGroup =
-        groupType.value;
-
-
-      /* =====================================
-         BASIC VALIDATION
-         ===================================== */
-
-      if (!fullName) {
-
-        showMessage(
-          "Please enter your full name.",
-          "error"
-        );
-
-        return;
-      }
-
-
-if (!mobileNumber) {
-    showMessage(
-        "Please enter your mobile number.",
-        "error"
-    );
-    return;
 }
 
-if (!/^[0-9]{10}$/.test(mobileNumber)) {
-    showMessage(
-        "Please enter a valid 10-digit mobile number.",
-        "error"
-    );
-    return;
+
+/* =========================================================
+   CLEAR INPUT ERROR
+   ========================================================= */
+
+function clearInputErrors() {
+
+    fullNameInput.classList.remove("input-error");
+
+    mobileNumberInput.classList.remove("input-error");
+
+    emailInput.classList.remove("input-error");
+
+    passwordInput.classList.remove("input-error");
+
+    confirmPasswordInput.classList.remove("input-error");
+
+    groupType.classList.remove("input-error");
+
 }
-      
-
-      if (!selectedGroup) {
-
-        showMessage(
-          "Please select your relationship.",
-          "error"
-        );
-
-        return;
-      }
 
 
-      if (password !== confirmPassword) {
+/* =========================================================
+   SHOW PASSWORD
+   ========================================================= */
 
-        showMessage(
-          "Passwords do not match.",
-          "error"
-        );
+showPasswordButton.addEventListener(
+    "click",
+    function () {
 
-        return;
-      }
+        if (passwordInput.type === "password") {
 
+            passwordInput.type = "text";
 
-      if (password.length < 6) {
+            showPasswordButton.textContent = "Hide";
 
-        showMessage(
-          "Password must be at least 6 characters.",
-          "error"
-        );
+        } else {
 
-        return;
-      }
+            passwordInput.type = "password";
 
+            showPasswordButton.textContent = "Show";
 
-      /* =====================================
-         FRIEND VALIDATION
-         ===================================== */
-
-      let friendOfOm = false;
-
-      let friendOfKrishna = false;
-
-
-      if (selectedGroup === "friend") {
-
-        friendOfOm =
-          friendOm.checked;
-
-        friendOfKrishna =
-          friendKrishna.checked;
-
-
-        if (!friendOfOm && !friendOfKrishna) {
-
-          showMessage(
-            "Please select whether you are a friend of Om, Krishna, or both.",
-            "error"
-          );
-
-          return;
         }
 
-      }
+    }
+);
 
 
-      /* =====================================
-         START REGISTRATION
-         ===================================== */
+/* =========================================================
+   SHOW CONFIRM PASSWORD
+   ========================================================= */
 
-      registerButton.disabled = true;
+showConfirmPasswordButton.addEventListener(
+    "click",
+    function () {
 
-      registerButton.textContent =
-        "Creating Account...";
+        if (confirmPasswordInput.type === "password") {
 
-      showMessage("", "");
+            confirmPasswordInput.type = "text";
+
+            showConfirmPasswordButton.textContent = "Hide";
+
+        } else {
+
+            confirmPasswordInput.type = "password";
+
+            showConfirmPasswordButton.textContent = "Show";
+
+        }
+
+    }
+);
 
 
-      try {
+/* =========================================================
+   MOBILE NUMBER
+   ONLY NUMBERS ALLOWED
+   ========================================================= */
 
-        /* ===================================
+mobileNumberInput.addEventListener(
+    "input",
+    function () {
+
+        this.value =
+            this.value.replace(/\D/g, "").slice(0, 10);
+
+    }
+);
+
+
+/* =========================================================
+   GROUP TYPE CHANGE
+   ========================================================= */
+
+groupType.addEventListener(
+    "change",
+    function () {
+
+        if (this.value === "friend") {
+
+            friendBox.classList.add("show");
+
+        } else {
+
+            friendBox.classList.remove("show");
+
+            friendOm.checked = false;
+
+            friendKrishna.checked = false;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REGISTRATION
+   ========================================================= */
+
+registerForm.addEventListener(
+    "submit",
+    async function (e) {
+
+        e.preventDefault();
+
+        clearInputErrors();
+
+        showMessage("", "");
+
+
+        /* =================================================
+           GET FORM VALUES
+           ================================================= */
+
+        const fullName =
+            fullNameInput.value.trim();
+
+        const mobileNumber =
+            mobileNumberInput.value.trim();
+
+        const email =
+            emailInput.value.trim().toLowerCase();
+
+        const password =
+            passwordInput.value;
+
+        const confirmPassword =
+            confirmPasswordInput.value;
+
+        const selectedGroup =
+            groupType.value;
+
+
+        /* =================================================
+           BASIC VALIDATION
+           ================================================= */
+
+        if (!fullName) {
+
+            fullNameInput.classList.add("input-error");
+
+            showMessage(
+                "Please enter your full name.",
+                "error"
+            );
+
+            fullNameInput.focus();
+
+            return;
+        }
+
+
+        if (!/^[0-9]{10}$/.test(mobileNumber)) {
+
+            mobileNumberInput.classList.add("input-error");
+
+            showMessage(
+                "Please enter a valid 10-digit mobile number.",
+                "error"
+            );
+
+            mobileNumberInput.focus();
+
+            return;
+        }
+
+
+        if (!email) {
+
+            emailInput.classList.add("input-error");
+
+            showMessage(
+                "Please enter your email address.",
+                "error"
+            );
+
+            emailInput.focus();
+
+            return;
+        }
+
+
+        if (password.length < 6) {
+
+            passwordInput.classList.add("input-error");
+
+            showMessage(
+                "Password must be at least 6 characters.",
+                "error"
+            );
+
+            passwordInput.focus();
+
+            return;
+        }
+
+
+        if (password !== confirmPassword) {
+
+            passwordInput.classList.add("input-error");
+
+            confirmPasswordInput.classList.add("input-error");
+
+            showMessage(
+                "Passwords do not match.",
+                "error"
+            );
+
+            confirmPasswordInput.focus();
+
+            return;
+        }
+
+
+        if (!selectedGroup) {
+
+            groupType.classList.add("input-error");
+
+            showMessage(
+                "Please select your relationship.",
+                "error"
+            );
+
+            groupType.focus();
+
+            return;
+        }
+
+
+        /* =================================================
+           FRIEND INFORMATION
+           ================================================= */
+
+        let friendOfOm = false;
+
+        let friendOfKrishna = false;
+
+
+        if (selectedGroup === "friend") {
+
+            friendOfOm =
+                friendOm.checked;
+
+            friendOfKrishna =
+                friendKrishna.checked;
+
+
+            if (!friendOfOm && !friendOfKrishna) {
+
+                showMessage(
+                    "Please select whether you are a friend of Om, Krishna, or both.",
+                    "error"
+                );
+
+                return;
+            }
+
+        }
+
+
+        /* =================================================
+           DISABLE BUTTON
+           ================================================= */
+
+        registerButton.disabled = true;
+
+        registerButton.textContent =
+            "Creating Account...";
+
+        showMessage("", "");
+
+
+        /* =================================================
            CREATE AUTH ACCOUNT
-           =================================== */
+           
+           IMPORTANT:
+           We DO NOT insert into profiles here.
+           
+           Supabase database trigger should create
+           the profiles row automatically.
+           ================================================= */
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.signUp({
+        try {
 
-            email: email,
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.signUp({
 
-            password: password,
+                    email: email,
 
-            options: {
+                    password: password,
 
-              data: {
+                    options: {
 
-                full_name: fullName,
+                        data: {
 
-                group_type: selectedGroup,
+                            full_name: fullName,
 
-                friend_of_om: friendOfOm,
+                            mobile_number: mobileNumber,
 
-                friend_of_krishna: friendOfKrishna
+                            group_type: selectedGroup,
 
-              }
+                            friend_of_om: friendOfOm,
+
+                            friend_of_krishna: friendOfKrishna
+
+                        }
+
+                    }
+
+                });
+
+
+            /* =============================================
+               SUPABASE ERROR
+               ============================================= */
+
+            if (error) {
+
+                throw error;
 
             }
 
-          });
+
+            /* =============================================
+               USER CHECK
+               ============================================= */
+
+            if (!data || !data.user) {
+
+                throw new Error(
+                    "Unable to create user account."
+                );
+
+            }
 
 
-        if (error) {
+            /* =============================================
+               SUCCESS MESSAGE
+               ============================================= */
 
-          throw error;
+            if (data.session) {
+
+                showMessage(
+                    "Registration successful! Your account is waiting for admin approval.",
+                    "success"
+                );
+
+            } else {
+
+                showMessage(
+                    "Registration successful! Please check your email to verify your email address. Your account will remain pending until admin approval.",
+                    "success"
+                );
+
+            }
+
+
+            /* =============================================
+               RESET FORM
+               ============================================= */
+
+            registerForm.reset();
+
+            friendBox.classList.remove("show");
+
+            friendOm.checked = false;
+
+            friendKrishna.checked = false;
+
+            showPasswordButton.textContent = "Show";
+
+            showConfirmPasswordButton.textContent = "Show";
+
+            passwordInput.type = "password";
+
+            confirmPasswordInput.type = "password";
+
+
+        } catch (error) {
+
+            console.error(
+                "REGISTRATION ERROR:",
+                error
+            );
+
+
+            let errorMessage =
+                "Registration failed. Please try again.";
+
+
+            if (error && error.message) {
+
+                errorMessage =
+                    error.message;
+
+            }
+
+
+            /* =============================================
+               COMMON SUPABASE ERROR MESSAGES
+               ============================================= */
+
+            const lowerMessage =
+                errorMessage.toLowerCase();
+
+
+            if (
+                lowerMessage.includes("user already registered") ||
+                lowerMessage.includes("already registered")
+            ) {
+
+                errorMessage =
+                    "This email address is already registered. Please login instead.";
+
+            }
+
+
+            if (
+                lowerMessage.includes("password should be at least")
+            ) {
+
+                errorMessage =
+                    "Password must be at least 6 characters.";
+
+            }
+
+
+            if (
+                lowerMessage.includes("invalid email")
+            ) {
+
+                errorMessage =
+                    "Please enter a valid email address.";
+
+            }
+
+
+            showMessage(
+                errorMessage,
+                "error"
+            );
+
+
+        } finally {
+
+            /* =============================================
+               ENABLE BUTTON AGAIN
+               ============================================= */
+
+            registerButton.disabled = false;
+
+            registerButton.textContent =
+                "Create Account";
 
         }
-
-
-        const user =
-          data.user;
-
-
-        if (!user) {
-
-          throw new Error(
-            "Unable to create user account."
-          );
-
-        }
-
-
-        /* ===================================
-           SAVE PROFILE
-           =================================== */
-
-        const {
-          error: profileError
-        } =
-          await supabaseClient
-            .from("profiles")
-            .insert({
-
-              id: user.id,
-
-              full_name: fullName,
-
-              role: "user",
-
-              status: "pending",
-
-              group_type: selectedGroup,
-
-              friend_of_om: friendOfOm,
-
-              friend_of_krishna: friendOfKrishna
-
-            });
-
-
-        /*
-         IMPORTANT:
-         If email confirmation is enabled,
-         Supabase may not allow this INSERT
-         from the browser because the user
-         does not have an active session yet.
-        */
-
-        if (profileError) {
-
-          console.error(
-            "PROFILE INSERT ERROR:",
-            profileError
-          );
-
-          /*
-           We don't expose database details
-           to the public user.
-          */
-
-          showMessage(
-            "Account created, but your profile is waiting for system setup. Please contact administrator.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        /* ===================================
-           SUCCESS
-           =================================== */
-
-        showMessage(
-          "Registration successful! Your account is waiting for admin approval.",
-          "success"
-        );
-
-
-        registerForm.reset();
-
-        friendBox.classList.remove("show");
-
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "REGISTRATION ERROR:",
-          error
-        );
-
-
-        showMessage(
-          error.message ||
-          "Registration failed. Please try again.",
-          "error"
-        );
-
-      }
-
-      finally {
-
-        registerButton.disabled = false;
-
-        registerButton.textContent =
-          "Create Account";
-
-      }
 
     }
-
-  );
+);
 
 </script>
 
