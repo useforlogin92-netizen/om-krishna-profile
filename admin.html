@@ -621,35 +621,27 @@
       </section>
 
 
-      <!-- USERS -->
-      <section id="usersSection" class="admin-page">
+<!-- USERS -->
+<section id="usersSection" class="admin-page">
 
-        <h2>Users</h2>
+  <div class="page-title">
+    <div>
+      <h2>Users</h2>
+      <p>Manage registered users and their account status.</p>
+    </div>
+  </div>
 
-        <div class="user-box">
+  <div id="usersList" class="management-grid">
 
-          <button class="management-card">
-            <span>👦</span>
-            <strong>Om</strong>
-            <small>Manage Om's profile</small>
-          </button>
+    <div class="empty-box">
+      <span>⏳</span>
+      <h3>Loading Users...</h3>
+      <p>Please wait.</p>
+    </div>
 
-          <button class="management-card">
-            <span>👦</span>
-            <strong>Krishna</strong>
-            <small>Manage Krishna's profile</small>
-          </button>
+  </div>
 
-          <button class="management-card">
-            <span>👨‍👩‍👧‍👦</span>
-            <strong>Family / Friends</strong>
-            <small>Manage family and friends</small>
-          </button>
-
-        </div>
-
-      </section>
-
+</section>
 
       <!-- PENDING APPROVALS -->
       <section id="approvalsSection" class="admin-page">
@@ -1053,6 +1045,186 @@ navItems.forEach(function (item) {
 
     if (selectedPage) {
       selectedPage.classList.add("active-page");
+    }
+
+  });
+
+});
+
+
+    /* ==========================================
+   USERS MANAGEMENT
+========================================== */
+
+const usersList = document.getElementById("usersList");
+
+async function loadUsers() {
+
+  if (!usersList) return;
+
+  usersList.innerHTML = `
+    <div class="empty-box">
+      <span>⏳</span>
+      <h3>Loading Users...</h3>
+      <p>Please wait.</p>
+    </div>
+  `;
+
+  try {
+
+    const { data: users, error } = await supabaseClient
+      .from("profiles")
+      .select("id, full_name, role, status")
+      .neq("role", "admin")
+      .order("full_name", { ascending: true });
+
+    if (error) {
+      throw error;
+    }
+
+    if (!users || users.length === 0) {
+
+      usersList.innerHTML = `
+        <div class="empty-box">
+          <span>👥</span>
+          <h3>No Users Found</h3>
+          <p>No registered users are available yet.</p>
+        </div>
+      `;
+
+      return;
+    }
+
+    usersList.innerHTML = "";
+
+    users.forEach(function(user) {
+
+      let icon = "👤";
+
+      if (user.full_name &&
+          user.full_name.toLowerCase().includes("om")) {
+        icon = "👦";
+      }
+
+      if (user.full_name &&
+          user.full_name.toLowerCase().includes("krishna")) {
+        icon = "👦";
+      }
+
+      const card = document.createElement("div");
+
+      card.className = "management-card";
+
+      card.innerHTML = `
+        <span style="font-size:32px;">${icon}</span>
+
+        <strong>
+          ${user.full_name || "Unnamed User"}
+        </strong>
+
+        <small>
+          Role: ${user.role || "user"}
+        </small>
+
+        <small>
+          Status:
+          <strong>${user.status || "pending"}</strong>
+        </small>
+
+        <button
+          type="button"
+          class="view-user-btn"
+          data-user-id="${user.id}">
+          View Profile
+        </button>
+      `;
+
+      usersList.appendChild(card);
+
+    });
+
+    /* View Profile buttons */
+
+    document.querySelectorAll(".view-user-btn").forEach(function(button) {
+
+      button.addEventListener("click", function() {
+
+        const userId = this.getAttribute("data-user-id");
+
+        openUserProfile(userId);
+
+      });
+
+    });
+
+  } catch (error) {
+
+    console.error("USERS LOAD ERROR:", error);
+
+    usersList.innerHTML = `
+      <div class="empty-box">
+        <span>⚠️</span>
+        <h3>Unable to Load Users</h3>
+        <p>${error.message || "Unknown error"}</p>
+      </div>
+    `;
+
+  }
+
+}
+
+
+/* ==========================================
+   VIEW USER PROFILE
+========================================== */
+
+async function openUserProfile(userId) {
+
+  try {
+
+    const { data: user, error } = await supabaseClient
+      .from("profiles")
+      .select("id, full_name, role, status")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    alert(
+      "Name: " + (user.full_name || "N/A") +
+      "\nRole: " + (user.role || "N/A") +
+      "\nStatus: " + (user.status || "N/A")
+    );
+
+  } catch (error) {
+
+    console.error("USER PROFILE ERROR:", error);
+
+    alert(
+      "Unable to load user profile.\n\n" +
+      (error.message || "Unknown error")
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   LOAD USERS WHEN USERS MENU IS OPENED
+========================================== */
+
+document.querySelectorAll(".nav-item").forEach(function(item) {
+
+  item.addEventListener("click", function() {
+
+    const sectionName =
+      item.getAttribute("data-section");
+
+    if (sectionName === "users") {
+      loadUsers();
     }
 
   });
