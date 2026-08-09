@@ -1052,7 +1052,7 @@ navItems.forEach(function (item) {
 });
 
 
-    /* ==========================================
+/* ==========================================
    USERS MANAGEMENT
 ========================================== */
 
@@ -1060,117 +1060,123 @@ const usersList = document.getElementById("usersList");
 
 async function loadUsers() {
 
-  if (!usersList) return;
-
-  usersList.innerHTML = `
-    <div class="empty-box">
-      <span>⏳</span>
-      <h3>Loading Users...</h3>
-      <p>Please wait.</p>
-    </div>
-  `;
-
-  try {
-
-    const { data: users, error } = await supabaseClient
-      .from("profiles")
-      .select("id, full_name, role, status")
-      .neq("role", "admin")
-      .order("full_name", { ascending: true });
-
-    if (error) {
-      throw error;
-    }
-
-    if (!users || users.length === 0) {
-
-      usersList.innerHTML = `
-        <div class="empty-box">
-          <span>👥</span>
-          <h3>No Users Found</h3>
-          <p>No registered users are available yet.</p>
-        </div>
-      `;
-
-      return;
-    }
-
-    usersList.innerHTML = "";
-
-    users.forEach(function(user) {
-
-      let icon = "👤";
-
-      if (user.full_name &&
-          user.full_name.toLowerCase().includes("om")) {
-        icon = "👦";
-      }
-
-      if (user.full_name &&
-          user.full_name.toLowerCase().includes("krishna")) {
-        icon = "👦";
-      }
-
-      const card = document.createElement("div");
-
-      card.className = "management-card";
-
-      card.innerHTML = `
-        <span style="font-size:32px;">${icon}</span>
-
-        <strong>
-          ${user.full_name || "Unnamed User"}
-        </strong>
-
-        <small>
-          Role: ${user.role || "user"}
-        </small>
-
-        <small>
-          Status:
-          <strong>${user.status || "pending"}</strong>
-        </small>
-
-        <button
-          type="button"
-          class="view-user-btn"
-          data-user-id="${user.id}">
-          View Profile
-        </button>
-      `;
-
-      usersList.appendChild(card);
-
-    });
-
-    /* View Profile buttons */
-
-    document.querySelectorAll(".view-user-btn").forEach(function(button) {
-
-      button.addEventListener("click", function() {
-
-        const userId = this.getAttribute("data-user-id");
-
-        openUserProfile(userId);
-
-      });
-
-    });
-
-  } catch (error) {
-
-    console.error("USERS LOAD ERROR:", error);
+    if (!usersList) return;
 
     usersList.innerHTML = `
-      <div class="empty-box">
-        <span>⚠️</span>
-        <h3>Unable to Load Users</h3>
-        <p>${error.message || "Unknown error"}</p>
-      </div>
+        <div class="empty-box">
+            <span>⏳</span>
+            <h3>Loading Users...</h3>
+            <p>Please wait...</p>
+        </div>
     `;
 
-  }
+    try {
 
+        const { data: users, error } = await supabaseClient
+            .from("profiles")
+            .select("id, full_name, role, status")
+            .neq("role", "admin")
+            .order("full_name", { ascending: true });
+
+        if (error) {
+            throw error;
+        }
+
+        if (!users || users.length === 0) {
+
+            usersList.innerHTML = `
+                <div class="empty-box">
+                    <span>👥</span>
+                    <h3>No Users Found</h3>
+                    <p>No registered users are available yet.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        usersList.innerHTML = "";
+
+        users.forEach(function(user) {
+
+            let icon = "👤";
+
+            if (
+                user.full_name &&
+                user.full_name.toLowerCase().includes("om")
+            ) {
+                icon = "👦";
+            }
+
+            if (
+                user.full_name &&
+                user.full_name.toLowerCase().includes("krishna")
+            ) {
+                icon = "👦";
+            }
+
+            const card = document.createElement("div");
+
+            card.className = "management-card";
+
+            card.innerHTML = `
+                <span style="font-size:32px;">
+                    ${icon}
+                </span>
+
+                <strong>
+                    ${user.full_name || "Unnamed User"}
+                </strong>
+
+                <small>
+                    Role: ${user.role || "user"}
+                </small>
+
+                <small>
+                    Status:
+                    <strong>${user.status || "pending"}</strong>
+                </small>
+
+                <button
+                    type="button"
+                    class="view-user-btn"
+                    data-user-id="${user.id}">
+                    View Profile
+                </button>
+            `;
+
+            usersList.appendChild(card);
+        });
+
+        document
+            .querySelectorAll(".view-user-btn")
+            .forEach(function(button) {
+
+                button.addEventListener("click", function() {
+
+                    const userId =
+                        this.getAttribute("data-user-id");
+
+                    openUserProfile(userId);
+
+                });
+
+            });
+
+    } catch (error) {
+
+        console.error("USERS LOAD ERROR:", error);
+
+        usersList.innerHTML = `
+            <div class="empty-box">
+                <span>⚠️</span>
+                <h3>Unable to Load Users</h3>
+                <p>
+                    ${error.message || "Unknown error"}
+                </p>
+            </div>
+        `;
+    }
 }
 
 
@@ -1180,38 +1186,43 @@ async function loadUsers() {
 
 async function openUserProfile(userId) {
 
-  try {
+    try {
 
-    const { data: user, error } = await supabaseClient
-      .from("profiles")
-      .select("id, full_name, role, status")
-      .eq("id", userId)
-      .single();
+        const { data: user, error } = await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id", userId)
+            .single();
 
-    if (error) {
-      throw error;
+        if (error) {
+            throw error;
+        }
+
+        if (!user) {
+            throw new Error("User not found.");
+        }
+
+        const details = Object.entries(user)
+            .map(([key, value]) => {
+                return `${key}: ${value ?? "N/A"}`;
+            })
+            .join("\n");
+
+        alert(
+            "USER PROFILE\n\n" +
+            details
+        );
+
+    } catch (error) {
+
+        console.error("USER PROFILE ERROR:", error);
+
+        alert(
+            "Unable to load user profile.\n\n" +
+            (error.message || "Unknown error")
+        );
     }
-
-    alert(
-      "Name: " + (user.full_name || "N/A") +
-      "\nRole: " + (user.role || "N/A") +
-      "\nStatus: " + (user.status || "N/A")
-    );
-
-  } catch (error) {
-
-    console.error("USER PROFILE ERROR:", error);
-
-    alert(
-      "Unable to load user profile.\n\n" +
-      (error.message || "Unknown error")
-    );
-
-  }
-
 }
-
-
 /* ==========================================
    LOAD USERS WHEN USERS MENU IS OPENED
 ========================================== */
