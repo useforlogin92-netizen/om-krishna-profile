@@ -226,6 +226,26 @@
       </div>
 
 
+<!-- MOBILE NUMBER -->
+<div class="form-group">
+  <label for="mobileNumber">Mobile Number</label>
+
+  <input
+    type="tel"
+    id="mobileNumber"
+    placeholder="Enter your 10-digit mobile number"
+    inputmode="numeric"
+    maxlength="10"
+    pattern="[0-9]{10}"
+    required
+  >
+
+  <div class="help-text">
+    Your mobile number is required for account contact and future verification.
+  </div>
+</div>
+      
+      
       <!-- EMAIL -->
       <div class="form-group">
         <label for="email">Email Address</label>
@@ -457,16 +477,20 @@
 
 
       const fullName =
-        document.getElementById("fullName")
-          .value
-          .trim();
+  document.getElementById("fullName")
+    .value
+    .trim();
 
+const mobileNumber =
+  document.getElementById("mobileNumber")
+    .value
+    .trim();
 
-      const email =
-        document.getElementById("email")
-          .value
-          .trim()
-          .toLowerCase();
+const email =
+  document.getElementById("email")
+    .value
+    .trim()
+    .toLowerCase();
 
 
       const password =
@@ -497,6 +521,23 @@
         return;
       }
 
+
+if (!mobileNumber) {
+    showMessage(
+        "Please enter your mobile number.",
+        "error"
+    );
+    return;
+}
+
+if (!/^[0-9]{10}$/.test(mobileNumber)) {
+    showMessage(
+        "Please enter a valid 10-digit mobile number.",
+        "error"
+    );
+    return;
+}
+      
 
       if (!selectedGroup) {
 
