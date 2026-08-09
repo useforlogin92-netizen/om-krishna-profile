@@ -1022,6 +1022,45 @@ forgotPasswordButton.addEventListener("click", async function () {
 
 
     /* =========================================
+   ADMIN SIDEBAR NAVIGATION
+   ========================================= */
+
+const navItems = document.querySelectorAll(".nav-item");
+const adminPages = document.querySelectorAll(".admin-page");
+
+navItems.forEach(function (item) {
+
+  item.addEventListener("click", function () {
+
+    const sectionName = item.getAttribute("data-section");
+
+    // Remove active from all menu buttons
+    navItems.forEach(function (nav) {
+      nav.classList.remove("active");
+    });
+
+    // Add active to clicked button
+    item.classList.add("active");
+
+    // Hide all pages
+    adminPages.forEach(function (page) {
+      page.classList.remove("active-page");
+    });
+
+    // Show selected page
+    const selectedPage =
+      document.getElementById(sectionName + "Section");
+
+    if (selectedPage) {
+      selectedPage.classList.add("active-page");
+    }
+
+  });
+
+});
+
+    
+    /* =========================================
        CHECK EXISTING SESSION
        ========================================= */
 
