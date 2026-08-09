@@ -181,23 +181,280 @@
 <!-- DASHBOARD -->
 <div id="dashboardSection" class="dashboard">
 
-    <div class="logo">
-        <h1>OM Krishna Group</h1>
-        <p>Admin Dashboard</p>
-    </div>
+  <div class="admin-layout">
 
-    <h2>Welcome, Admin</h2>
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
 
-    <p id="adminEmail"></p>
+      <div class="sidebar-logo">
+        <h2>OM Krishna Group</h2>
+        <p>Admin Panel</p>
+      </div>
 
-    <button class="logout" id="logoutButton">
-        Logout
-    </button>
+      <nav class="admin-nav">
 
-</div>
-    
+        <button class="nav-item active" data-section="home">
+          🏠 Dashboard
+        </button>
+
+        <button class="nav-item" data-section="users">
+          👥 Users
+        </button>
+
+        <button class="nav-item" data-section="approvals">
+          ⏳ Pending Approvals
+        </button>
+
+        <button class="nav-item" data-section="content">
+          📝 Content
+        </button>
+
+        <button class="nav-item" data-section="documents">
+          📄 Documents
+        </button>
+
+        <button class="nav-item" data-section="photos">
+          📷 Photos & Videos
+        </button>
+
+        <button class="nav-item" data-section="messages">
+          💬 Messages / Chat
+        </button>
+
+        <button class="nav-item" data-section="activity">
+          📊 Activity Logs
+        </button>
+
+        <button class="nav-item" data-section="settings">
+          ⚙️ Settings
+        </button>
+
+      </nav>
+
+      <button class="logout" id="logoutButton">
+        🚪 Logout
+      </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- TOP BAR -->
+      <header class="admin-header">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p>Welcome, Admin</p>
+        </div>
+
+        <div class="admin-user">
+          <span>Administrator</span>
+          <small id="adminEmail"></small>
+        </div>
+      </header>
+
+
+      <!-- HOME -->
+      <section id="homeSection" class="admin-page active-page">
+
+        <h2>Dashboard Overview</h2>
+
+        <div class="dashboard-cards">
+
+          <div class="dashboard-card">
+            <div class="card-icon">👥</div>
+            <h3>Users</h3>
+            <strong>0</strong>
+            <p>Registered Users</p>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-icon">⏳</div>
+            <h3>Pending Approvals</h3>
+            <strong>0</strong>
+            <p>Waiting for approval</p>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-icon">📄</div>
+            <h3>Documents</h3>
+            <strong>0</strong>
+            <p>Uploaded documents</p>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-icon">💬</div>
+            <h3>Messages</h3>
+            <strong>0</strong>
+            <p>New messages</p>
+          </div>
+
+        </div>
+
+        <div class="welcome-box">
+          <h3>Welcome to OM Krishna Group Admin Panel</h3>
+          <p>
+            From here you can manage users, approvals, content,
+            documents, photos, messages and other activities.
+          </p>
+        </div>
+
+      </section>
+
+
+      <!-- USERS -->
+      <section id="usersSection" class="admin-page">
+
+        <h2>Users</h2>
+
+        <div class="user-box">
+
+          <button class="management-card">
+            <span>👦</span>
+            <strong>Om</strong>
+            <small>Manage Om's profile</small>
+          </button>
+
+          <button class="management-card">
+            <span>👦</span>
+            <strong>Krishna</strong>
+            <small>Manage Krishna's profile</small>
+          </button>
+
+          <button class="management-card">
+            <span>👨‍👩‍👧‍👦</span>
+            <strong>Family / Friends</strong>
+            <small>Manage family and friends</small>
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- PENDING APPROVALS -->
+      <section id="approvalsSection" class="admin-page">
+
+        <h2>Pending Approvals</h2>
+
+        <div class="empty-box">
+          <span>⏳</span>
+          <h3>No Pending Approvals</h3>
+          <p>New requests will appear here.</p>
+        </div>
+
+      </section>
+
+
+      <!-- CONTENT -->
+      <section id="contentSection" class="admin-page">
+
+        <h2>Content Management</h2>
+
+        <div class="management-grid">
+
+          <div class="management-card">
+            <span>📝</span>
+            <strong>Posts</strong>
+            <small>Manage website posts</small>
+          </div>
+
+          <div class="management-card">
+            <span>📢</span>
+            <strong>Announcements</strong>
+            <small>Manage announcements</small>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- DOCUMENTS -->
+      <section id="documentsSection" class="admin-page">
+
+        <h2>Documents</h2>
+
+        <div class="empty-box">
+          <span>📄</span>
+          <h3>No Documents</h3>
+          <p>Uploaded documents will appear here.</p>
+        </div>
+
+      </section>
+
+
+      <!-- PHOTOS -->
+      <section id="photosSection" class="admin-page">
+
+        <h2>Photos & Videos</h2>
+
+        <div class="empty-box">
+          <span>📷</span>
+          <h3>No Photos or Videos</h3>
+          <p>Media uploaded by users will appear here.</p>
+        </div>
+
+      </section>
+
+
+      <!-- MESSAGES -->
+      <section id="messagesSection" class="admin-page">
+
+        <h2>Messages / Chat</h2>
+
+        <div class="empty-box">
+          <span>💬</span>
+          <h3>No Messages</h3>
+          <p>User messages and chats will appear here.</p>
+        </div>
+
+      </section>
+
+
+      <!-- ACTIVITY -->
+      <section id="activitySection" class="admin-page">
+
+        <h2>Activity Logs</h2>
+
+        <div class="empty-box">
+          <span>📊</span>
+          <h3>No Activity Yet</h3>
+          <p>User and admin activities will appear here.</p>
+        </div>
+
+      </section>
+
+
+      <!-- SETTINGS -->
+      <section id="settingsSection" class="admin-page">
+
+        <h2>Settings</h2>
+
+        <div class="management-grid">
+
+          <div class="management-card">
+            <span>🔐</span>
+            <strong>Account Security</strong>
+            <small>Manage admin security</small>
+          </div>
+
+          <div class="management-card">
+            <span>⚙️</span>
+            <strong>Website Settings</strong>
+            <small>Manage website settings</small>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
   </div>
 
+</div>    
 
   <script>
 
