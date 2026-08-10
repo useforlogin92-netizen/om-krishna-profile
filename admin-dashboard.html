@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OM Krishna Group - Admin Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #172033;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .welcome h2 {
+            margin-top: 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px;
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #f9fafb;
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .approved {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .email-verified {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .admin-approved {
+            background: #f3e8ff;
+            color: #7e22ce;
+        }
+
+        .approve-btn {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 8px 13px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .approve-btn:hover {
+            background: #15803d;
+        }
+
+        .approve-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 25px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 800px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 0 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>OM Krishna Group — Admin Dashboard</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <h2>Welcome, Administrator</h2>
+        <p id="adminEmail">Checking administrator account...</p>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <h3>Pending Users</h3>
+            <div class="stat-number" id="pendingCount">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h3>Approved Users</h3>
+            <div class="stat-number" id="approvedCount">0</div>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Users</h3>
+            <div class="stat-number" id="totalCount">0</div>
+        </div>
+    </div>
+
+    <!-- PENDING USERS -->
+
+    <div class="section">
+        <h2>Pending User Approvals</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Group Type</th>
+                        <th>Email Verified</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="pendingUsers">
+                    <tr>
+                        <td colspan="7" class="loading">
+                            Loading users...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- APPROVED USERS -->
+
+    <div class="section">
+        <h2>Approved Users</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                        <th>Approval Method</th>
+                        <th>Approved At</th>
+                    </tr>
+                </thead>
+
+                <tbody id="approvedUsers">
+                    <tr>
+                        <td colspan="6" class="loading">
+                            Loading users...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    // =========================================================
+    // SUPABASE CONFIGURATION
+    // =========================================================
+
+    const SUPABASE_URL = "https://keehbqlaxiojtkpldgry.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+    // =========================================================
+    // MESSAGE
+    // =========================================================
+
+    function showMessage(text, type) {
+
+        const message = document.getElementById("message");
+
+        message.textContent = text;
+
+        message.className = "message " + type;
+
+        message.style.display = "block";
+
+        setTimeout(() => {
+            message.style.display = "none";
+        }, 5000);
+    }
+
+
+    // =========================================================
+    // CHECK ADMIN
+    // =========================================================
+
+    async function checkAdmin() {
+
+        const {
+            data: {
+                user
+            }
+        } = await supabaseClient.auth.getUser();
+
+        if (!user) {
+
+            window.location.href = "login.html";
+
+            return null;
+        }
+
+        const {
+            data: profile,
+            error
+        } = await supabaseClient
+            .from("profiles")
+            .select("id, full_name, role, status")
+            .eq("id", user.id)
+            .single();
+
+        if (error || !profile) {
+
+            showMessage(
+                "Administrator profile not found.",
+                "error"
+            );
+
+            await supabaseClient.auth.signOut();
+
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+
+            return null;
+        }
+
+        if (profile.role !== "admin") {
+
+            showMessage(
+                "Access denied. Administrator access required.",
+                "error"
+            );
+
+            await supabaseClient.auth.signOut();
+
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+
+            return null;
+        }
+
+        if (profile.status !== "approved") {
+
+            showMessage(
+                "Administrator account is not approved.",
+                "error"
+            );
+
+            await supabaseClient.auth.signOut();
+
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+
+            return null;
+        }
+
+        document.getElementById("adminEmail").textContent =
+            user.email + " — Administrator";
+
+        return user;
+    }
+
+
+    // =========================================================
+    // LOAD USERS
+    // =========================================================
+
+    async function loadUsers() {
+
+        const {
+            data: profiles,
+            error
+        } = await supabaseClient
+            .from("profiles")
+            .select(`
+                id,
+                full_name,
+                role,
+                status,
+                profile_owner,
+                phone,
+                mobile_number,
+                group_type,
+                approval_method,
+                approved_at,
+                approved_by,
+                created_at
+            `)
+            .eq("role", "user")
+            .order("created_at", {
+                ascending: false
+            });
+
+        if (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Unable to load users: " + error.message,
+                "error"
+            );
+
+            return;
+        }
+
+
+        // Get auth user information
+        const userIds = profiles.map(user => user.id);
+
+        let authUsers = [];
+
+        if (userIds.length > 0) {
+
+            const {
+                data,
+                error: authError
+            } = await supabaseClient
+                .from("profiles")
+                .select("id")
+                .in("id", userIds);
+
+            if (!authError) {
+                authUsers = data || [];
+            }
+        }
+
+
+        renderPendingUsers(profiles);
+
+        renderApprovedUsers(profiles);
+
+        document.getElementById("pendingCount").textContent =
+            profiles.filter(u => u.status === "pending").length;
+
+        document.getElementById("approvedCount").textContent =
+            profiles.filter(u => u.status === "approved").length;
+
+        document.getElementById("totalCount").textContent =
+            profiles.length;
+    }
+
+
+    // =========================================================
+    // PENDING USERS
+    // =========================================================
+
+    function renderPendingUsers(users) {
+
+        const tbody =
+            document.getElementById("pendingUsers");
+
+        const pending =
+            users.filter(user => user.status === "pending");
+
+        if (pending.length === 0) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="loading">
+                        No pending users.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        tbody.innerHTML = pending.map(user => {
+
+            const mobile =
+                user.mobile_number ||
+                user.phone ||
+                "—";
+
+            const group =
+                user.group_type ||
+                "—";
+
+            return `
+                <tr>
+
+                    <td>
+                        ${escapeHtml(user.full_name || "—")}
+                    </td>
+
+                    <td>
+                        Loading email...
+                    </td>
+
+                    <td>
+                        ${escapeHtml(mobile)}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(group)}
+                    </td>
+
+                    <td>
+                        <span class="status pending">
+                            Check Required
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="status pending">
+                            Pending
+                        </span>
+                    </td>
+
+                    <td>
+                        <button
+                            class="approve-btn"
+                            onclick="approveUser('${user.id}')"
+                        >
+                            Approve
+                        </button>
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+    }
+
+
+    // =========================================================
+    // APPROVED USERS
+    // =========================================================
+
+    function renderApprovedUsers(users) {
+
+        const tbody =
+            document.getElementById("approvedUsers");
+
+        const approved =
+            users.filter(user => user.status === "approved");
+
+        if (approved.length === 0) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="loading">
+                        No approved users.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        tbody.innerHTML = approved.map(user => {
+
+            let methodText = "Unknown";
+            let methodClass = "approved";
+
+            if (user.approval_method === "admin") {
+
+                methodText = "Approved by Admin";
+                methodClass = "admin-approved";
+
+            } else if (
+                user.approval_method === "email_verification"
+            ) {
+
+                methodText = "Email Verification";
+                methodClass = "email-verified";
+            }
+
+
+            const approvedAt =
+                user.approved_at
+                    ? new Date(user.approved_at)
+                        .toLocaleString()
+                    : "—";
+
+
+            return `
+                <tr>
+
+                    <td>
+                        ${escapeHtml(user.full_name || "—")}
+                    </td>
+
+                    <td>
+                        —
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            user.mobile_number ||
+                            user.phone ||
+                            "—"
+                        )}
+                    </td>
+
+                    <td>
+                        <span class="status approved">
+                            Approved
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="status ${methodClass}">
+                            ${methodText}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${approvedAt}
+                    </td>
+
+                </tr>
+            `;
+
+        }).join("");
+    }
+
+
+    // =========================================================
+    // ADMIN APPROVE USER
+    // =========================================================
+
+    async function approveUser(userId) {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to approve this user?"
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient
+                .rpc(
+                    "admin_approve_user",
+                    {
+                        target_user_id: userId
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(error);
+
+                showMessage(
+                    "Approval failed: " +
+                    error.message,
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (data === true) {
+
+                showMessage(
+                    "User approved successfully.",
+                    "success"
+                );
+
+                await loadUsers();
+
+            } else {
+
+                showMessage(
+                    "User was not found.",
+                    "error"
+                );
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Unexpected error occurred.",
+                "error"
+            );
+        }
+    }
+
+
+    // =========================================================
+    // LOGOUT
+    // =========================================================
+
+    async function logout() {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href = "login.html";
+    }
+
+
+    // =========================================================
+    // HTML SECURITY
+    // =========================================================
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    // =========================================================
+    // START
+    // =========================================================
+
+    async function startDashboard() {
+
+        const admin =
+            await checkAdmin();
+
+        if (!admin) {
+            return;
+        }
+
+        await loadUsers();
+    }
+
+
+    startDashboard();
+
+</script>
+
+</body>
+</html>
