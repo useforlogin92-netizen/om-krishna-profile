@@ -1,883 +1,1063 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>OM Krishna Group - Login</title>
+  <title>Login | OM Krishna Group</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    min-height:100vh;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#111827,#1f2937);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.login-box{
-    width:100%;
-    max-width:520px;
-    background:white;
-    border-radius:18px;
-    padding:35px;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
-
-.logo{
-    text-align:center;
-    margin-bottom:28px;
-}
-
-.logo h1{
-    margin:0;
-    font-size:28px;
-    color:#111827;
-}
-
-.logo p{
-    margin-top:8px;
-    color:#6b7280;
-    font-size:14px;
-}
-
-.notice{
-    margin-bottom:20px;
-    padding:12px 14px;
-    background:#f3f4f6;
-    border-radius:9px;
-    color:#4b5563;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.form-group{
-    margin-bottom:18px;
-}
-
-label{
-    display:block;
-    margin-bottom:7px;
-    font-weight:600;
-    color:#374151;
-}
-
-input{
-    width:100%;
-    padding:13px 14px;
-    border:1px solid #d1d5db;
-    border-radius:9px;
-    font-size:15px;
-    outline:none;
-    background:white;
-}
-
-input:focus{
-    border-color:#111827;
-    box-shadow:0 0 0 2px rgba(17,24,39,.08);
-}
-
-.password-wrapper{
-    position:relative;
-}
-
-.password-wrapper input{
-    padding-right:70px;
-}
-
-.show-password{
-    position:absolute;
-    right:12px;
-    top:50%;
-    transform:translateY(-50%);
-    border:0;
-    background:none;
-    color:#374151;
-    font-size:13px;
-    font-weight:600;
-    cursor:pointer;
-    width:auto;
-    padding:5px;
-}
-
-.show-password:hover{
-    background:none;
-}
-
-button.login-button{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:9px;
-    background:#111827;
-    color:white;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-}
-
-button.login-button:hover{
-    background:#000;
-}
-
-button.login-button:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-#message{
-    margin-top:18px;
-    text-align:center;
-    font-size:14px;
-    min-height:22px;
-    line-height:1.5;
-}
-
-.success{
-    color:#15803d;
-}
-
-.error{
-    color:#dc2626;
-}
-
-.info{
-    color:#2563eb;
-}
-
-.links{
-    text-align:center;
-    margin-top:22px;
-    font-size:14px;
-    color:#6b7280;
-}
-
-.links a{
-    color:#111827;
-    font-weight:700;
-    text-decoration:none;
-}
-
-.links a:hover{
-    text-decoration:underline;
-}
-
-.divider{
-    margin:20px 0;
-    border-top:1px solid #e5e7eb;
-}
-
-.footer-note{
-    text-align:center;
-    color:#9ca3af;
-    font-size:12px;
-    line-height:1.5;
-    margin-top:20px;
-}
-
-@media(max-width:600px){
-
-    .login-box{
-        padding:25px 20px;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
     }
 
-    .logo h1{
-        font-size:24px;
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-}
-</style>
+
+    .login-container {
+      width: 100%;
+      max-width: 560px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 38px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    .logo-title {
+      text-align: center;
+      margin-bottom: 8px;
+      color: #111827;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 28px;
+    }
+
+    .login-types {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: #f1f5f9;
+      padding: 5px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .login-type {
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: transparent;
+      font-size: 15px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .login-type.active {
+      background: #111827;
+      color: white;
+    }
+
+    .info-box {
+      background: #f1f5f9;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #111827;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      padding-right: 70px;
+    }
+
+    .show-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: #111827;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .login-btn:hover {
+      background: #000000;
+    }
+
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .message.success {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 25px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .links a {
+      color: #111827;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .forgot {
+      text-align: right;
+      margin-top: 8px;
+    }
+
+    .forgot a {
+      color: #475569;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .security-note {
+      border-top: 1px solid #e2e8f0;
+      margin-top: 25px;
+      padding-top: 18px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    @media(max-width: 500px) {
+      .login-container {
+        padding: 25px 20px;
+      }
+
+      .logo-title {
+        font-size: 25px;
+      }
+
+      .login-type {
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="login-container">
 
-    <div class="logo">
-        <h1>OM Krishna Group</h1>
-        <p>Login to Your Account</p>
+  <h1 class="logo-title">OM Krishna Group</h1>
+
+  <p class="subtitle">Login to Your Account</p>
+
+  <!-- LOGIN TYPE -->
+
+  <div class="login-types">
+
+    <button
+      type="button"
+      id="userTab"
+      class="login-type active">
+      👤 User Login
+    </button>
+
+    <button
+      type="button"
+      id="adminTab"
+      class="login-type">
+      🔐 Admin Login
+    </button>
+
+  </div>
+
+  <!-- INFORMATION -->
+
+  <div id="infoBox" class="info-box">
+    Login using your registered email address or mobile number
+    and password. Your email must be verified and your account
+    must be approved before accessing the member area.
+  </div>
+
+  <!-- LOGIN FORM -->
+
+  <form id="loginForm">
+
+    <div class="form-group">
+
+      <label for="loginId" id="loginIdLabel">
+        Email or Mobile Number
+      </label>
+
+      <input
+        type="text"
+        id="loginId"
+        placeholder="Enter email or 10-digit mobile number"
+        autocomplete="username"
+        required>
+
     </div>
 
-    <div class="notice">
-        Login using the email address and password you used during registration.
-        Your account must be email-verified and approved by an administrator before
-        accessing the member area.
-    </div>
+    <div class="form-group">
 
-    <form id="loginForm">
+      <label for="password">Password</label>
 
-        <div class="form-group">
-            <label for="email">Email Address</label>
+      <div class="password-wrapper">
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email address"
-                autocomplete="email"
-                required
-            >
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="password">Password</label>
-
-            <div class="password-wrapper">
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                    required
-                >
-
-                <button
-                    type="button"
-                    class="show-password"
-                    id="showPassword"
-                >
-                    Show
-                </button>
-
-            </div>
-
-        </div>
-
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required>
 
         <button
-            type="submit"
-            class="login-button"
-            id="loginButton"
-        >
-            Login
+          type="button"
+          class="show-password"
+          id="showPasswordButton">
+          Show
         </button>
 
-    </form>
+      </div>
 
-
-    <div id="message"></div>
-
-
-    <div class="links">
-
-        <span>Don't have an account?</span>
-        <a href="register.html">Create Account</a>
+      <div class="forgot">
+        <a href="#" id="forgotPasswordLink">
+          Forgot Password?
+        </a>
+      </div>
 
     </div>
 
+    <button
+      type="submit"
+      id="loginButton"
+      class="login-btn">
+      Login
+    </button>
 
-    <div class="divider"></div>
+  </form>
 
+  <div id="message" class="message"></div>
 
-    <div class="footer-note">
-        Your account access is controlled by OM Krishna Group administration.
-    </div>
+  <div class="links" id="registerLink">
+
+    Don't have an account?
+    <a href="register.html">Create Account</a>
+
+  </div>
+
+  <div class="security-note">
+    Account access is controlled by OM Krishna Group.
+  </div>
 
 </div>
 
 
 <script>
 
-/* =========================================================
+/* ============================================================
    SUPABASE CONFIGURATION
-   ========================================================= */
+   ============================================================
+
+   IMPORTANT:
+   Use EXACTLY the same values from your register.html.
+
+   NEVER use the Supabase SERVICE ROLE KEY here.
+============================================================ */
 
 const SUPABASE_URL =
-    "https://keehbqlaxiojtkpldgry.supabase.co";
+  "https://keehbqlaxiojtkpldgry.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
-
+  "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
 
-/* =========================================================
+/* ============================================================
    ELEMENTS
-   ========================================================= */
+============================================================ */
+
+const userTab =
+  document.getElementById("userTab");
+
+const adminTab =
+  document.getElementById("adminTab");
+
+const infoBox =
+  document.getElementById("infoBox");
 
 const loginForm =
-    document.getElementById("loginForm");
+  document.getElementById("loginForm");
+
+const loginId =
+  document.getElementById("loginId");
+
+const loginIdLabel =
+  document.getElementById("loginIdLabel");
+
+const password =
+  document.getElementById("password");
 
 const loginButton =
-    document.getElementById("loginButton");
+  document.getElementById("loginButton");
 
 const message =
-    document.getElementById("message");
+  document.getElementById("message");
 
-const emailInput =
-    document.getElementById("email");
+const forgotPasswordLink =
+  document.getElementById("forgotPasswordLink");
 
-const passwordInput =
-    document.getElementById("password");
+const registerLink =
+  document.getElementById("registerLink");
 
 const showPasswordButton =
-    document.getElementById("showPassword");
+  document.getElementById("showPasswordButton");
 
 
-/* =========================================================
-   MESSAGE FUNCTION
-   ========================================================= */
+let loginType = "user";
 
-function showMessage(text, type){
 
-    message.textContent = text;
+/* ============================================================
+   MESSAGE
+============================================================ */
 
-    message.className = type || "";
+function showMessage(text, type) {
+
+  message.textContent = text;
+  message.className = "message " + type;
 
 }
 
 
-/* =========================================================
+function clearMessage() {
+
+  message.textContent = "";
+  message.className = "message";
+
+}
+
+
+/* ============================================================
+   USER LOGIN TAB
+============================================================ */
+
+function setUserLogin() {
+
+  loginType = "user";
+
+  userTab.classList.add("active");
+  adminTab.classList.remove("active");
+
+  loginIdLabel.textContent =
+    "Email or Mobile Number";
+
+  loginId.type = "text";
+
+  loginId.placeholder =
+    "Enter email or 10-digit mobile number";
+
+  infoBox.innerHTML =
+    "Login using your registered email address or mobile number " +
+    "and password. Your email must be verified and your account " +
+    "must be approved before accessing the member area.";
+
+  registerLink.style.display = "block";
+
+  clearMessage();
+
+}
+
+
+/* ============================================================
+   ADMIN LOGIN TAB
+============================================================ */
+
+function setAdminLogin() {
+
+  loginType = "admin";
+
+  adminTab.classList.add("active");
+  userTab.classList.remove("active");
+
+  loginIdLabel.textContent =
+    "Admin Email Address";
+
+  loginId.type = "email";
+
+  loginId.placeholder =
+    "Enter administrator email address";
+
+  infoBox.innerHTML =
+    "Administrator login. Only an account with the " +
+    "<b>admin</b> role and approved status can access " +
+    "the administration area.";
+
+  registerLink.style.display = "none";
+
+  clearMessage();
+
+}
+
+
+userTab.addEventListener(
+  "click",
+  setUserLogin
+);
+
+adminTab.addEventListener(
+  "click",
+  setAdminLogin
+);
+
+
+/* ============================================================
    SHOW / HIDE PASSWORD
-   ========================================================= */
+============================================================ */
 
 showPasswordButton.addEventListener(
-    "click",
-    function(){
+  "click",
+  function() {
 
-        if(passwordInput.type === "password"){
+    if (password.type === "password") {
 
-            passwordInput.type = "text";
+      password.type = "text";
+      showPasswordButton.textContent = "Hide";
 
-            showPasswordButton.textContent = "Hide";
+    } else {
 
-        }else{
-
-            passwordInput.type = "password";
-
-            showPasswordButton.textContent = "Show";
-
-        }
+      password.type = "password";
+      showPasswordButton.textContent = "Show";
 
     }
+
+  }
 );
 
 
-/* =========================================================
-   LOGIN
-   ========================================================= */
+/* ============================================================
+   NORMALIZE MOBILE NUMBER
+============================================================ */
 
-loginForm.addEventListener(
-    "submit",
-    async function(e){
+function normalizeMobile(value) {
 
-        e.preventDefault();
-
-
-        showMessage("", "");
-
-
-        const email =
-            emailInput.value.trim().toLowerCase();
-
-        const password =
-            passwordInput.value;
-
-
-        /* -------------------------------------------------
-           BASIC VALIDATION
-           ------------------------------------------------- */
-
-        if(!email){
-
-            showMessage(
-                "Please enter your email address.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        if(!password){
-
-            showMessage(
-                "Please enter your password.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        /* -------------------------------------------------
-           BUTTON LOADING STATE
-           ------------------------------------------------- */
-
-        loginButton.disabled = true;
-
-        loginButton.textContent = "Logging in...";
-
-
-        try{
-
-
-            /* =============================================
-               STEP 1
-               SUPABASE AUTH LOGIN
-               ============================================= */
-
-            const {
-                data,
-                error
-            } =
-            await supabaseClient.auth.signInWithPassword({
-
-                email: email,
-
-                password: password
-
-            });
-
-
-            if(error){
-
-                console.error(
-                    "LOGIN AUTH ERROR:",
-                    error
-                );
-
-
-                /* Email verification error */
-
-                if(
-                    error.message &&
-                    (
-                        error.message
-                        .toLowerCase()
-                        .includes("email not confirmed")
-                    )
-                ){
-
-                    throw new Error(
-                        "Please verify your email address before logging in. Check your email inbox."
-                    );
-
-                }
-
-
-                /* Invalid login */
-
-                if(
-                    error.message &&
-                    (
-                        error.message
-                        .toLowerCase()
-                        .includes("invalid login credentials")
-                    )
-                ){
-
-                    throw new Error(
-                        "Incorrect email or password."
-                    );
-
-                }
-
-
-                throw error;
-
-            }
-
-
-            if(!data || !data.user){
-
-                throw new Error(
-                    "Unable to login. Please try again."
-                );
-
-            }
-
-
-            const user =
-                data.user;
-
-
-            console.log(
-                "AUTH USER:",
-                user
-            );
-
-
-            /* =============================================
-               STEP 2
-               CHECK EMAIL VERIFICATION
-               ============================================= */
-
-            if(!user.email_confirmed_at){
-
-                await supabaseClient.auth.signOut();
-
-                throw new Error(
-                    "Please verify your email address before logging in."
-                );
-
-            }
-
-
-            /* =============================================
-               STEP 3
-               GET USER PROFILE
-               ============================================= */
-
-            const {
-
-                data: profile,
-
-                error: profileError
-
-            } =
-            await supabaseClient
-
-                .from("profiles")
-
-                .select(
-                    "id, full_name, role, status, group_type, mobile_number, friend_of_om, friend_of_krishna"
-                )
-
-                .eq(
-                    "id",
-                    user.id
-                )
-
-                .maybeSingle();
-
-
-            if(profileError){
-
-                console.error(
-                    "PROFILE ERROR:",
-                    profileError
-                );
-
-
-                await supabaseClient.auth.signOut();
-
-
-                throw new Error(
-                    "Unable to load your account profile. Please contact the administrator."
-                );
-
-            }
-
-
-            /* =============================================
-               PROFILE DOES NOT EXIST
-               ============================================= */
-
-            if(!profile){
-
-                await supabaseClient.auth.signOut();
-
-
-                throw new Error(
-                    "Your account profile was not found. Please contact the administrator."
-                );
-
-            }
-
-
-            console.log(
-                "USER PROFILE:",
-                profile
-            );
-
-
-            /* =============================================
-               STEP 4
-               CHECK ACCOUNT STATUS
-               ============================================= */
-
-            const status =
-                String(
-                    profile.status || ""
-                ).toLowerCase();
-
-
-            const role =
-                String(
-                    profile.role || ""
-                ).toLowerCase();
-
-
-            /* -------------------------------------------------
-               SUSPENDED ACCOUNT
-               ------------------------------------------------- */
-
-            if(status === "suspended"){
-
-                await supabaseClient.auth.signOut();
-
-
-                throw new Error(
-                    "Your account has been suspended. Please contact the administrator."
-                );
-
-            }
-
-
-            /* -------------------------------------------------
-               PENDING ACCOUNT
-               ------------------------------------------------- */
-
-            if(status === "pending"){
-
-                await supabaseClient.auth.signOut();
-
-
-                showMessage(
-                    "Your email is verified, but your account is still waiting for admin approval.",
-                    "info"
-                );
-
-
-                return;
-
-            }
-
-
-            /* -------------------------------------------------
-               OTHER UNAPPROVED STATUS
-               ------------------------------------------------- */
-
-            if(status !== "approved"){
-
-                await supabaseClient.auth.signOut();
-
-
-                throw new Error(
-                    "Your account is not currently approved for access."
-                );
-
-            }
-
-
-            /* =============================================
-               STEP 5
-               SAVE BASIC SESSION INFORMATION
-               
-               NOTE:
-               Security is NOT based on localStorage.
-               Supabase Auth remains the actual session.
-               ============================================= */
-
-            try{
-
-                localStorage.setItem(
-                    "omkrishna_last_login",
-                    new Date().toISOString()
-                );
-
-                localStorage.setItem(
-                    "omkrishna_user_name",
-                    profile.full_name || ""
-                );
-
-            }catch(storageError){
-
-                console.warn(
-                    "Local storage unavailable:",
-                    storageError
-                );
-
-            }
-
-
-            /* =============================================
-               STEP 6
-               ROLE BASED REDIRECTION
-               ============================================= */
-
-            showMessage(
-                "Login successful. Redirecting...",
-                "success"
-            );
-
-
-            /*
-             * ADMIN
-             */
-
-            if(role === "admin"){
-
-                window.location.href =
-                    "admin.html";
-
-                return;
-
-            }
-
-
-            /*
-             * OM / KRISHNA
-             */
-
-            if(
-                role === "om" ||
-                role === "krishna"
-            ){
-
-                /*
-                 * For now send these approved accounts
-                 * to the main website.
-                 *
-                 * A dedicated profile page can be added
-                 * later without changing the authentication.
-                 */
-
-                window.location.href =
-                    "index.html";
-
-                return;
-
-            }
-
-
-            /*
-             * NORMAL USER
-             */
-
-            if(role === "user"){
-
-                /*
-                 * profile.html will be created later.
-                 *
-                 * For now we use index.html so the login
-                 * does not produce a 404.
-                 */
-
-                window.location.href =
-                    "index.html";
-
-                return;
-
-            }
-
-
-            /*
-             * UNKNOWN ROLE
-             */
-
-            await supabaseClient.auth.signOut();
-
-
-            throw new Error(
-                "Your account role is not configured correctly. Please contact the administrator."
-            );
-
-
-        }catch(error){
-
-            console.error(
-                "LOGIN ERROR:",
-                error
-            );
-
-
-            showMessage(
-                error.message ||
-                "Login failed. Please try again.",
-                "error"
-            );
-
-        }finally{
-
-            loginButton.disabled = false;
-
-            loginButton.textContent = "Login";
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   CHECK EXISTING SESSION
-   ========================================================= */
-
-async function checkExistingSession(){
-
-    try{
-
-        const {
-            data
-        } =
-        await supabaseClient.auth.getSession();
-
-
-        if(
-            data &&
-            data.session &&
-            data.session.user
-        ){
-
-            /*
-             * User already has a Supabase session.
-             *
-             * We do NOT automatically redirect here.
-             * This prevents unexpected redirects while
-             * someone is intentionally opening login.html.
-             */
-
-            console.log(
-                "Existing Supabase session found."
-            );
-
-        }
-
-    }catch(error){
-
-        console.warn(
-            "SESSION CHECK ERROR:",
-            error
-        );
-
-    }
+  return value.replace(/\D/g, "");
 
 }
 
 
-/* Run session check */
+/* ============================================================
+   CHECK WHETHER LOGIN ID IS MOBILE
+============================================================ */
 
-checkExistingSession();
+function isMobileNumber(value) {
+
+  return /^[0-9]{10}$/.test(
+    normalizeMobile(value)
+  );
+
+}
 
 
-/* =========================================================
-   AUTH STATE LISTENER
-   ========================================================= */
+/* ============================================================
+   GET USER PROFILE BY MOBILE
+============================================================ */
 
-supabaseClient.auth.onAuthStateChange(
-    function(event, session){
+async function getProfileByMobile(mobile) {
 
-        console.log(
-            "AUTH EVENT:",
-            event
-        );
+  const cleanMobile =
+    normalizeMobile(mobile);
 
-        /*
-         * Login redirect is intentionally handled
-         * inside the login process above.
-         *
-         * This listener is kept for future expansion
-         * such as logout/session management.
-         */
+  const { data, error } =
+    await supabaseClient
+      .from("profiles")
+      .select(`
+        id,
+        full_name,
+        role,
+        status,
+        mobile_number,
+        email_address,
+        approval_method,
+        approved_at,
+        approved_by,
+        email_verified_at
+      `)
+      .eq("mobile_number", cleanMobile)
+      .maybeSingle();
+
+  if (error) {
+
+    console.error(
+      "Mobile profile lookup error:",
+      error
+    );
+
+    throw new Error(
+      "Unable to find the account using this mobile number."
+    );
+
+  }
+
+  return data;
+
+}
+
+
+/* ============================================================
+   GET USER PROFILE
+============================================================ */
+
+async function getProfile(userId) {
+
+  const { data, error } =
+    await supabaseClient
+      .from("profiles")
+      .select(`
+        id,
+        full_name,
+        role,
+        status,
+        mobile_number,
+        email_address,
+        approval_method,
+        approved_at,
+        approved_by,
+        email_verified_at
+      `)
+      .eq("id", userId)
+      .single();
+
+  if (error) {
+
+    console.error(
+      "Profile lookup error:",
+      error
+    );
+
+    throw new Error(
+      "Your account profile could not be found."
+    );
+
+  }
+
+  return data;
+
+}
+
+
+/* ============================================================
+   LOGIN
+============================================================ */
+
+loginForm.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+    clearMessage();
+
+    const loginValue =
+      loginId.value.trim();
+
+    const userPassword =
+      password.value;
+
+    if (!loginValue) {
+
+      showMessage(
+        "Please enter your login information.",
+        "error"
+      );
+
+      return;
 
     }
+
+    if (!userPassword) {
+
+      showMessage(
+        "Please enter your password.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    loginButton.disabled = true;
+    loginButton.textContent =
+      "Logging in...";
+
+
+    try {
+
+      let loginEmail = "";
+      let profileFromMobile = null;
+
+
+      /* ======================================================
+         USER LOGIN
+      ====================================================== */
+
+      if (loginType === "user") {
+
+        const cleanValue =
+          loginValue.trim();
+
+
+        /* -----------------------------------------------
+           MOBILE LOGIN
+        ----------------------------------------------- */
+
+        if (isMobileNumber(cleanValue)) {
+
+          profileFromMobile =
+            await getProfileByMobile(
+              cleanValue
+            );
+
+
+          if (!profileFromMobile) {
+
+            throw new Error(
+              "No account was found with this mobile number."
+            );
+
+          }
+
+
+          loginEmail =
+            profileFromMobile.email_address;
+
+
+          if (!loginEmail) {
+
+            throw new Error(
+              "No email address is linked to this account. Please contact the administrator."
+            );
+
+          }
+
+        }
+
+        /* -----------------------------------------------
+           EMAIL LOGIN
+        ----------------------------------------------- */
+
+        else {
+
+          loginEmail =
+            cleanValue.toLowerCase();
+
+        }
+
+      }
+
+
+      /* ======================================================
+         ADMIN LOGIN
+      ====================================================== */
+
+      else {
+
+        loginEmail =
+          loginValue.toLowerCase();
+
+      }
+
+
+      /* ======================================================
+         SUPABASE AUTHENTICATION
+      ====================================================== */
+
+      const {
+        data: authData,
+        error: authError
+      } =
+        await supabaseClient.auth.signInWithPassword({
+
+          email: loginEmail,
+
+          password: userPassword
+
+        });
+
+
+      if (authError) {
+
+        throw authError;
+
+      }
+
+
+      if (!authData.user) {
+
+        throw new Error(
+          "Unable to create a login session."
+        );
+
+      }
+
+
+      const authUser =
+        authData.user;
+
+
+      /* ======================================================
+         EMAIL VERIFICATION CHECK
+      ====================================================== */
+
+      if (!authUser.email_confirmed_at) {
+
+        await supabaseClient.auth.signOut();
+
+        showMessage(
+          "Please verify your email address before logging in. Check your email inbox.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* ======================================================
+         GET PROFILE
+      ====================================================== */
+
+      const profile =
+        await getProfile(
+          authUser.id
+        );
+
+
+      /* ======================================================
+         ADMIN LOGIN
+      ====================================================== */
+
+      if (loginType === "admin") {
+
+        if (profile.role !== "admin") {
+
+          await supabaseClient.auth.signOut();
+
+          showMessage(
+            "Access denied. This account is not an administrator.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (profile.status !== "approved") {
+
+          await supabaseClient.auth.signOut();
+
+          showMessage(
+            "Administrator account is not approved.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        window.location.href =
+          "admin-dashboard.html";
+
+        return;
+
+      }
+
+
+      /* ======================================================
+         USER LOGIN
+      ====================================================== */
+
+      if (profile.role === "admin") {
+
+        await supabaseClient.auth.signOut();
+
+        showMessage(
+          "This is an administrator account. Please select Admin Login.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* ======================================================
+         USER APPROVAL CHECK
+      ====================================================== */
+
+      if (profile.status !== "approved") {
+
+        await supabaseClient.auth.signOut();
+
+        showMessage(
+          "Your email is verified, but your account has not been approved yet.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* ======================================================
+         SUCCESS
+      ====================================================== */
+
+      window.location.href =
+        "user-dashboard.html";
+
+    }
+
+
+    catch (error) {
+
+      console.error(
+        "LOGIN ERROR:",
+        error
+      );
+
+      showMessage(
+        error.message ||
+        "Login failed. Please check your details and try again.",
+        "error"
+      );
+
+    }
+
+
+    finally {
+
+      loginButton.disabled = false;
+      loginButton.textContent =
+        "Login";
+
+    }
+
+  }
+);
+
+
+/* ============================================================
+   FORGOT PASSWORD
+============================================================ */
+
+forgotPasswordLink.addEventListener(
+  "click",
+  async function(event) {
+
+    event.preventDefault();
+
+    clearMessage();
+
+    const value =
+      loginId.value.trim();
+
+
+    if (!value) {
+
+      showMessage(
+        "Please enter your registered email address first.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /* --------------------------------------------------------
+       Password reset is intentionally EMAIL based.
+
+       If user enters mobile number, we cannot safely send
+       the reset link until we resolve the account email.
+    -------------------------------------------------------- */
+
+    let resetEmail = "";
+
+
+    try {
+
+      if (isMobileNumber(value)) {
+
+        const profile =
+          await getProfileByMobile(
+            value
+          );
+
+
+        if (!profile) {
+
+          showMessage(
+            "No account was found with this mobile number.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        resetEmail =
+          profile.email_address;
+
+
+        if (!resetEmail) {
+
+          showMessage(
+            "No email address is linked to this account.",
+            "error"
+          );
+
+          return;
+
+        }
+
+      } else {
+
+        resetEmail =
+          value.toLowerCase();
+
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient.auth.resetPasswordForEmail(
+          resetEmail,
+          {
+            redirectTo:
+              window.location.origin +
+              "/reset-password.html"
+          }
+        );
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      showMessage(
+        "Password reset link has been sent to your registered email address.",
+        "success"
+      );
+
+    }
+
+
+    catch (error) {
+
+      console.error(
+        "PASSWORD RESET ERROR:",
+        error
+      );
+
+      showMessage(
+        error.message ||
+        "Unable to send the password reset email.",
+        "error"
+      );
+
+    }
+
+  }
 );
 
 </script>
