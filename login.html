@@ -791,18 +791,6 @@ loginForm.addEventListener(
          EMAIL VERIFICATION CHECK
       ====================================================== */
 
-      if (!authUser.email_confirmed_at) {
-
-        await supabaseClient.auth.signOut();
-
-        showMessage(
-          "Please verify your email address before logging in. Check your email inbox.",
-          "error"
-        );
-
-        return;
-
-      }
 
 
       /* ======================================================
@@ -879,18 +867,26 @@ loginForm.addEventListener(
          USER APPROVAL CHECK
       ====================================================== */
 
-      if (profile.status !== "approved") {
+      // USER APPROVAL CHECK
+// User can login if EITHER:
+// 1. Email is verified
+// OR
+// 2. Admin has approved the account
 
-        await supabaseClient.auth.signOut();
+const emailVerified = !!authUser.email_confirmed_at;
+const adminApproved = profile.status === "approved";
 
-        showMessage(
-          "Your email is verified, but your account has not been approved yet.",
-          "error"
-        );
+if (!emailVerified && !adminApproved) {
 
-        return;
+    await supabaseClient.auth.signOut();
 
-      }
+    showMessage(
+        "Your account is not approved yet. Please verify your email or wait for admin approval.",
+        "error"
+    );
+
+    return;
+}
 
 
       /* ======================================================
