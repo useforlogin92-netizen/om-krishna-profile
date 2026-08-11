@@ -1,0 +1,1504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Representative Chat | OM Krishna Group</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#0b1220;
+  color:#eef2ff;
+  font-family:Arial,sans-serif;
+}
+
+header{
+  height:64px;
+  background:#111827;
+  border-bottom:1px solid #263247;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 22px;
+}
+
+.brand{
+  font-weight:800;
+  font-size:20px;
+}
+
+.brand span{
+  color:#d4af37;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.identity{
+  color:#d4af37;
+  font-weight:700;
+}
+
+button{
+  cursor:pointer;
+}
+
+.gold{
+  background:#d4af37;
+  color:#111;
+  border:0;
+  border-radius:8px;
+  padding:10px 17px;
+  font-weight:700;
+}
+
+.logout{
+  background:transparent;
+  color:#fff;
+  border:1px solid #d4af37;
+  border-radius:8px;
+  padding:9px 16px;
+  font-weight:700;
+}
+
+.wrap{
+  max-width:1200px;
+  margin:25px auto;
+  padding:0 16px;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:330px 1fr;
+  gap:16px;
+  height:calc(100vh - 114px);
+  min-height:600px;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+  background:#111827;
+  border:1px solid #263247;
+  border-radius:14px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.sidebar-head{
+  padding:18px;
+  border-bottom:1px solid #263247;
+}
+
+.sidebar-head h2{
+  margin:0 0 5px;
+}
+
+.muted{
+  color:#94a3b8;
+  font-size:13px;
+}
+
+.count{
+  display:inline-flex;
+  min-width:24px;
+  height:24px;
+  align-items:center;
+  justify-content:center;
+  background:#d4af37;
+  color:#111;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:800;
+  margin-left:5px;
+}
+
+.conversations{
+  overflow:auto;
+  flex:1;
+}
+
+.conversation{
+  padding:15px;
+  border-bottom:1px solid #263247;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.conversation:hover{
+  background:#172033;
+}
+
+.conversation.selected{
+  background:#1b293d;
+  border-left:3px solid #d4af37;
+}
+
+.conv-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.conv-name{
+  font-weight:700;
+}
+
+.unread{
+  background:#d4af37;
+  color:#111;
+  border-radius:20px;
+  padding:3px 8px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.conv-preview{
+  color:#cbd5e1;
+  font-size:13px;
+  margin-top:7px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.conv-meta{
+  color:#64748b;
+  font-size:11px;
+  margin-top:7px;
+}
+
+.empty{
+  padding:30px 20px;
+  text-align:center;
+  color:#94a3b8;
+}
+
+/* =========================
+   CHAT
+========================= */
+
+.chat{
+  background:#111827;
+  border:1px solid #263247;
+  border-radius:14px;
+  overflow:hidden;
+  display:grid;
+  grid-template-rows:auto auto 1fr auto;
+  min-width:0;
+}
+
+.chat-head{
+  padding:18px 20px;
+  border-bottom:1px solid #263247;
+}
+
+.chat-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+.chat-subtitle{
+  margin-top:5px;
+}
+
+.chat-status{
+  padding:8px 20px;
+  font-size:12px;
+  color:#94a3b8;
+  border-bottom:1px solid #263247;
+}
+
+.messages{
+  padding:20px;
+  overflow:auto;
+}
+
+.msg{
+  max-width:72%;
+  margin:9px 0;
+  padding:11px 14px;
+  border-radius:12px;
+  background:#1b2638;
+}
+
+.msg.mine{
+  margin-left:auto;
+  background:#29485b;
+}
+
+.sender{
+  font-size:12px;
+  color:#d4af37;
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+.msg-body{
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+
+.meta{
+  font-size:11px;
+  color:#94a3b8;
+  margin-top:6px;
+}
+
+.composer{
+  padding:14px;
+  border-top:1px solid #263247;
+  display:flex;
+  gap:8px;
+}
+
+.composer input{
+  flex:1;
+  min-width:0;
+  background:#0b1220;
+  color:#fff;
+  border:1px solid #334155;
+  border-radius:9px;
+  padding:13px;
+  outline:none;
+}
+
+.composer input:focus{
+  border-color:#d4af37;
+}
+
+.send{
+  min-width:80px;
+}
+
+.warning{
+  color:#ffb4b4;
+  background:#35191b;
+  padding:12px 16px;
+  margin:15px;
+  border-radius:8px;
+  display:none;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  padding:30px;
+  text-align:center;
+  color:#94a3b8;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+  header{
+    padding:0 14px;
+  }
+
+  .identity{
+    display:none;
+  }
+
+  .layout{
+    grid-template-columns:1fr;
+    height:auto;
+  }
+
+  .sidebar{
+    height:330px;
+  }
+
+  .chat{
+    height:calc(100vh - 455px);
+    min-height:500px;
+  }
+
+  .msg{
+    max-width:88%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="brand">
+    OM <span>Krishna</span> Group · Messages
+  </div>
+
+  <div class="header-right">
+
+    <div
+      id="identity"
+      class="identity">
+      Loading...
+    </div>
+
+    <button
+      class="logout"
+      onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<div class="wrap">
+
+  <div
+    id="warning"
+    class="warning">
+  </div>
+
+
+  <div class="layout">
+
+    <!-- ==========================================
+         CONVERSATION LIST
+    =========================================== -->
+
+    <aside class="sidebar">
+
+      <div class="sidebar-head">
+
+        <h2>
+          Messages
+          <span
+            id="unreadCount"
+            class="count">
+            0
+          </span>
+        </h2>
+
+        <div class="muted">
+          Public conversations assigned to you
+        </div>
+
+      </div>
+
+
+      <div
+        id="conversationList"
+        class="conversations">
+
+        <div class="loading">
+          Loading conversations...
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ==========================================
+         CHAT AREA
+    =========================================== -->
+
+    <main class="chat">
+
+      <div class="chat-head">
+
+        <div
+          id="chatTitle"
+          class="chat-title">
+          Select a conversation
+        </div>
+
+        <div
+          id="chatSubtitle"
+          class="muted chat-subtitle">
+          Choose a message from the left.
+        </div>
+
+      </div>
+
+
+      <div
+        id="chatStatus"
+        class="chat-status">
+        Waiting
+      </div>
+
+
+      <div
+        id="messages"
+        class="messages">
+
+        <div class="empty">
+          Select a conversation to view messages.
+        </div>
+
+      </div>
+
+
+      <div class="composer">
+
+        <input
+          id="messageInput"
+          placeholder="Type your reply..."
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter')sendMessage()"
+        >
+
+        <button
+          class="gold send"
+          onclick="sendMessage()">
+          Send
+        </button>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const sb = supabase.createClient(
+  "https://keehbqlaxiojtkpldgry.supabase.co",
+  "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T"
+);
+
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
+
+let currentUser = null;
+
+let representative = null;
+
+let conversations = [];
+
+let selectedConversation = null;
+
+let messageChannel = null;
+
+let conversationChannel = null;
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  init
+);
+
+
+async function init(){
+
+  try{
+
+    /* -----------------------------------------
+       CHECK LOGIN
+    ------------------------------------------ */
+
+    const sessionResult =
+      await sb.auth.getSession();
+
+
+    const session =
+      sessionResult.data.session;
+
+
+    if(!session){
+
+      location.href =
+        'login.html';
+
+      return;
+
+    }
+
+
+    currentUser =
+      session.user;
+
+
+    /* -----------------------------------------
+       FIND REPRESENTATIVE
+    ------------------------------------------ */
+
+    const targetResult =
+      await sb
+        .from('chat_targets')
+        .select(
+          'target_key, user_id, display_name, active'
+        )
+        .eq(
+          'user_id',
+          currentUser.id
+        )
+        .eq(
+          'active',
+          true
+        )
+        .maybeSingle();
+
+
+    if(targetResult.error){
+
+      throw targetResult.error;
+
+    }
+
+
+    if(!targetResult.data){
+
+      showWarning(
+        'This account is not configured as an OM/Krishna chat representative.'
+      );
+
+      document
+        .getElementById('identity')
+        .textContent =
+          'Not a Representative';
+
+      return;
+
+    }
+
+
+    representative =
+      targetResult.data;
+
+
+    document
+      .getElementById('identity')
+      .textContent =
+        representative.display_name;
+
+
+    document
+      .getElementById('chatStatus')
+      .textContent =
+        'Live • Connected';
+
+
+    /* -----------------------------------------
+       LOAD CONVERSATIONS
+    ------------------------------------------ */
+
+    await loadConversations();
+
+
+    /* -----------------------------------------
+       REALTIME NEW CONVERSATIONS
+    ------------------------------------------ */
+
+    conversationChannel =
+      sb
+        .channel(
+          'representative-conversations-' +
+          currentUser.id
+        )
+        .on(
+          'postgres_changes',
+          {
+            event:'INSERT',
+            schema:'public',
+            table:'conversations',
+            filter:
+              'target_user_id=eq.' +
+              currentUser.id
+          },
+          async payload => {
+
+            await loadConversations();
+
+            notifyNewConversation();
+
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event:'UPDATE',
+            schema:'public',
+            table:'conversations',
+            filter:
+              'target_user_id=eq.' +
+              currentUser.id
+          },
+          async payload => {
+
+            await loadConversations();
+
+          }
+        )
+        .subscribe();
+
+  }
+
+  catch(error){
+
+    console.error(
+      'INIT ERROR:',
+      error
+    );
+
+    showWarning(
+      error.message ||
+      'Unable to load representative account.'
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD CONVERSATIONS
+========================================================= */
+
+async function loadConversations(){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+
+  const result =
+    await sb
+      .from('conversations')
+      .select(`
+        id,
+        conversation_type,
+        public_target,
+        public_name,
+        public_email,
+        public_mobile,
+        target_user_id,
+        created_at
+      `)
+      .eq(
+        'target_user_id',
+        currentUser.id
+      )
+      .eq(
+        'conversation_type',
+        'public'
+      )
+      .order(
+        'created_at',
+        {
+          ascending:false
+        }
+      );
+
+
+  if(result.error){
+
+    showWarning(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  conversations =
+    result.data || [];
+
+
+  renderConversationList();
+
+}
+
+
+/* =========================================================
+   RENDER CONVERSATION LIST
+========================================================= */
+
+async function renderConversationList(){
+
+  const list =
+    document.getElementById(
+      'conversationList'
+    );
+
+
+  if(!conversations.length){
+
+    list.innerHTML = `
+      <div class="empty">
+        No public conversations yet.
+      </div>
+    `;
+
+    document
+      .getElementById('unreadCount')
+      .textContent = '0';
+
+    return;
+
+  }
+
+
+  list.innerHTML = '';
+
+
+  let unread = 0;
+
+
+  for(
+    const conversation of conversations
+  ){
+
+    const lastMessage =
+      await getLastMessage(
+        conversation.id
+      );
+
+
+    const item =
+      document.createElement(
+        'div'
+      );
+
+
+    item.className =
+      'conversation';
+
+
+    if(
+      selectedConversation &&
+      selectedConversation.id ===
+      conversation.id
+    ){
+
+      item.classList.add(
+        'selected'
+      );
+
+    }
+
+
+    const name =
+      conversation.public_name ||
+      'Public Visitor';
+
+
+    const preview =
+      lastMessage
+        ? lastMessage.message_text
+        : 'No messages yet';
+
+
+    const date =
+      lastMessage
+        ? formatDate(
+            lastMessage.created_at
+          )
+        : formatDate(
+            conversation.created_at
+          );
+
+
+    item.innerHTML = `
+      <div class="conv-top">
+
+        <div class="conv-name">
+          ${escapeHtml(name)}
+        </div>
+
+      </div>
+
+      <div class="conv-preview">
+        ${escapeHtml(preview || '')}
+      </div>
+
+      <div class="conv-meta">
+        ${escapeHtml(conversation.public_email || '')}
+        <br>
+        ${escapeHtml(date)}
+      </div>
+    `;
+
+
+    item.addEventListener(
+      'click',
+      () => openConversation(
+        conversation
+      )
+    );
+
+
+    list.appendChild(item);
+
+  }
+
+}
+
+
+/* =========================================================
+   GET LAST MESSAGE
+========================================================= */
+
+async function getLastMessage(
+  conversationId
+){
+
+  const result =
+    await sb
+      .from('messages')
+      .select(
+        'message_text,created_at,sender_id'
+      )
+      .eq(
+        'conversation_id',
+        conversationId
+      )
+      .order(
+        'created_at',
+        {
+          ascending:false
+        }
+      )
+      .limit(1)
+      .maybeSingle();
+
+
+  if(result.error){
+
+    console.error(
+      result.error
+    );
+
+    return null;
+
+  }
+
+
+  return result.data;
+
+}
+
+
+/* =========================================================
+   OPEN CONVERSATION
+========================================================= */
+
+async function openConversation(
+  conversation
+){
+
+  selectedConversation =
+    conversation;
+
+
+  renderConversationList();
+
+
+  document
+    .getElementById('chatTitle')
+    .textContent =
+      'Chat with ' +
+      (
+        conversation.public_name ||
+        'Public Visitor'
+      );
+
+
+  document
+    .getElementById('chatSubtitle')
+    .textContent =
+      (
+        conversation.public_email ||
+        ''
+      ) +
+      ' • ' +
+      (
+        conversation.public_mobile ||
+        ''
+      );
+
+
+  document
+    .getElementById('chatStatus')
+    .textContent =
+      'Live • Conversation open';
+
+
+  await loadMessages(
+    conversation.id
+  );
+
+
+  subscribeToMessages(
+    conversation.id
+  );
+
+}
+
+
+/* =========================================================
+   LOAD MESSAGES
+========================================================= */
+
+async function loadMessages(
+  conversationId
+){
+
+  const box =
+    document.getElementById(
+      'messages'
+    );
+
+
+  box.innerHTML = `
+    <div class="loading">
+      Loading messages...
+    </div>
+  `;
+
+
+  const result =
+    await sb
+      .from('messages')
+      .select('*')
+      .eq(
+        'conversation_id',
+        conversationId
+      )
+      .order(
+        'created_at',
+        {
+          ascending:true
+        }
+      );
+
+
+  if(result.error){
+
+    box.innerHTML = '';
+
+    showWarning(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  box.innerHTML = '';
+
+
+  if(!result.data.length){
+
+    box.innerHTML = `
+      <div class="empty">
+        No messages in this conversation.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  result.data.forEach(
+    message => addMessage(
+      message
+    )
+  );
+
+}
+
+
+/* =========================================================
+   REALTIME MESSAGE SUBSCRIPTION
+========================================================= */
+
+function subscribeToMessages(
+  conversationId
+){
+
+  if(messageChannel){
+
+    sb.removeChannel(
+      messageChannel
+    );
+
+    messageChannel = null;
+
+  }
+
+
+  messageChannel =
+    sb
+      .channel(
+        'representative-message-' +
+        conversationId
+      )
+      .on(
+        'postgres_changes',
+        {
+          event:'INSERT',
+          schema:'public',
+          table:'messages',
+          filter:
+            'conversation_id=eq.' +
+            conversationId
+        },
+        payload => {
+
+          addMessage(
+            payload.new
+          );
+
+        }
+      )
+      .subscribe(
+        status => {
+
+          if(status === 'SUBSCRIBED'){
+
+            document
+              .getElementById(
+                'chatStatus'
+              )
+              .textContent =
+                'Live • Connected';
+
+          }
+
+        }
+      );
+
+}
+
+
+/* =========================================================
+   SEND REPLY
+========================================================= */
+
+async function sendMessage(){
+
+  if(
+    !currentUser ||
+    !selectedConversation
+  ){
+
+    alert(
+      'Please select a conversation first.'
+    );
+
+    return;
+
+  }
+
+
+  const input =
+    document.getElementById(
+      'messageInput'
+    );
+
+
+  const text =
+    input.value.trim();
+
+
+  if(!text){
+
+    return;
+
+  }
+
+
+  const result =
+    await sb
+      .from('messages')
+      .insert({
+
+        conversation_id:
+          selectedConversation.id,
+
+        sender_id:
+          currentUser.id,
+
+        sender_name:
+          representative.display_name,
+
+        message_text:
+          text,
+
+        message_type:
+          'text'
+
+      })
+      .select()
+      .single();
+
+
+  if(result.error){
+
+    alert(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  /*
+     Realtime subscription will also receive
+     this message. We don't manually add it here
+     to prevent duplicate messages.
+  */
+
+  input.value = '';
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE TO SCREEN
+========================================================= */
+
+function addMessage(
+  message
+){
+
+  const box =
+    document.getElementById(
+      'messages'
+    );
+
+
+  /*
+     Prevent duplicate realtime messages
+  */
+
+  if(
+    document.querySelector(
+      '[data-message-id="' +
+      message.id +
+      '"]'
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const empty =
+    box.querySelector(
+      '.empty'
+    );
+
+
+  if(empty){
+
+    empty.remove();
+
+  }
+
+
+  const div =
+    document.createElement(
+      'div'
+    );
+
+
+  div.dataset.messageId =
+    message.id;
+
+
+  div.className =
+    'msg ' +
+    (
+      message.sender_id ===
+      currentUser.id
+        ? 'mine'
+        : ''
+    );
+
+
+  const sender =
+    document.createElement(
+      'div'
+    );
+
+
+  sender.className =
+    'sender';
+
+
+  sender.textContent =
+    message.sender_id ===
+    currentUser.id
+      ? representative.display_name
+      : (
+          message.sender_name ||
+          'Visitor'
+        );
+
+
+  const body =
+    document.createElement(
+      'div'
+    );
+
+
+  body.className =
+    'msg-body';
+
+
+  body.textContent =
+    message.message_text ||
+    '';
+
+
+  const meta =
+    document.createElement(
+      'div'
+    );
+
+
+  meta.className =
+    'meta';
+
+
+  meta.textContent =
+    formatDate(
+      message.created_at
+    );
+
+
+  div.appendChild(
+    sender
+  );
+
+  div.appendChild(
+    body
+  );
+
+  div.appendChild(
+    meta
+  );
+
+
+  box.appendChild(
+    div
+  );
+
+
+  box.scrollTop =
+    box.scrollHeight;
+
+}
+
+
+/* =========================================================
+   DATE FORMAT
+========================================================= */
+
+function formatDate(
+  value
+){
+
+  if(!value){
+
+    return '';
+
+  }
+
+
+  return new Date(
+    value
+  ).toLocaleString(
+    'en-IN'
+  );
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(
+  value
+){
+
+  return String(
+    value || ''
+  )
+  .replace(
+    /&/g,
+    '&amp;'
+  )
+  .replace(
+    /</g,
+    '&lt;'
+  )
+  .replace(
+    />/g,
+    '&gt;'
+  )
+  .replace(
+    /"/g,
+    '&quot;'
+  )
+  .replace(
+    /'/g,
+    '&#039;'
+  );
+
+}
+
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+function showWarning(
+  message
+){
+
+  const warning =
+    document.getElementById(
+      'warning'
+    );
+
+  warning.textContent =
+    message;
+
+  warning.style.display =
+    'block';
+
+}
+
+
+/* =========================================================
+   NEW CONVERSATION NOTIFICATION
+========================================================= */
+
+function notifyNewConversation(){
+
+  /*
+     Simple browser notification.
+     We don't force permission automatically.
+  */
+
+  if(
+    'Notification' in window &&
+    Notification.permission ===
+    'granted'
+  ){
+
+    new Notification(
+      'OM Krishna Group',
+      {
+        body:
+          'New public chat received.'
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+  if(messageChannel){
+
+    await sb.removeChannel(
+      messageChannel
+    );
+
+  }
+
+
+  if(conversationChannel){
+
+    await sb.removeChannel(
+      conversationChannel
+    );
+
+  }
+
+
+  await sb.auth.signOut();
+
+  location.href =
+    'login.html';
+
+}
+
+
+/* =========================================================
+   CLEANUP
+========================================================= */
+
+window.addEventListener(
+  'beforeunload',
+  () => {
+
+    if(messageChannel){
+
+      sb.removeChannel(
+        messageChannel
+      );
+
+    }
+
+    if(conversationChannel){
+
+      sb.removeChannel(
+        conversationChannel
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
