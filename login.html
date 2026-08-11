@@ -873,15 +873,14 @@ loginForm.addEventListener(
 // OR
 // 2. Admin has approved the account
 
-const emailVerified = !!authUser.email_confirmed_at;
 const adminApproved = profile.status === "approved";
 
-if (!emailVerified && !adminApproved) {
+if (!adminApproved) {
 
     await supabaseClient.auth.signOut();
 
     showMessage(
-        "Your account is not approved yet. Please verify your email or wait for admin approval.",
+        "Your account is not approved yet. Please wait for admin approval.",
         "error"
     );
 
