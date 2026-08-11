@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -67,7 +68,7 @@ button{
   overflow:hidden;
 }
 
-/* START SCREEN */
+/* ================= START ================= */
 
 .start{
   padding:28px;
@@ -108,6 +109,31 @@ button{
   padding:12px;
   width:100%;
 }
+
+.error{
+  color:#ffb4b4;
+  background:#35191b;
+  padding:12px;
+  border-radius:8px;
+  margin-top:12px;
+}
+
+.info{
+  color:#b9d5ef;
+  background:#102238;
+  border:1px solid #29445f;
+  padding:12px;
+  border-radius:8px;
+  margin-top:12px;
+  font-size:13px;
+}
+
+.muted{
+  color:#94a3b8;
+  font-size:13px;
+}
+
+/* ================= CHAT ================= */
 
 .chat{
   display:none;
@@ -174,26 +200,8 @@ button{
   padding:12px;
 }
 
-.error{
-  color:#ffb4b4;
-  background:#35191b;
-  padding:12px;
-  border-radius:8px;
-  margin-top:12px;
-}
-
-.muted{
-  color:#94a3b8;
-  font-size:13px;
-}
-
-.restore{
-  background:#102238;
-  border:1px solid #29445f;
-  color:#b9d5ef;
-  padding:12px;
-  border-radius:8px;
-  margin-top:12px;
+.composer button{
+  min-width:70px;
 }
 
 @media(max-width:650px){
@@ -239,7 +247,7 @@ button{
 
 
 <!-- =====================================================
-     START
+     START CHAT
 ====================================================== -->
 
 <section
@@ -290,12 +298,11 @@ button{
 
 
   <div
-    id="restoreBox"
-    class="restore"
+    id="restoreInfo"
+    class="info"
     style="display:none">
 
-    Previous conversation found.
-    Restoring your chat...
+    Restoring your previous conversation...
 
   </div>
 
@@ -338,7 +345,7 @@ button{
 
 
 <!-- =====================================================
-     CHAT
+     CHAT WINDOW
 ====================================================== -->
 
 <section
@@ -403,7 +410,7 @@ button{
 <script>
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONFIG
 ========================================================= */
 
 const SUPABASE_URL =
@@ -413,10 +420,32 @@ const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
 
 
+/* =========================================================
+   IMPORTANT
+   PUBLIC CHAT HAS ITS OWN AUTH STORAGE.
+
+   OM / KRISHNA LOGIN USES THEIR NORMAL SESSION.
+
+   PUBLIC CHAT USES:
+   omkrishna_public_chat_auth
+========================================================= */
+
 const sb =
   window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+      auth:{
+        storageKey:
+          "omkrishna_public_chat_auth",
+
+        persistSession:true,
+
+        autoRefreshToken:true,
+
+        detectSessionInUrl:false
+      }
+    }
   );
 
 
@@ -425,12 +454,20 @@ const sb =
 ========================================================= */
 
 let target = null;
+
 let conversationId = null;
+
 let userId = null;
+
 let channel = null;
 
-const STORAGE_KEY =
-  "omkrishna_public_chat";
+
+/*
+ * Browser local storage for the public conversation.
+ */
+
+const CHAT_STORAGE_KEY =
+  "omkrishna_public_chat_state";
 
 
 /* =========================================================
@@ -467,6 +504,9 @@ const emailEl =
 const mobileEl =
   document.getElementById("mobile");
 
+const messageEl =
+  document.getElementById("message");
+
 
 /* =========================================================
    ERROR
@@ -474,15 +514,17 @@ const mobileEl =
 
 function showError(text){
 
-  errorEl.textContent = text;
+  errorEl.textContent =
+    text;
 
-  errorEl.style.display = "block";
+  errorEl.style.display =
+    "block";
 
 }
 
 
 /* =========================================================
-   SELECT OM / KRISHNA
+   SELECT TARGET
 ========================================================= */
 
 function selectTarget(t){
@@ -510,15 +552,22 @@ function selectTarget(t){
 
 
 /* =========================================================
-   ANONYMOUS SESSION
+   GET / CREATE PUBLIC ANONYMOUS SESSION
 ========================================================= */
 
-async function getVisitorSession(){
+async function getPublicUser(){
+
+  /*
+   * Because this client has its own
+   * storageKey, this session is completely
+   * separate from OM/Krishna login.
+   */
 
   const {
     data,
     error
-  } = await sb.auth.getSession();
+  } =
+    await sb.auth.getSession();
 
 
   if(error){
@@ -555,10 +604,10 @@ async function getVisitorSession(){
 
 
 /* =========================================================
-   SAVE CHAT STATE
+   SAVE STATE
 ========================================================= */
 
-function saveChatState(){
+function saveState(){
 
   const state = {
 
@@ -581,7 +630,7 @@ function saveChatState(){
 
 
   localStorage.setItem(
-    STORAGE_KEY,
+    CHAT_STORAGE_KEY,
     JSON.stringify(state)
   );
 
@@ -589,29 +638,34 @@ function saveChatState(){
 
 
 /* =========================================================
-   GET SAVED CHAT
+   GET SAVED STATE
 ========================================================= */
 
-function getSavedChat(){
+function getSavedState(){
 
   try{
 
-    const raw =
+    const value =
       localStorage.getItem(
-        STORAGE_KEY
+        CHAT_STORAGE_KEY
       );
 
-    if(!raw){
+    if(!value){
 
       return null;
 
     }
 
-    return JSON.parse(raw);
+    return JSON.parse(value);
 
   }
 
-  catch{
+  catch(error){
+
+    console.error(
+      "Saved state error:",
+      error
+    );
 
     return null;
 
@@ -643,13 +697,68 @@ function showChat(){
 
 
   document
-    .getElementById("visitorInfo")
+    .getElementById(
+      "visitorInfo"
+    )
     .textContent =
+
       nameEl.value.trim()
       + " • "
       + emailEl.value.trim()
       + " • "
       + mobileEl.value.trim();
+
+}
+
+
+/* =========================================================
+   FIND CHAT TARGET
+========================================================= */
+
+async function getChatTarget(){
+
+  const {
+    data,
+    error
+  } =
+    await sb
+
+      .from("chat_targets")
+
+      .select(
+        "target_key,user_id,display_name,active"
+      )
+
+      .eq(
+        "target_key",
+        target
+      )
+
+      .eq(
+        "active",
+        true
+      )
+
+      .maybeSingle();
+
+
+  if(error){
+
+    throw error;
+
+  }
+
+
+  if(!data){
+
+    throw new Error(
+      "Selected chat representative is not available."
+    );
+
+  }
+
+
+  return data;
 
 }
 
@@ -692,16 +801,31 @@ async function startChat(){
 
   try{
 
-    const u =
-      await getVisitorSession();
+    /*
+     * PUBLIC ANONYMOUS USER
+     */
+
+    const publicUser =
+      await getPublicUser();
 
 
     userId =
-      u.id;
+      publicUser.id;
 
 
     /*
-     * Create conversation.
+     * FIND OM OR KRISHNA PROFILE
+     *
+     * IMPORTANT:
+     * target_user_id is now explicitly saved.
+     */
+
+    const chatTarget =
+      await getChatTarget();
+
+
+    /*
+     * CREATE CONVERSATION
      */
 
     const {
@@ -730,12 +854,15 @@ async function startChat(){
             mobile,
 
           created_by:
-            u.id
+            publicUser.id,
+
+          target_user_id:
+            chatTarget.user_id
 
         })
 
         .select(
-          "id,target_user_id"
+          "id,target_user_id,created_by"
         )
 
         .single();
@@ -748,16 +875,43 @@ async function startChat(){
     }
 
 
+    /*
+     * VERIFY DATABASE RESULT
+     */
+
+    if(
+      data.created_by !==
+      publicUser.id
+    ){
+
+      throw new Error(
+        "Conversation security verification failed."
+      );
+
+    }
+
+
+    if(
+      data.target_user_id !==
+      chatTarget.user_id
+    ){
+
+      throw new Error(
+        "Chat target verification failed."
+      );
+
+    }
+
+
     conversationId =
       data.id;
 
 
     /*
-     * Save everything locally.
-     * Refresh will NOT lose the chat.
+     * SAVE FOR REFRESH
      */
 
-    saveChatState();
+    saveState();
 
 
     showChat();
@@ -765,21 +919,22 @@ async function startChat(){
 
     await loadMessages();
 
-    subscribeToMessages();
+    subscribeRealtime();
 
 
-    document
-      .getElementById("message")
-      .focus();
+    messageEl.focus();
 
   }
 
-  catch(e){
+  catch(error){
 
-    console.error(e);
+    console.error(
+      "START CHAT ERROR:",
+      error
+    );
 
     showError(
-      e.message ||
+      error.message ||
       "Unable to start chat."
     );
 
@@ -794,6 +949,13 @@ async function startChat(){
 
 async function loadMessages(){
 
+  if(!conversationId){
+
+    return;
+
+  }
+
+
   const {
     data,
     error
@@ -802,7 +964,9 @@ async function loadMessages(){
 
       .from("messages")
 
-      .select("*")
+      .select(
+        "id,conversation_id,sender_id,sender_name,message_text,message_type,created_at"
+      )
 
       .eq(
         "conversation_id",
@@ -819,6 +983,11 @@ async function loadMessages(){
 
   if(error){
 
+    console.error(
+      "LOAD MESSAGE ERROR:",
+      error
+    );
+
     showError(
       error.message
     );
@@ -832,21 +1001,18 @@ async function loadMessages(){
     "";
 
 
-  data.forEach(
-    message =>
-      addMessage(
-        message
-      )
+  (data || []).forEach(
+    addMessage
   );
 
 }
 
 
 /* =========================================================
-   REALTIME SUBSCRIPTION
+   REALTIME
 ========================================================= */
 
-function subscribeToMessages(){
+function subscribeRealtime(){
 
   if(!conversationId){
 
@@ -856,7 +1022,7 @@ function subscribeToMessages(){
 
 
   /*
-   * Remove old channel first.
+   * Remove previous channel.
    */
 
   if(channel){
@@ -865,6 +1031,8 @@ function subscribeToMessages(){
       channel
     );
 
+    channel = null;
+
   }
 
 
@@ -872,15 +1040,16 @@ function subscribeToMessages(){
     "Connecting...";
 
 
-  channel =
+  const channelName =
+    "public-chat-" +
+    conversationId;
 
+
+  channel =
     sb
 
       .channel(
-        "public-chat-" +
-        conversationId +
-        "-" +
-        Date.now()
+        channelName
       )
 
       .on(
@@ -889,8 +1058,11 @@ function subscribeToMessages(){
 
         {
           event:"INSERT",
+
           schema:"public",
+
           table:"messages",
+
           filter:
             "conversation_id=eq." +
             conversationId
@@ -898,10 +1070,18 @@ function subscribeToMessages(){
 
         payload => {
 
+          console.log(
+            "REALTIME MESSAGE:",
+            payload.new
+          );
+
+
           /*
-           * Do not duplicate our own
-           * message because sendMessage()
-           * already adds it.
+           * If message is from OM/Krishna,
+           * it will be added here.
+           *
+           * Own public message is already
+           * displayed by sendMessage().
            */
 
           if(
@@ -923,6 +1103,12 @@ function subscribeToMessages(){
 
         status => {
 
+          console.log(
+            "REALTIME STATUS:",
+            status
+          );
+
+
           if(
             status ===
             "SUBSCRIBED"
@@ -939,7 +1125,17 @@ function subscribeToMessages(){
           ){
 
             connectionEl.textContent =
-              "Live connection error";
+              "Live • Connection error";
+
+          }
+
+          else if(
+            status ===
+            "TIMED_OUT"
+          ){
+
+            connectionEl.textContent =
+              "Live • Timed out";
 
           }
 
@@ -959,19 +1155,13 @@ function subscribeToMessages(){
 
 
 /* =========================================================
-   SEND MESSAGE
+   SEND PUBLIC MESSAGE
 ========================================================= */
 
 async function sendMessage(){
 
-  const input =
-    document.getElementById(
-      "message"
-    );
-
-
   const text =
-    input.value.trim();
+    messageEl.value.trim();
 
 
   if(!text){
@@ -987,7 +1177,7 @@ async function sendMessage(){
   ){
 
     alert(
-      "Chat session is not ready. Please start the chat again."
+      "Chat session is not ready."
     );
 
     return;
@@ -1022,12 +1212,19 @@ async function sendMessage(){
 
       })
 
-      .select()
+      .select(
+        "id,conversation_id,sender_id,sender_name,message_text,message_type,created_at"
+      )
 
       .single();
 
 
   if(error){
+
+    console.error(
+      "SEND MESSAGE ERROR:",
+      error
+    );
 
     alert(
       error.message
@@ -1038,12 +1235,16 @@ async function sendMessage(){
   }
 
 
+  /*
+   * Show own message immediately.
+   */
+
   addMessage(
     data
   );
 
 
-  input.value =
+  messageEl.value =
     "";
 
 }
@@ -1055,32 +1256,43 @@ async function sendMessage(){
 
 function addMessage(m){
 
-  /*
-   * Prevent duplicate display.
-   */
-
-  const existing =
-    document.querySelector(
-      '[data-message-id="' +
-      m.id +
-      '"]'
-    );
-
-
-  if(existing){
+  if(!m){
 
     return;
 
   }
 
 
-  const d =
+  /*
+   * Prevent duplicate messages.
+   */
+
+  if(m.id){
+
+    const existing =
+      document.querySelector(
+        '[data-message-id="' +
+        m.id +
+        '"]'
+      );
+
+
+    if(existing){
+
+      return;
+
+    }
+
+  }
+
+
+  const wrapper =
     document.createElement(
       "div"
     );
 
 
-  d.className =
+  wrapper.className =
     "msg " +
     (
       m.sender_id === userId
@@ -1089,8 +1301,12 @@ function addMessage(m){
     );
 
 
-  d.dataset.messageId =
-    m.id;
+  if(m.id){
+
+    wrapper.dataset.messageId =
+      m.id;
+
+  }
 
 
   const sender =
@@ -1134,14 +1350,16 @@ function addMessage(m){
 
 
   meta.textContent =
-    new Date(
-      m.created_at
-    ).toLocaleString(
-      "en-IN"
-    );
+    m.created_at
+      ? new Date(
+          m.created_at
+        ).toLocaleString(
+          "en-IN"
+        )
+      : "";
 
 
-  d.append(
+  wrapper.append(
     sender,
     body,
     meta
@@ -1149,7 +1367,7 @@ function addMessage(m){
 
 
   messagesEl.appendChild(
-    d
+    wrapper
   );
 
 
@@ -1160,19 +1378,18 @@ function addMessage(m){
 
 
 /* =========================================================
-   RESTORE CHAT AFTER PAGE REFRESH
+   RESTORE AFTER REFRESH
 ========================================================= */
 
 async function restoreChat(){
 
   const saved =
-    getSavedChat();
+    getSavedState();
 
 
   if(
     !saved ||
-    !saved.conversationId ||
-    !saved.target
+    !saved.conversationId
   ){
 
     return;
@@ -1182,7 +1399,7 @@ async function restoreChat(){
 
   document
     .getElementById(
-      "restoreBox"
+      "restoreInfo"
     )
     .style.display =
       "block";
@@ -1190,18 +1407,22 @@ async function restoreChat(){
 
   try{
 
-    const u =
-      await getVisitorSession();
+    /*
+     * Get the SAME public anonymous
+     * session from the separate storage.
+     */
+
+    const publicUser =
+      await getPublicUser();
 
 
     userId =
-      u.id;
+      publicUser.id;
 
 
     /*
-     * Verify that this conversation
-     * really belongs to this browser's
-     * anonymous account.
+     * Verify that the conversation
+     * belongs to this public user.
      */
 
     const {
@@ -1212,9 +1433,16 @@ async function restoreChat(){
 
         .from("conversations")
 
-        .select(
-          "id,conversation_type,public_target,public_name,public_email,public_mobile,created_by"
-        )
+        .select(`
+          id,
+          conversation_type,
+          public_target,
+          public_name,
+          public_email,
+          public_mobile,
+          created_by,
+          target_user_id
+        `)
 
         .eq(
           "id",
@@ -1223,7 +1451,7 @@ async function restoreChat(){
 
         .eq(
           "created_by",
-          userId
+          publicUser.id
         )
 
         .maybeSingle();
@@ -1236,22 +1464,25 @@ async function restoreChat(){
     }
 
 
+    /*
+     * Conversation does not belong to
+     * current public anonymous session.
+     */
+
     if(!conversation){
 
-      /*
-       * Old/invalid local conversation.
-       */
-
       localStorage.removeItem(
-        STORAGE_KEY
+        CHAT_STORAGE_KEY
       );
+
 
       document
         .getElementById(
-          "restoreBox"
+          "restoreInfo"
         )
         .style.display =
           "none";
+
 
       return;
 
@@ -1259,7 +1490,7 @@ async function restoreChat(){
 
 
     /*
-     * Restore state.
+     * Restore values.
      */
 
     conversationId =
@@ -1274,10 +1505,12 @@ async function restoreChat(){
       saved.name ||
       "";
 
+
     emailEl.value =
       conversation.public_email ||
       saved.email ||
       "";
+
 
     mobileEl.value =
       conversation.public_mobile ||
@@ -1287,7 +1520,7 @@ async function restoreChat(){
 
     document
       .getElementById(
-        "restoreBox"
+        "restoreInfo"
       )
       .style.display =
         "none";
@@ -1298,20 +1531,22 @@ async function restoreChat(){
 
     await loadMessages();
 
-    subscribeToMessages();
+    subscribeRealtime();
+
 
   }
 
-  catch(e){
+  catch(error){
 
     console.error(
       "RESTORE ERROR:",
-      e
+      error
     );
+
 
     document
       .getElementById(
-        "restoreBox"
+        "restoreInfo"
       )
       .style.display =
         "none";
@@ -1330,4 +1565,5 @@ restoreChat();
 </script>
 
 </body>
+
 </html>
