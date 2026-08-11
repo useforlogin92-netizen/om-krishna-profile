@@ -568,13 +568,14 @@
   <header>
     <div class="brand-title">OM & KRISHNA</div>
     <nav>
-      <a href="#profile-section">Profile</a>
-      <a href="#stats-section">Statistics</a>
-      <a href="#portals">Portals</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#videos">Videos</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <a href="#profile-section">Profile</a>
+  <a href="#stats-section">Statistics</a>
+  <a href="#portals">Portals</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#videos">Videos</a>
+  <a href="#contact">Contact</a>
+  <a href="chat.html" class="nav-chat">💬 Chat</a>
+</nav>
   </header>
 
   <div class="container">
@@ -1146,15 +1147,62 @@
     text-align: center;
     margin-top: 15px;
     font-size: 14px;
-  }
+}
+
+/* ================= CHAT BUTTON ================= */
+
+.nav-chat{
+    color:#d4af37 !important;
+    border:1px solid #d4af37;
+    padding:7px 13px;
+    border-radius:20px;
+    margin-left:18px !important;
+    transition:all .3s ease;
+}
+
+.nav-chat:hover{
+    background:#d4af37;
+    color:#000 !important;
+}
+
+
+/* ================= FLOATING CHAT ================= */
+
+.floating-chat-btn{
+    position:fixed;
+    bottom:70px;
+    right:20px;
+    z-index:9998;
+    padding:11px 20px;
+    border-radius:25px;
+    border:1px solid #d4af37;
+    background:#d4af37;
+    color:#000;
+    text-decoration:none;
+    cursor:pointer;
+    font-weight:700;
+    font-size:13px;
+    box-shadow:0 5px 20px rgba(0,0,0,.4);
+    transition:all .3s ease;
+}
+
+.floating-chat-btn:hover{
+    background:#f3e5ab;
+    transform:translateY(-2px);
+}
+
+</style>
 </style>
 
 <a href="login.html" class="admin-login-btn">
     🔐 Login / Member Area
 </a>
 
-<div id="adminLoginOverlay" class="login-overlay">
-  <div class="login-box">
+<a href="chat.html" class="floating-chat-btn">
+    💬 Chat
+</a>
+
+<div id="adminLoginOverlay" class="login-overlay">  <div class="login-box">
 
     <h2>🔐 Admin Login</h2>
 
