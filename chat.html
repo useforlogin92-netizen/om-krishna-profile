@@ -1,14 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Public Chat | OM Krishna Group</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -17,7 +19,7 @@ body{
   margin:0;
   background:#0b1220;
   color:#eef2ff;
-  font-family:Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 header{
@@ -110,12 +112,19 @@ button{
 .chat{
   display:none;
   height:650px;
-  grid-template-rows:auto 1fr auto;
+  grid-template-rows:auto auto 1fr auto;
 }
 
 .chathead{
   padding:17px 20px;
   border-bottom:1px solid #263247;
+}
+
+.connection{
+  padding:10px 20px;
+  border-bottom:1px solid #263247;
+  color:#8fb5d8;
+  font-size:13px;
 }
 
 .messages{
@@ -134,6 +143,13 @@ button{
 .mine{
   margin-left:auto;
   background:#29485b;
+}
+
+.sender{
+  font-size:12px;
+  font-weight:700;
+  color:#d4af37;
+  margin-bottom:4px;
 }
 
 .meta{
@@ -171,11 +187,13 @@ button{
   font-size:13px;
 }
 
-.status{
-  padding:8px 20px;
-  font-size:12px;
-  color:#94a3b8;
-  border-bottom:1px solid #263247;
+.restore{
+  background:#102238;
+  border:1px solid #29445f;
+  color:#b9d5ef;
+  padding:12px;
+  border-radius:8px;
+  margin-top:12px;
 }
 
 @media(max-width:650px){
@@ -191,8 +209,11 @@ button{
   .msg{
     max-width:88%;
   }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -203,7 +224,9 @@ button{
     OM <span>Krishna</span> Group · Chat
   </div>
 
-  <button class="gold" onclick="location.href='index.html'">
+  <button
+    class="gold"
+    onclick="location.href='index.html'">
     Back
   </button>
 
@@ -212,149 +235,167 @@ button{
 
 <div class="wrap">
 
-  <div class="panel">
-
-    <!-- =====================================================
-         START PUBLIC CHAT
-    ====================================================== -->
-
-    <section id="start" class="start">
-
-      <h1>Who would you like to connect with?</h1>
-
-      <p class="muted">
-        Choose one: OM or Krishna.
-      </p>
+<div class="panel">
 
 
-      <div class="targets">
+<!-- =====================================================
+     START
+====================================================== -->
 
-        <button
-          id="omBtn"
-          class="target"
-          onclick="selectTarget('om')">
+<section
+  id="start"
+  class="start">
 
-          <b>🟢 OM</b>
-          <br>
+  <h1>
+    Who would you like to connect with?
+  </h1>
 
-          <span class="muted">
-            Connect with OM
-          </span>
-
-        </button>
-
-
-        <button
-          id="krishnaBtn"
-          class="target"
-          onclick="selectTarget('krishna')">
-
-          <b>🔵 Krishna</b>
-          <br>
-
-          <span class="muted">
-            Connect with Krishna
-          </span>
-
-        </button>
-
-      </div>
+  <p class="muted">
+    Choose one: OM or Krishna.
+  </p>
 
 
-      <div id="form" class="form">
+  <div class="targets">
 
-        <input
-          id="name"
-          placeholder="Full Name *"
-          autocomplete="name"
-        >
+    <button
+      id="omBtn"
+      class="target"
+      onclick="selectTarget('om')">
 
-        <input
-          id="email"
-          type="email"
-          placeholder="Email Address *"
-          autocomplete="email"
-        >
+      <b>🟢 OM</b>
+      <br>
 
-        <input
-          id="mobile"
-          placeholder="Mobile Number *"
-          autocomplete="tel"
-        >
+      <span class="muted">
+        Connect with OM
+      </span>
 
-        <button
-          class="gold"
-          onclick="startChat()">
-
-          Start Chat
-
-        </button>
-
-        <div
-          id="error"
-          class="error"
-          style="display:none">
-        </div>
-
-      </div>
-
-    </section>
+    </button>
 
 
-    <!-- =====================================================
-         CHAT SCREEN
-    ====================================================== -->
+    <button
+      id="krishnaBtn"
+      class="target"
+      onclick="selectTarget('krishna')">
 
-    <section id="chat" class="chat">
+      <b>🔵 Krishna</b>
+      <br>
 
-      <div class="chathead">
+      <span class="muted">
+        Connect with Krishna
+      </span>
 
-        <b id="title"></b>
-
-        <div class="muted">
-          Private public conversation.
-        </div>
-
-      </div>
-
-
-      <div
-        id="connectionStatus"
-        class="status">
-
-        Connecting...
-
-      </div>
-
-
-      <div
-        id="messages"
-        class="messages">
-      </div>
-
-
-      <div class="composer">
-
-        <input
-          id="message"
-          placeholder="Type a message..."
-          autocomplete="off"
-          onkeydown="if(event.key==='Enter')sendMessage()"
-        >
-
-        <button
-          class="gold"
-          onclick="sendMessage()">
-
-          Send
-
-        </button>
-
-      </div>
-
-    </section>
+    </button>
 
   </div>
+
+
+  <div
+    id="restoreBox"
+    class="restore"
+    style="display:none">
+
+    Previous conversation found.
+    Restoring your chat...
+
+  </div>
+
+
+  <div
+    id="form"
+    class="form">
+
+    <input
+      id="name"
+      placeholder="Full Name *">
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Email Address *">
+
+    <input
+      id="mobile"
+      placeholder="Mobile Number *">
+
+    <button
+      class="gold"
+      onclick="startChat()">
+
+      Start Chat
+
+    </button>
+
+
+    <div
+      id="error"
+      class="error"
+      style="display:none">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CHAT
+====================================================== -->
+
+<section
+  id="chat"
+  class="chat">
+
+
+  <div class="chathead">
+
+    <b id="title">
+    </b>
+
+    <div
+      id="visitorInfo"
+      class="muted">
+    </div>
+
+  </div>
+
+
+  <div
+    id="connection"
+    class="connection">
+
+    Connecting...
+
+  </div>
+
+
+  <div
+    id="messages"
+    class="messages">
+  </div>
+
+
+  <div class="composer">
+
+    <input
+      id="message"
+      placeholder="Type a message..."
+      onkeydown="if(event.key==='Enter') sendMessage()">
+
+    <button
+      class="gold"
+      onclick="sendMessage()">
+
+      Send
+
+    </button>
+
+  </div>
+
+
+</section>
+
+
+</div>
 
 </div>
 
@@ -365,23 +406,79 @@ button{
    SUPABASE
 ========================================================= */
 
-const sb = supabase.createClient(
-  "https://keehbqlaxiojtkpldgry.supabase.co",
-  "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T"
-);
+const SUPABASE_URL =
+  "https://keehbqlaxiojtkpldgry.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
+
+
+const sb =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
 
 /* =========================================================
-   GLOBAL VARIABLES
+   STATE
 ========================================================= */
 
 let target = null;
-
 let conversationId = null;
-
 let userId = null;
-
 let channel = null;
+
+const STORAGE_KEY =
+  "omkrishna_public_chat";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const startEl =
+  document.getElementById("start");
+
+const chatEl =
+  document.getElementById("chat");
+
+const formEl =
+  document.getElementById("form");
+
+const errorEl =
+  document.getElementById("error");
+
+const messagesEl =
+  document.getElementById("messages");
+
+const titleEl =
+  document.getElementById("title");
+
+const connectionEl =
+  document.getElementById("connection");
+
+const nameEl =
+  document.getElementById("name");
+
+const emailEl =
+  document.getElementById("email");
+
+const mobileEl =
+  document.getElementById("mobile");
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(text){
+
+  errorEl.textContent = text;
+
+  errorEl.style.display = "block";
+
+}
 
 
 /* =========================================================
@@ -393,104 +490,189 @@ function selectTarget(t){
   target = t;
 
   document
-    .getElementById('omBtn')
+    .getElementById("omBtn")
     .classList.toggle(
-      'selected',
-      t === 'om'
+      "selected",
+      t === "om"
     );
 
   document
-    .getElementById('krishnaBtn')
+    .getElementById("krishnaBtn")
     .classList.toggle(
-      'selected',
-      t === 'krishna'
+      "selected",
+      t === "krishna"
     );
 
-  document
-    .getElementById('form')
-    .style.display = 'grid';
+  formEl.style.display =
+    "grid";
 
-  document
-    .getElementById('error')
-    .style.display = 'none';
 }
 
 
 /* =========================================================
-   ERROR MESSAGE
+   ANONYMOUS SESSION
 ========================================================= */
 
-function showError(message){
+async function getVisitorSession(){
 
-  const errorBox =
-    document.getElementById('error');
-
-  errorBox.textContent = message;
-
-  errorBox.style.display = 'block';
-}
+  const {
+    data,
+    error
+  } = await sb.auth.getSession();
 
 
-/* =========================================================
-   PUBLIC USER SESSION
-========================================================= */
+  if(error){
 
-async function session(){
-
-  const current =
-    await sb.auth.getSession();
-
-  if(current.data.session){
-
-    return current.data.session.user;
+    throw error;
 
   }
 
 
-  const anonymous =
+  if(data.session){
+
+    return data.session.user;
+
+  }
+
+
+  const {
+    data:anonymousData,
+    error:anonymousError
+  } =
     await sb.auth.signInAnonymously();
 
-  if(anonymous.error){
 
-    throw anonymous.error;
+  if(anonymousError){
+
+    throw anonymousError;
 
   }
 
-  return anonymous.data.user;
+
+  return anonymousData.user;
+
 }
 
 
 /* =========================================================
-   START CHAT
+   SAVE CHAT STATE
+========================================================= */
+
+function saveChatState(){
+
+  const state = {
+
+    conversationId:
+      conversationId,
+
+    target:
+      target,
+
+    name:
+      nameEl.value.trim(),
+
+    email:
+      emailEl.value.trim(),
+
+    mobile:
+      mobileEl.value.trim()
+
+  };
+
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(state)
+  );
+
+}
+
+
+/* =========================================================
+   GET SAVED CHAT
+========================================================= */
+
+function getSavedChat(){
+
+  try{
+
+    const raw =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+    if(!raw){
+
+      return null;
+
+    }
+
+    return JSON.parse(raw);
+
+  }
+
+  catch{
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW CHAT
+========================================================= */
+
+function showChat(){
+
+  startEl.style.display =
+    "none";
+
+  chatEl.style.display =
+    "grid";
+
+
+  titleEl.textContent =
+    "Chat with " +
+    (
+      target === "om"
+        ? "OM"
+        : "Krishna"
+    );
+
+
+  document
+    .getElementById("visitorInfo")
+    .textContent =
+      nameEl.value.trim()
+      + " • "
+      + emailEl.value.trim()
+      + " • "
+      + mobileEl.value.trim();
+
+}
+
+
+/* =========================================================
+   START NEW CHAT
 ========================================================= */
 
 async function startChat(){
 
-  const errorBox =
-    document.getElementById('error');
-
-  errorBox.style.display = 'none';
+  errorEl.style.display =
+    "none";
 
 
   const name =
-    document.getElementById('name')
-      .value
-      .trim();
+    nameEl.value.trim();
 
   const email =
-    document.getElementById('email')
-      .value
-      .trim();
+    emailEl.value.trim();
 
   const mobile =
-    document.getElementById('mobile')
-      .value
-      .trim();
+    mobileEl.value.trim();
 
-
-  /* -----------------------------------------
-     VALIDATION
-  ------------------------------------------ */
 
   if(
     !target ||
@@ -500,71 +682,40 @@ async function startChat(){
   ){
 
     showError(
-      'Please select OM/Krishna and enter Full Name, Email and Mobile.'
+      "Please select OM/Krishna and enter Full Name, Email and Mobile."
     );
 
     return;
+
   }
 
 
   try{
 
-    /* -----------------------------------------
-       CREATE / GET PUBLIC SESSION
-    ------------------------------------------ */
-
     const u =
-      await session();
-
-    userId = u.id;
+      await getVisitorSession();
 
 
-    /* -----------------------------------------
-       FIND REAL OM / KRISHNA ACCOUNT
-    ------------------------------------------ */
+    userId =
+      u.id;
 
-    const targetResult =
+
+    /*
+     * Create conversation.
+     */
+
+    const {
+      data,
+      error
+    } =
       await sb
-        .from('chat_targets')
-        .select(
-          'user_id, display_name'
-        )
-        .eq(
-          'target_key',
-          target
-        )
-        .eq(
-          'active',
-          true
-        )
-        .single();
 
+        .from("conversations")
 
-    if(targetResult.error){
-
-      throw targetResult.error;
-
-    }
-
-
-    const targetUserId =
-      targetResult.data.user_id;
-
-    const targetDisplayName =
-      targetResult.data.display_name;
-
-
-    /* -----------------------------------------
-       CREATE CONVERSATION
-    ------------------------------------------ */
-
-    const conversation =
-      await sb
-        .from('conversations')
         .insert({
 
           conversation_type:
-            'public',
+            "public",
 
           public_target:
             target,
@@ -579,121 +730,57 @@ async function startChat(){
             mobile,
 
           created_by:
-            userId,
-
-          target_user_id:
-            targetUserId
+            u.id
 
         })
-        .select('id')
+
+        .select(
+          "id,target_user_id"
+        )
+
         .single();
 
 
-    if(conversation.error){
+    if(error){
 
-      throw conversation.error;
+      throw error;
 
     }
 
 
     conversationId =
-      conversation.data.id;
+      data.id;
 
 
-    /* -----------------------------------------
-       OPEN CHAT
-    ------------------------------------------ */
+    /*
+     * Save everything locally.
+     * Refresh will NOT lose the chat.
+     */
 
-    document
-      .getElementById('start')
-      .style.display = 'none';
-
-    document
-      .getElementById('chat')
-      .style.display = 'grid';
+    saveChatState();
 
 
-    document
-      .getElementById('title')
-      .textContent =
-        'Chat with ' +
-        targetDisplayName;
+    showChat();
+
+
+    await loadMessages();
+
+    subscribeToMessages();
 
 
     document
-      .getElementById('connectionStatus')
-      .textContent =
-        'Connected';
-
-
-    /* -----------------------------------------
-       LOAD OLD MESSAGES
-    ------------------------------------------ */
-
-    await load();
-
-
-    /* -----------------------------------------
-       REALTIME MESSAGE LISTENER
-    ------------------------------------------ */
-
-    channel =
-      sb
-        .channel(
-          'public-chat-' +
-          conversationId
-        )
-        .on(
-          'postgres_changes',
-          {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'messages',
-            filter:
-              'conversation_id=eq.' +
-              conversationId
-          },
-          payload => {
-
-            if(
-              payload.new.sender_id !== userId
-            ){
-
-              add(payload.new);
-
-            }
-
-          }
-        )
-        .subscribe(
-          status => {
-
-            if(status === 'SUBSCRIBED'){
-
-              document
-                .getElementById(
-                  'connectionStatus'
-                )
-                .textContent =
-                  'Live • Connected';
-
-            }
-
-          }
-        );
+      .getElementById("message")
+      .focus();
 
   }
 
   catch(e){
 
-    console.error(
-      'START CHAT ERROR:',
-      e
-    );
+    console.error(e);
 
     showError(
       e.message ||
-      'Unable to start chat. Please try again.'
+      "Unable to start chat."
     );
 
   }
@@ -705,28 +792,35 @@ async function startChat(){
    LOAD MESSAGES
 ========================================================= */
 
-async function load(){
+async function loadMessages(){
 
-  const result =
+  const {
+    data,
+    error
+  } =
     await sb
-      .from('messages')
-      .select('*')
+
+      .from("messages")
+
+      .select("*")
+
       .eq(
-        'conversation_id',
+        "conversation_id",
         conversationId
       )
+
       .order(
-        'created_at',
+        "created_at",
         {
           ascending:true
         }
       );
 
 
-  if(result.error){
+  if(error){
 
     showError(
-      result.error.message
+      error.message
     );
 
     return;
@@ -734,17 +828,132 @@ async function load(){
   }
 
 
-  const box =
-    document.getElementById(
-      'messages'
+  messagesEl.innerHTML =
+    "";
+
+
+  data.forEach(
+    message =>
+      addMessage(
+        message
+      )
+  );
+
+}
+
+
+/* =========================================================
+   REALTIME SUBSCRIPTION
+========================================================= */
+
+function subscribeToMessages(){
+
+  if(!conversationId){
+
+    return;
+
+  }
+
+
+  /*
+   * Remove old channel first.
+   */
+
+  if(channel){
+
+    sb.removeChannel(
+      channel
     );
 
-  box.innerHTML = '';
+  }
 
 
-  result.data.forEach(
-    message => add(message)
-  );
+  connectionEl.textContent =
+    "Connecting...";
+
+
+  channel =
+
+    sb
+
+      .channel(
+        "public-chat-" +
+        conversationId +
+        "-" +
+        Date.now()
+      )
+
+      .on(
+
+        "postgres_changes",
+
+        {
+          event:"INSERT",
+          schema:"public",
+          table:"messages",
+          filter:
+            "conversation_id=eq." +
+            conversationId
+        },
+
+        payload => {
+
+          /*
+           * Do not duplicate our own
+           * message because sendMessage()
+           * already adds it.
+           */
+
+          if(
+            payload.new.sender_id !==
+            userId
+          ){
+
+            addMessage(
+              payload.new
+            );
+
+          }
+
+        }
+
+      )
+
+      .subscribe(
+
+        status => {
+
+          if(
+            status ===
+            "SUBSCRIBED"
+          ){
+
+            connectionEl.textContent =
+              "Live • Connected";
+
+          }
+
+          else if(
+            status ===
+            "CHANNEL_ERROR"
+          ){
+
+            connectionEl.textContent =
+              "Live connection error";
+
+          }
+
+          else{
+
+            connectionEl.textContent =
+              "Live • " +
+              status;
+
+          }
+
+        }
+
+      );
 
 }
 
@@ -757,27 +966,43 @@ async function sendMessage(){
 
   const input =
     document.getElementById(
-      'message'
+      "message"
     );
+
 
   const text =
     input.value.trim();
 
 
-  if(
-    !text ||
-    !conversationId ||
-    !userId
-  ){
+  if(!text){
 
     return;
 
   }
 
 
-  const result =
+  if(
+    !conversationId ||
+    !userId
+  ){
+
+    alert(
+      "Chat session is not ready. Please start the chat again."
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
     await sb
-      .from('messages')
+
+      .from("messages")
+
       .insert({
 
         conversation_id:
@@ -787,26 +1012,25 @@ async function sendMessage(){
           userId,
 
         sender_name:
-          document
-            .getElementById('name')
-            .value
-            .trim(),
+          nameEl.value.trim(),
 
         message_text:
           text,
 
         message_type:
-          'text'
+          "text"
 
       })
+
       .select()
+
       .single();
 
 
-  if(result.error){
+  if(error){
 
     alert(
-      result.error.message
+      error.message
     );
 
     return;
@@ -814,9 +1038,13 @@ async function sendMessage(){
   }
 
 
-  add(result.data);
+  addMessage(
+    data
+  );
 
-  input.value = '';
+
+  input.value =
+    "";
 
 }
 
@@ -825,86 +1053,279 @@ async function sendMessage(){
    DISPLAY MESSAGE
 ========================================================= */
 
-function add(message){
+function addMessage(m){
 
-  const box =
-    document.getElementById(
-      'messages'
+  /*
+   * Prevent duplicate display.
+   */
+
+  const existing =
+    document.querySelector(
+      '[data-message-id="' +
+      m.id +
+      '"]'
     );
 
 
-  const div =
+  if(existing){
+
+    return;
+
+  }
+
+
+  const d =
     document.createElement(
-      'div'
+      "div"
     );
 
 
-  div.className =
-    'msg ' +
+  d.className =
+    "msg " +
     (
-      message.sender_id === userId
-        ? 'mine'
-        : ''
+      m.sender_id === userId
+        ? "mine"
+        : ""
+    );
+
+
+  d.dataset.messageId =
+    m.id;
+
+
+  const sender =
+    document.createElement(
+      "div"
+    );
+
+
+  sender.className =
+    "sender";
+
+
+  sender.textContent =
+    m.sender_name ||
+    (
+      m.sender_id === userId
+        ? nameEl.value.trim()
+        : "OM / Krishna"
     );
 
 
   const body =
     document.createElement(
-      'div'
+      "div"
     );
 
+
   body.textContent =
-    message.message_text || '';
+    m.message_text ||
+    "";
 
 
   const meta =
     document.createElement(
-      'div'
+      "div"
     );
 
+
   meta.className =
-    'meta';
+    "meta";
 
 
   meta.textContent =
     new Date(
-      message.created_at
+      m.created_at
     ).toLocaleString(
-      'en-IN'
+      "en-IN"
     );
 
 
-  div.appendChild(body);
+  d.append(
+    sender,
+    body,
+    meta
+  );
 
-  div.appendChild(meta);
 
-  box.appendChild(div);
+  messagesEl.appendChild(
+    d
+  );
 
 
-  box.scrollTop =
-    box.scrollHeight;
+  messagesEl.scrollTop =
+    messagesEl.scrollHeight;
 
 }
 
 
 /* =========================================================
-   CLEANUP
+   RESTORE CHAT AFTER PAGE REFRESH
 ========================================================= */
 
-window.addEventListener(
-  'beforeunload',
-  () => {
+async function restoreChat(){
 
-    if(channel){
+  const saved =
+    getSavedChat();
 
-      sb.removeChannel(
-        channel
-      );
+
+  if(
+    !saved ||
+    !saved.conversationId ||
+    !saved.target
+  ){
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "restoreBox"
+    )
+    .style.display =
+      "block";
+
+
+  try{
+
+    const u =
+      await getVisitorSession();
+
+
+    userId =
+      u.id;
+
+
+    /*
+     * Verify that this conversation
+     * really belongs to this browser's
+     * anonymous account.
+     */
+
+    const {
+      data:conversation,
+      error
+    } =
+      await sb
+
+        .from("conversations")
+
+        .select(
+          "id,conversation_type,public_target,public_name,public_email,public_mobile,created_by"
+        )
+
+        .eq(
+          "id",
+          saved.conversationId
+        )
+
+        .eq(
+          "created_by",
+          userId
+        )
+
+        .maybeSingle();
+
+
+    if(error){
+
+      throw error;
 
     }
 
+
+    if(!conversation){
+
+      /*
+       * Old/invalid local conversation.
+       */
+
+      localStorage.removeItem(
+        STORAGE_KEY
+      );
+
+      document
+        .getElementById(
+          "restoreBox"
+        )
+        .style.display =
+          "none";
+
+      return;
+
+    }
+
+
+    /*
+     * Restore state.
+     */
+
+    conversationId =
+      conversation.id;
+
+    target =
+      conversation.public_target;
+
+
+    nameEl.value =
+      conversation.public_name ||
+      saved.name ||
+      "";
+
+    emailEl.value =
+      conversation.public_email ||
+      saved.email ||
+      "";
+
+    mobileEl.value =
+      conversation.public_mobile ||
+      saved.mobile ||
+      "";
+
+
+    document
+      .getElementById(
+        "restoreBox"
+      )
+      .style.display =
+        "none";
+
+
+    showChat();
+
+
+    await loadMessages();
+
+    subscribeToMessages();
+
   }
-);
+
+  catch(e){
+
+    console.error(
+      "RESTORE ERROR:",
+      e
+    );
+
+    document
+      .getElementById(
+        "restoreBox"
+      )
+      .style.display =
+        "none";
+
+  }
+
+}
+
+
+/* =========================================================
+   PAGE START
+========================================================= */
+
+restoreChat();
 
 </script>
 
