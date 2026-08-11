@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Dashboard | OM Krishna Group</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0b1220;color:#eef2ff;min-height:100vh}
+header{background:#111827;border-bottom:1px solid #263247;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:22px;font-weight:700}.brand span{color:#d4af37}
+.logout{border:1px solid #d4af37;background:transparent;color:#f5d76e;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700}
+main{max-width:1050px;margin:40px auto;padding:0 20px}
+.hero{background:linear-gradient(135deg,#17233b,#0f172a);border:1px solid #263247;border-radius:18px;padding:35px}
+.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#aebbd2}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+.card{background:#111827;border:1px solid #263247;border-radius:14px;padding:22px}
+.card h3{margin:0 0 16px;color:#d4af37}
+.row{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid #263247;padding:11px 0}
+.row:last-child{border-bottom:0}.label{color:#94a3b8}.value{font-weight:600;text-align:right;word-break:break-word}
+.badge{display:inline-block;padding:6px 11px;border-radius:999px;background:#123b2c;color:#55e6aa;font-size:13px}
+.error{color:#ff8f8f;background:#3a1717;border:1px solid #6b2525;padding:14px;border-radius:10px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hero h1{font-size:28px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">OM <span>Krishna</span> Group</div>
+  <button class="logout" id="logoutBtn">Logout</button>
+</header>
+<main>
+  <section class="hero">
+    <h1>Welcome, <span id="welcomeName">Member</span></h1>
+    <p>Welcome to your OM Krishna Group member area.</p>
+  </section>
+  <div id="errorBox" style="display:none;margin-top:20px"></div>
+  <section class="grid">
+    <div class="card">
+      <h3>Account Information</h3>
+      <div class="row"><span class="label">Full Name</span><span class="value" id="fullName">—</span></div>
+      <div class="row"><span class="label">Email</span><span class="value" id="email">—</span></div>
+      <div class="row"><span class="label">Mobile</span><span class="value" id="mobile">—</span></div>
+    </div>
+    <div class="card">
+      <h3>Account Status</h3>
+      <div class="row"><span class="label">Status</span><span class="value"><span class="badge" id="status">Active</span></span></div>
+      <div class="row"><span class="label">Role</span><span class="value" id="role">User</span></div>
+      <div class="row"><span class="label">Member Since</span><span class="value" id="createdAt">—</span></div>
+    </div>
+  </section>
+</main>
+<script>
+const SUPABASE_URL="https://keehbqlaxiojtkpldgry.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+const $=id=>document.getElementById(id);
+function showError(text){$("errorBox").style.display="block";$("errorBox").className="error";$("errorBox").textContent=text}
+async function loadDashboard(){
+ const {data:{user},error:authError}=await supabaseClient.auth.getUser();
+ if(authError||!user){window.location.href="login.html";return}
+ const {data:profile,error}=await supabaseClient.from("profiles")
+  .select("full_name,mobile_number,email_address,role,status,created_at")
+  .eq("id",user.id).single();
+ if(error){console.error(error);showError("Your login session is active, but your profile could not be loaded.");return}
+ $("welcomeName").textContent=profile.full_name||user.user_metadata?.full_name||"Member";
+ $("fullName").textContent=profile.full_name||"—";
+ $("email").textContent=profile.email_address||user.email||"—";
+ $("mobile").textContent=profile.mobile_number||"—";
+ $("role").textContent=profile.role||"user";
+ $("status").textContent=profile.status||"active";
+ if(profile.created_at)$("createdAt").textContent=new Date(profile.created_at).toLocaleDateString("en-IN");
+}
+$("logoutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();window.location.href="login.html"});
+loadDashboard();
+</script>
+</body>
+</html>
