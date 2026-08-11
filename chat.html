@@ -1,37 +1,912 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Public Chat | OM Krishna Group</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1220;color:#eef2ff;font-family:Arial,sans-serif}
-header{height:64px;background:#111827;border-bottom:1px solid #263247;display:flex;align-items:center;justify-content:space-between;padding:0 22px}
-.brand{font-weight:800;font-size:20px}.brand span{color:#d4af37}button{cursor:pointer}
-.gold{background:#d4af37;color:#111;border:0;border-radius:8px;padding:11px 18px;font-weight:700}
-.wrap{max-width:850px;margin:28px auto;padding:0 16px}.panel{background:#111827;border:1px solid #263247;border-radius:16px;overflow:hidden}
-.start{padding:28px}.targets{display:flex;gap:14px;margin:20px 0}.target{flex:1;padding:22px;border:1px solid #334155;border-radius:12px;background:#0f172a;color:#fff;text-align:left}.target.selected{border-color:#d4af37;box-shadow:0 0 0 1px #d4af37}
-.form{display:none;gap:12px;max-width:620px}.form input{background:#0b1220;color:#fff;border:1px solid #334155;border-radius:8px;padding:12px;width:100%}
-.chat{display:none;height:650px;grid-template-rows:auto 1fr auto}.chathead{padding:17px 20px;border-bottom:1px solid #263247}.messages{padding:20px;overflow:auto}.msg{max-width:72%;margin:8px 0;padding:10px 13px;border-radius:12px;background:#1b2638}.mine{margin-left:auto;background:#29485b}.meta{font-size:11px;color:#94a3b8;margin-top:5px}.composer{padding:14px;border-top:1px solid #263247;display:flex;gap:8px}.composer input{flex:1;background:#0b1220;color:#fff;border:1px solid #334155;border-radius:9px;padding:12px}.error{color:#ffb4b4;background:#35191b;padding:12px;border-radius:8px;margin-top:12px}.muted{color:#94a3b8;font-size:13px}
-@media(max-width:650px){.targets{flex-direction:column}.chat{height:calc(100vh - 92px)}}
-</style></head><body>
-<header><div class="brand">OM <span>Krishna</span> Group · Chat</div><button class="gold" onclick="location.href='index.html'">Back</button></header>
-<div class="wrap"><div class="panel">
-<section id="start" class="start"><h1>Who would you like to connect with?</h1>
-<p class="muted">Choose one: OM or Krishna.</p>
-<div class="targets"><button id="omBtn" class="target" onclick="selectTarget('om')"><b>🟢 OM</b><br><span class="muted">Connect with OM</span></button>
-<button id="krishnaBtn" class="target" onclick="selectTarget('krishna')"><b>🔵 Krishna</b><br><span class="muted">Connect with Krishna</span></button></div>
-<div id="form" class="form"><input id="name" placeholder="Full Name *"><input id="email" type="email" placeholder="Email Address *"><input id="mobile" placeholder="Mobile Number *"><button class="gold" onclick="startChat()">Start Chat</button><div id="error" class="error" style="display:none"></div></div></section>
-<section id="chat" class="chat"><div class="chathead"><b id="title"></b><div class="muted">Private public conversation.</div></div><div id="messages" class="messages"></div>
-<div class="composer"><input id="message" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="gold" onclick="sendMessage()">Send</button></div></section>
-</div></div>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#0b1220;
+  color:#eef2ff;
+  font-family:Arial,sans-serif;
+}
+
+header{
+  height:64px;
+  background:#111827;
+  border-bottom:1px solid #263247;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 22px;
+}
+
+.brand{
+  font-weight:800;
+  font-size:20px;
+}
+
+.brand span{
+  color:#d4af37;
+}
+
+button{
+  cursor:pointer;
+}
+
+.gold{
+  background:#d4af37;
+  color:#111;
+  border:0;
+  border-radius:8px;
+  padding:11px 18px;
+  font-weight:700;
+}
+
+.wrap{
+  max-width:850px;
+  margin:28px auto;
+  padding:0 16px;
+}
+
+.panel{
+  background:#111827;
+  border:1px solid #263247;
+  border-radius:16px;
+  overflow:hidden;
+}
+
+/* START SCREEN */
+
+.start{
+  padding:28px;
+}
+
+.targets{
+  display:flex;
+  gap:14px;
+  margin:20px 0;
+}
+
+.target{
+  flex:1;
+  padding:22px;
+  border:1px solid #334155;
+  border-radius:12px;
+  background:#0f172a;
+  color:#fff;
+  text-align:left;
+}
+
+.target.selected{
+  border-color:#d4af37;
+  box-shadow:0 0 0 1px #d4af37;
+}
+
+.form{
+  display:none;
+  gap:12px;
+  max-width:620px;
+}
+
+.form input{
+  background:#0b1220;
+  color:#fff;
+  border:1px solid #334155;
+  border-radius:8px;
+  padding:12px;
+  width:100%;
+}
+
+.chat{
+  display:none;
+  height:650px;
+  grid-template-rows:auto 1fr auto;
+}
+
+.chathead{
+  padding:17px 20px;
+  border-bottom:1px solid #263247;
+}
+
+.messages{
+  padding:20px;
+  overflow:auto;
+}
+
+.msg{
+  max-width:72%;
+  margin:8px 0;
+  padding:10px 13px;
+  border-radius:12px;
+  background:#1b2638;
+}
+
+.mine{
+  margin-left:auto;
+  background:#29485b;
+}
+
+.meta{
+  font-size:11px;
+  color:#94a3b8;
+  margin-top:5px;
+}
+
+.composer{
+  padding:14px;
+  border-top:1px solid #263247;
+  display:flex;
+  gap:8px;
+}
+
+.composer input{
+  flex:1;
+  background:#0b1220;
+  color:#fff;
+  border:1px solid #334155;
+  border-radius:9px;
+  padding:12px;
+}
+
+.error{
+  color:#ffb4b4;
+  background:#35191b;
+  padding:12px;
+  border-radius:8px;
+  margin-top:12px;
+}
+
+.muted{
+  color:#94a3b8;
+  font-size:13px;
+}
+
+.status{
+  padding:8px 20px;
+  font-size:12px;
+  color:#94a3b8;
+  border-bottom:1px solid #263247;
+}
+
+@media(max-width:650px){
+
+  .targets{
+    flex-direction:column;
+  }
+
+  .chat{
+    height:calc(100vh - 92px);
+  }
+
+  .msg{
+    max-width:88%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="brand">
+    OM <span>Krishna</span> Group · Chat
+  </div>
+
+  <button class="gold" onclick="location.href='index.html'">
+    Back
+  </button>
+
+</header>
+
+
+<div class="wrap">
+
+  <div class="panel">
+
+    <!-- =====================================================
+         START PUBLIC CHAT
+    ====================================================== -->
+
+    <section id="start" class="start">
+
+      <h1>Who would you like to connect with?</h1>
+
+      <p class="muted">
+        Choose one: OM or Krishna.
+      </p>
+
+
+      <div class="targets">
+
+        <button
+          id="omBtn"
+          class="target"
+          onclick="selectTarget('om')">
+
+          <b>🟢 OM</b>
+          <br>
+
+          <span class="muted">
+            Connect with OM
+          </span>
+
+        </button>
+
+
+        <button
+          id="krishnaBtn"
+          class="target"
+          onclick="selectTarget('krishna')">
+
+          <b>🔵 Krishna</b>
+          <br>
+
+          <span class="muted">
+            Connect with Krishna
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <div id="form" class="form">
+
+        <input
+          id="name"
+          placeholder="Full Name *"
+          autocomplete="name"
+        >
+
+        <input
+          id="email"
+          type="email"
+          placeholder="Email Address *"
+          autocomplete="email"
+        >
+
+        <input
+          id="mobile"
+          placeholder="Mobile Number *"
+          autocomplete="tel"
+        >
+
+        <button
+          class="gold"
+          onclick="startChat()">
+
+          Start Chat
+
+        </button>
+
+        <div
+          id="error"
+          class="error"
+          style="display:none">
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHAT SCREEN
+    ====================================================== -->
+
+    <section id="chat" class="chat">
+
+      <div class="chathead">
+
+        <b id="title"></b>
+
+        <div class="muted">
+          Private public conversation.
+        </div>
+
+      </div>
+
+
+      <div
+        id="connectionStatus"
+        class="status">
+
+        Connecting...
+
+      </div>
+
+
+      <div
+        id="messages"
+        class="messages">
+      </div>
+
+
+      <div class="composer">
+
+        <input
+          id="message"
+          placeholder="Type a message..."
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter')sendMessage()"
+        >
+
+        <button
+          class="gold"
+          onclick="sendMessage()">
+
+          Send
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+
 <script>
-const sb=supabase.createClient("https://keehbqlaxiojtkpldgry.supabase.co","sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T");
-let target=null,conversationId=null,userId=null,channel=null;
-function selectTarget(t){target=t;omBtn.classList.toggle('selected',t==='om');krishnaBtn.classList.toggle('selected',t==='krishna');form.style.display='grid'}
-function showError(x){error.textContent=x;error.style.display='block'}
-async function session(){let r=await sb.auth.getSession();if(r.data.session)return r.data.session.user;let a=await sb.auth.signInAnonymously();if(a.error)throw a.error;return a.data.user}
-async function startChat(){error.style.display='none';let nameEl=document.getElementById('name'),emailEl=document.getElementById('email'),mobileEl=document.getElementById('mobile');let name=nameEl.value.trim(),email=emailEl.value.trim(),mobile=mobileEl.value.trim();if(!target||!name||!email||!mobile)return showError('Please select OM/Krishna and enter Full Name, Email and Mobile.');try{let u=await session();userId=u.id;let r=await sb.from('conversations').insert({conversation_type:'public',public_target:target,public_name:name,public_email:email,public_mobile:mobile,created_by:u.id}).select('id').single();if(r.error)throw r.error;conversationId=r.data.id;start.style.display='none';chat.style.display='grid';title.textContent='Chat with '+(target==='om'?'OM':'Krishna');await load();channel=sb.channel('public-chat-'+conversationId).on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'conversation_id=eq.'+conversationId},p=>{if(p.new.sender_id!==userId)add(p.new)}).subscribe()}catch(e){console.error(e);showError(e.message||'Unable to start chat. Enable Anonymous Sign-Ins in Supabase Auth settings if required.')}}
-async function load(){let r=await sb.from('messages').select('*').eq('conversation_id',conversationId).order('created_at',{ascending:true});if(r.error)return showError(r.error.message);messages.innerHTML='';r.data.forEach(add)}
-async function sendMessage(){let input=document.getElementById('message'),text=input.value.trim();if(!text)return;let r=await sb.from('messages').insert({conversation_id:conversationId,sender_id:userId,sender_name:document.getElementById('name').value.trim(),message_text:text,message_type:'text'}).select().single();if(r.error)return alert(r.error.message);add(r.data);input.value=''}
-function add(m){let d=document.createElement('div');d.className='msg '+(m.sender_id===userId?'mine':'');let body=document.createElement('div');body.textContent=m.message_text||'';let meta=document.createElement('div');meta.className='meta';meta.textContent=new Date(m.created_at).toLocaleString('en-IN');d.append(body,meta);messages.appendChild(d);messages.scrollTop=messages.scrollHeight}
-</script></body></html>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const sb = supabase.createClient(
+  "https://keehbqlaxiojtkpldgry.supabase.co",
+  "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T"
+);
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let target = null;
+
+let conversationId = null;
+
+let userId = null;
+
+let channel = null;
+
+
+/* =========================================================
+   SELECT OM / KRISHNA
+========================================================= */
+
+function selectTarget(t){
+
+  target = t;
+
+  document
+    .getElementById('omBtn')
+    .classList.toggle(
+      'selected',
+      t === 'om'
+    );
+
+  document
+    .getElementById('krishnaBtn')
+    .classList.toggle(
+      'selected',
+      t === 'krishna'
+    );
+
+  document
+    .getElementById('form')
+    .style.display = 'grid';
+
+  document
+    .getElementById('error')
+    .style.display = 'none';
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+function showError(message){
+
+  const errorBox =
+    document.getElementById('error');
+
+  errorBox.textContent = message;
+
+  errorBox.style.display = 'block';
+}
+
+
+/* =========================================================
+   PUBLIC USER SESSION
+========================================================= */
+
+async function session(){
+
+  const current =
+    await sb.auth.getSession();
+
+  if(current.data.session){
+
+    return current.data.session.user;
+
+  }
+
+
+  const anonymous =
+    await sb.auth.signInAnonymously();
+
+  if(anonymous.error){
+
+    throw anonymous.error;
+
+  }
+
+  return anonymous.data.user;
+}
+
+
+/* =========================================================
+   START CHAT
+========================================================= */
+
+async function startChat(){
+
+  const errorBox =
+    document.getElementById('error');
+
+  errorBox.style.display = 'none';
+
+
+  const name =
+    document.getElementById('name')
+      .value
+      .trim();
+
+  const email =
+    document.getElementById('email')
+      .value
+      .trim();
+
+  const mobile =
+    document.getElementById('mobile')
+      .value
+      .trim();
+
+
+  /* -----------------------------------------
+     VALIDATION
+  ------------------------------------------ */
+
+  if(
+    !target ||
+    !name ||
+    !email ||
+    !mobile
+  ){
+
+    showError(
+      'Please select OM/Krishna and enter Full Name, Email and Mobile.'
+    );
+
+    return;
+  }
+
+
+  try{
+
+    /* -----------------------------------------
+       CREATE / GET PUBLIC SESSION
+    ------------------------------------------ */
+
+    const u =
+      await session();
+
+    userId = u.id;
+
+
+    /* -----------------------------------------
+       FIND REAL OM / KRISHNA ACCOUNT
+    ------------------------------------------ */
+
+    const targetResult =
+      await sb
+        .from('chat_targets')
+        .select(
+          'user_id, display_name'
+        )
+        .eq(
+          'target_key',
+          target
+        )
+        .eq(
+          'active',
+          true
+        )
+        .single();
+
+
+    if(targetResult.error){
+
+      throw targetResult.error;
+
+    }
+
+
+    const targetUserId =
+      targetResult.data.user_id;
+
+    const targetDisplayName =
+      targetResult.data.display_name;
+
+
+    /* -----------------------------------------
+       CREATE CONVERSATION
+    ------------------------------------------ */
+
+    const conversation =
+      await sb
+        .from('conversations')
+        .insert({
+
+          conversation_type:
+            'public',
+
+          public_target:
+            target,
+
+          public_name:
+            name,
+
+          public_email:
+            email,
+
+          public_mobile:
+            mobile,
+
+          created_by:
+            userId,
+
+          target_user_id:
+            targetUserId
+
+        })
+        .select('id')
+        .single();
+
+
+    if(conversation.error){
+
+      throw conversation.error;
+
+    }
+
+
+    conversationId =
+      conversation.data.id;
+
+
+    /* -----------------------------------------
+       OPEN CHAT
+    ------------------------------------------ */
+
+    document
+      .getElementById('start')
+      .style.display = 'none';
+
+    document
+      .getElementById('chat')
+      .style.display = 'grid';
+
+
+    document
+      .getElementById('title')
+      .textContent =
+        'Chat with ' +
+        targetDisplayName;
+
+
+    document
+      .getElementById('connectionStatus')
+      .textContent =
+        'Connected';
+
+
+    /* -----------------------------------------
+       LOAD OLD MESSAGES
+    ------------------------------------------ */
+
+    await load();
+
+
+    /* -----------------------------------------
+       REALTIME MESSAGE LISTENER
+    ------------------------------------------ */
+
+    channel =
+      sb
+        .channel(
+          'public-chat-' +
+          conversationId
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'messages',
+            filter:
+              'conversation_id=eq.' +
+              conversationId
+          },
+          payload => {
+
+            if(
+              payload.new.sender_id !== userId
+            ){
+
+              add(payload.new);
+
+            }
+
+          }
+        )
+        .subscribe(
+          status => {
+
+            if(status === 'SUBSCRIBED'){
+
+              document
+                .getElementById(
+                  'connectionStatus'
+                )
+                .textContent =
+                  'Live • Connected';
+
+            }
+
+          }
+        );
+
+  }
+
+  catch(e){
+
+    console.error(
+      'START CHAT ERROR:',
+      e
+    );
+
+    showError(
+      e.message ||
+      'Unable to start chat. Please try again.'
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD MESSAGES
+========================================================= */
+
+async function load(){
+
+  const result =
+    await sb
+      .from('messages')
+      .select('*')
+      .eq(
+        'conversation_id',
+        conversationId
+      )
+      .order(
+        'created_at',
+        {
+          ascending:true
+        }
+      );
+
+
+  if(result.error){
+
+    showError(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  const box =
+    document.getElementById(
+      'messages'
+    );
+
+  box.innerHTML = '';
+
+
+  result.data.forEach(
+    message => add(message)
+  );
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage(){
+
+  const input =
+    document.getElementById(
+      'message'
+    );
+
+  const text =
+    input.value.trim();
+
+
+  if(
+    !text ||
+    !conversationId ||
+    !userId
+  ){
+
+    return;
+
+  }
+
+
+  const result =
+    await sb
+      .from('messages')
+      .insert({
+
+        conversation_id:
+          conversationId,
+
+        sender_id:
+          userId,
+
+        sender_name:
+          document
+            .getElementById('name')
+            .value
+            .trim(),
+
+        message_text:
+          text,
+
+        message_type:
+          'text'
+
+      })
+      .select()
+      .single();
+
+
+  if(result.error){
+
+    alert(
+      result.error.message
+    );
+
+    return;
+
+  }
+
+
+  add(result.data);
+
+  input.value = '';
+
+}
+
+
+/* =========================================================
+   DISPLAY MESSAGE
+========================================================= */
+
+function add(message){
+
+  const box =
+    document.getElementById(
+      'messages'
+    );
+
+
+  const div =
+    document.createElement(
+      'div'
+    );
+
+
+  div.className =
+    'msg ' +
+    (
+      message.sender_id === userId
+        ? 'mine'
+        : ''
+    );
+
+
+  const body =
+    document.createElement(
+      'div'
+    );
+
+  body.textContent =
+    message.message_text || '';
+
+
+  const meta =
+    document.createElement(
+      'div'
+    );
+
+  meta.className =
+    'meta';
+
+
+  meta.textContent =
+    new Date(
+      message.created_at
+    ).toLocaleString(
+      'en-IN'
+    );
+
+
+  div.appendChild(body);
+
+  div.appendChild(meta);
+
+  box.appendChild(div);
+
+
+  box.scrollTop =
+    box.scrollHeight;
+
+}
+
+
+/* =========================================================
+   CLEANUP
+========================================================= */
+
+window.addEventListener(
+  'beforeunload',
+  () => {
+
+    if(channel){
+
+      sb.removeChannel(
+        channel
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
