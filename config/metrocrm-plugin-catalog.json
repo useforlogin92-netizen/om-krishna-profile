@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0",
+  "catalog_name": "MetroCRM Plugin Catalog",
+  "source": "MetroCRM",
+  "status": "foundation",
+  "note": "Reusable plugin definitions. No MetroCRM production code is modified by this catalog.",
+  "core_plugins": [
+    {
+      "id": "lead-management",
+      "name": "Lead Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "customer-management",
+      "name": "Customer Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "customer-requirements",
+      "name": "Customer Requirements",
+      "enabled_by_company": true
+    },
+    {
+      "id": "lead-assignment",
+      "name": "Lead Assignment",
+      "enabled_by_company": true
+    },
+    {
+      "id": "follow-up-management",
+      "name": "Follow-up Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "call-management",
+      "name": "Call Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "site-visit",
+      "name": "Site Visit",
+      "enabled_by_company": true
+    },
+    {
+      "id": "developer-management",
+      "name": "Developer Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "project-management",
+      "name": "Project Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "tower-management",
+      "name": "Tower Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "unit-management",
+      "name": "Unit Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "nearby-locations",
+      "name": "Nearby Locations",
+      "enabled_by_company": true
+    },
+    {
+      "id": "property-data",
+      "name": "Property Data",
+      "enabled_by_company": true
+    },
+    {
+      "id": "property-media",
+      "name": "Property Media",
+      "enabled_by_company": true
+    },
+    {
+      "id": "reports",
+      "name": "Reports & Analytics",
+      "enabled_by_company": true
+    },
+    {
+      "id": "export-control",
+      "name": "Export Control",
+      "enabled_by_company": true
+    },
+    {
+      "id": "audit-log",
+      "name": "Audit Log",
+      "enabled_by_company": true
+    },
+    {
+      "id": "user-management",
+      "name": "User Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "rbac-permissions",
+      "name": "RBAC & Permissions",
+      "enabled_by_company": true
+    },
+    {
+      "id": "ai-caller",
+      "name": "AI Caller",
+      "enabled_by_company": true
+    },
+    {
+      "id": "ai-call-logs",
+      "name": "AI Call Logs",
+      "enabled_by_company": true
+    },
+    {
+      "id": "whatsapp-crm",
+      "name": "WhatsApp CRM",
+      "enabled_by_company": true
+    },
+    {
+      "id": "whatsapp-property-import",
+      "name": "WhatsApp Property Import",
+      "enabled_by_company": true
+    },
+    {
+      "id": "email-integration",
+      "name": "Email Integration",
+      "enabled_by_company": true
+    },
+    {
+      "id": "website-lead-capture",
+      "name": "Website Lead Capture",
+      "enabled_by_company": true
+    },
+    {
+      "id": "missed-call-lead-capture",
+      "name": "Missed Call Lead Capture",
+      "enabled_by_company": true
+    },
+    {
+      "id": "lead-source-management",
+      "name": "Lead Source Management",
+      "enabled_by_company": true
+    },
+    {
+      "id": "dashboard-analytics",
+      "name": "Dashboard & Analytics",
+      "enabled_by_company": true
+    },
+    {
+      "id": "integration-manager",
+      "name": "Integration Manager",
+      "enabled_by_company": true
+    },
+    {
+      "id": "backup-restore",
+      "name": "Backup & Restore",
+      "enabled_by_company": true
+    }
+  ]
+}
