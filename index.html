@@ -3,1337 +3,263 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OM KRISHNA GROUP - Official Website</title>
+  <meta name="description" content="OM Krishna Group — Building businesses, CRM solutions, websites, digital solutions, products and future ventures.">
+  <meta name="theme-color" content="#08111f">
+  <title>OM Krishna Group | Building Businesses. Creating Digital Solutions.</title>
   <style>
-    /* CSS Variables */
-    :root {
-      --bg-dark: #0a0b0e;
-      --card-bg: #14171f;
-      --card-border: rgba(212, 175, 55, 0.25);
-      --gold-primary: #d4af37;
-      --gold-light: #f3e5ab;
-      --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
-      --text-white: #ffffff;
-      --text-muted: #a5adba;
+    :root{
+      --navy:#07111f;--navy2:#0c1b2f;--blue:#123b70;--gold:#d7ad3d;--gold2:#f3d57a;
+      --white:#fff;--muted:#aeb9c8;--line:rgba(215,173,61,.22);--card:rgba(255,255,255,.055);
+      --shadow:0 18px 55px rgba(0,0,0,.28);--max:1180px;
     }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-white);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* Full-Screen Hero Section */
-    .hero-section {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      background: linear-gradient(180deg, rgba(10, 11, 14, 0.4) 0%, rgba(10, 11, 14, 0.95) 100%),
-                  url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      box-sizing: border-box;
-    }
-
-    .hero-overlay-lighting {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(0,0,0,0) 70%);
-      pointer-events: none;
-      animation: pulseGlow 4s infinite alternate;
-    }
-
-    .hero-heading {
-      font-size: 3.5rem;
-      font-weight: 900;
-      letter-spacing: 4px;
-      margin: 0;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-      text-shadow: 0 10px 20px rgba(0,0,0,0.5);
-      animation: fadeInDown 1s ease-out;
-    }
-
-    .hero-subheading {
-      font-size: 1.5rem;
-      color: var(--text-white);
-      margin: 15px 0 10px 0;
-      font-weight: 400;
-      letter-spacing: 1px;
-      animation: fadeInUp 1.2s ease-out;
-    }
-
-    .hero-tagline {
-      font-size: 1.2rem;
-      color: var(--gold-light);
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 35px;
-      animation: fadeInUp 1.4s ease-out;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-      animation: fadeInUp 1.6s ease-out;
-    }
-
-    .btn-hero {
-      padding: 14px 32px;
-      font-size: 1rem;
-      font-weight: 700;
-      border-radius: 30px;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .btn-gold {
-      background: var(--gold-gradient);
-      color: #000;
-      border: none;
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-    }
-
-    .btn-gold:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
-    }
-
-    .btn-outline {
-      background: rgba(0, 0, 0, 0.5);
-      color: var(--gold-primary);
-      border: 2px solid var(--gold-primary);
-      backdrop-filter: blur(5px);
-    }
-
-    .btn-outline:hover {
-      background: var(--gold-primary);
-      color: #000;
-      transform: translateY(-3px);
-    }
-
-/* ================================
-   OM SKILLS & DEVELOPMENT
-   ================================ */
-
-.skills-card {
-    position: relative;
-}
-
-.skill-item {
-    margin: 18px 0;
-}
-
-.skill-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.skill-header strong {
-    font-size: 15px;
-    color: var(--text-white);
-}
-
-.skill-score {
-    color: var(--gold-primary);
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.skill-bar {
-    width: 100%;
-    height: 9px;
-    background: rgba(255, 255, 255, 0.10);
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.skill-progress {
-    height: 100%;
-    background: var(--gold-gradient);
-    border-radius: 20px;
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
-    transition: width 0.8s ease;
-}
-
-.skills-note {
-    margin-top: 22px;
-    padding-top: 14px;
-    border-top: 1px solid var(--card-border);
-    color: var(--text-muted);
-    font-size: 13px;
-    line-height: 1.6;
-    font-style: italic;
-}
-    
-    /* Header Sticky Navigation */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(10, 11, 14, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand-title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--gold-primary);
-      letter-spacing: 2px;
-    }
-
-    nav a {
-      color: var(--text-white);
-      text-decoration: none;
-      margin-left: 18px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: var(--gold-primary);
-    }
-
-    /* Main Container */
-    .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    /* Controls Switcher */
-    .profile-switcher {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 40px;
-    }
-
-    /* Profile Hero Display */
-    .profile-hero-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 40px 20px;
-      text-align: center;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-      margin-bottom: 40px;
-    }
-
-    .avatar-wrapper {
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 20px auto;
-    }
-
-    .profile-avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--gold-primary);
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
-    }
-
-    .player-name {
-      font-size: 2.4rem;
-      margin: 10px 0;
-      color: var(--gold-primary);
-    }
-
-    .badges-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .badge {
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid var(--gold-primary);
-      color: var(--gold-light);
-      padding: 8px 18px;
-      border-radius: 25px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    /* Grid Layout for Profile Cards */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-      margin-bottom: 40px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 25px;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: var(--gold-primary);
-    }
-
-    .card-title {
-      font-size: 1.25rem;
-      color: var(--gold-primary);
-      margin-top: 0;
-      margin-bottom: 15px;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-      padding-bottom: 8px;
-    }
-
-    .card-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .card-list li {
-      margin-bottom: 12px;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .card-list li strong {
-      color: var(--text-white);
-    }
-
-    .card-full {
-      grid-column: 1 / -1;
-    }
-
-    /* Media Grid */
-    .media-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .media-card {
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .media-card img, .media-card iframe {
-      width: 100%;
-      border-radius: 8px;
-      border: none;
-    }
-
-    /* Action Portal Links Box */
-    .portal-box {
-      background: var(--card-bg);
-      border: 1px solid var(--gold-primary);
-      border-radius: 18px;
-      padding: 30px;
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    .portal-btn {
-      display: inline-block;
-      padding: 12px 25px;
-      margin: 8px;
-      background: var(--gold-gradient);
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 25px;
-      transition: transform 0.3s;
-    }
-
-    .portal-btn:hover {
-      transform: scale(1.05);
-    }
-
-    /* Animations */
-    @keyframes pulseGlow {
-      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
-      100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      border-top: 1px solid var(--card-border);
-      color: var(--text-muted);
-      background: #050507;
-    }
-
-    @media (max-width: 768px) {
-      .hero-heading { font-size: 2.2rem; }
-      .hero-subheading { font-size: 1.1rem; }
-      .hero-tagline { font-size: 0.95rem; }
-      header { flex-direction: column; gap: 10px; }
-      nav a { margin: 0 6px; }
-    }
-    /* ==============================
-   OM ACTIVITY JOURNAL
-   ============================== */
-
-.activity-intro {
-    color: var(--text-muted);
-    margin: 0 0 24px;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.activity-list {
-    position: relative;
-    margin-top: 20px;
-    padding-left: 28px;
-}
-
-.activity-list::before {
-    content: "";
-    position: absolute;
-    left: 8px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--gold-primary);
-    opacity: 0.5;
-}
-
-.activity-item {
-    position: relative;
-    display: flex;
-    gap: 20px;
-    margin-bottom: 24px;
-    padding: 18px;
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.03);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.activity-item::before {
-    content: "";
-    position: absolute;
-    left: -27px;
-    top: 28px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--gold-primary);
-    border: 3px solid var(--bg-dark);
-    box-shadow: 0 0 0 2px var(--gold-primary);
-}
-
-.activity-item:hover {
-    transform: translateX(5px);
-    border-color: var(--gold-primary);
-}
-
-.activity-date {
-    min-width: 85px;
-    text-align: center;
-    padding: 10px;
-    border-radius: 10px;
-    background: rgba(212, 175, 55, 0.12);
-    color: var(--gold-primary);
-    height: fit-content;
-}
-
-.activity-date strong {
-    display: block;
-    font-size: 1.1rem;
-}
-
-.activity-date span {
-    display: block;
-    margin-top: 4px;
-    font-size: 0.68rem;
-    letter-spacing: 1px;
-    opacity: 0.8;
-}
-
-.activity-content {
-    flex: 1;
-}
-
-.activity-content h3 {
-    margin: 0 0 8px;
-    font-size: 1.05rem;
-    color: var(--text-white);
-}
-
-.activity-content p {
-    margin: 0 0 12px;
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-.activity-tag {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 20px;
-    background: rgba(212, 175, 55, 0.12);
-    color: var(--gold-primary);
-    font-size: 0.72rem;
-    font-weight: 700;
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-
-    .activity-list {
-        padding-left: 20px;
-    }
-
-    .activity-item {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .activity-item::before {
-        left: -19px;
-    }
-
-    .activity-date {
-        min-width: auto;
-        width: fit-content;
-        text-align: left;
-    }
-}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--white);background:
+      radial-gradient(circle at 10% 0%,rgba(18,59,112,.35),transparent 35%),
+      radial-gradient(circle at 90% 10%,rgba(215,173,61,.12),transparent 28%),var(--navy);line-height:1.6}
+    a{color:inherit}.container{max-width:var(--max);margin:auto;padding:0 22px}
+    header{position:sticky;top:0;z-index:1000;background:rgba(7,17,31,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:1px}
+    .brand img{width:54px;height:42px;object-fit:contain}.brand span{font-size:15px}
+    nav{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:flex-end}
+    nav a{font-size:13px;text-decoration:none;color:#eaf0f8;font-weight:650}nav a:hover{color:var(--gold2)}
+    .nav-cta{padding:9px 15px;border:1px solid var(--gold);border-radius:22px;color:var(--gold2)}
+    .hero{min-height:720px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px;padding:75px 0}
+    .eyebrow{color:var(--gold2);font-weight:800;letter-spacing:2px;text-transform:uppercase;font-size:12px}
+    h1{font-size:clamp(42px,6vw,76px);line-height:1.02;margin:15px 0 20px;letter-spacing:-2px}
+    .hero h1 span{color:var(--gold2)}.hero p{font-size:18px;color:var(--muted);max-width:700px}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;border-radius:28px;text-decoration:none;font-weight:800;border:1px solid var(--gold)}
+    .btn-primary{background:linear-gradient(135deg,#c59427,#f5db83,#b98320);color:#08111f}
+    .btn-secondary{background:transparent;color:var(--gold2)}
+    .hero-logo{display:flex;justify-content:center;align-items:center;min-height:390px;border:1px solid var(--line);border-radius:32px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.015));box-shadow:var(--shadow)}
+    .hero-logo img{width:min(88%,520px);max-height:430px;object-fit:contain;filter:drop-shadow(0 20px 25px rgba(0,0,0,.35))}
+    section{padding:85px 0}.section-head{text-align:center;max-width:800px;margin:0 auto 42px}
+    .section-head h2{font-size:clamp(30px,4vw,46px);margin:8px 0 12px}.section-head p{color:var(--muted);margin:0}
+    .intro-grid,.business-grid,.feature-grid,.industry-grid,.web-grid,.steps,.updates,.contact-grid{display:grid;gap:20px}
+    .intro-grid{grid-template-columns:repeat(3,1fr)}.business-grid{grid-template-columns:repeat(2,1fr)}
+    .feature-grid{grid-template-columns:repeat(4,1fr)}.industry-grid{grid-template-columns:repeat(4,1fr)}
+    .web-grid{grid-template-columns:repeat(3,1fr)}.steps{grid-template-columns:repeat(6,1fr)}
+    .updates{grid-template-columns:repeat(3,1fr)}.contact-grid{grid-template-columns:1.1fr .9fr}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:27px;box-shadow:0 10px 35px rgba(0,0,0,.12)}
+    .card:hover{border-color:rgba(243,213,122,.55);transform:translateY(-3px);transition:.25s}
+    .icon{font-size:30px}.card h3{margin:10px 0;color:var(--gold2);font-size:20px}.card p,.card li{color:var(--muted)}
+    .card ul{padding-left:18px;margin-bottom:0}.card li{margin:7px 0}
+    .business-card{min-height:330px;display:flex;flex-direction:column}.business-card .push{margin-top:auto}
+    .link{color:var(--gold2);font-weight:800;text-decoration:none}.link:hover{text-decoration:underline}
+    .highlight{background:linear-gradient(135deg,rgba(18,59,112,.55),rgba(215,173,61,.09));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .feature{padding:20px}.feature h3{font-size:16px}.feature p{font-size:14px}
+    .industry{min-height:190px}.industry strong{display:block;color:var(--white);font-size:17px;margin-bottom:8px}
+    .industry span{color:var(--muted);font-size:13px}
+    .process{counter-reset:step}.step{text-align:center;padding:18px 10px}.step b{display:grid;place-items:center;width:44px;height:44px;margin:auto;border:1px solid var(--gold);border-radius:50%;color:var(--gold2)}
+    .step h3{font-size:15px}.step p{font-size:12px;color:var(--muted)}
+    .cta{border:1px solid var(--line);border-radius:28px;padding:45px;background:linear-gradient(135deg,rgba(18,59,112,.5),rgba(255,255,255,.035));text-align:center}
+    .cta h2{font-size:38px;margin:0 0 12px}.cta p{color:var(--muted);max-width:720px;margin:0 auto}
+    .contact-item{display:flex;gap:14px;align-items:flex-start}.contact-item b{display:block;color:var(--gold2)}.contact-item span{color:var(--muted)}
+    .socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.social{padding:9px 13px;border:1px solid var(--line);border-radius:20px;text-decoration:none;font-size:13px}
+    footer{border-top:1px solid var(--line);padding:38px 0;color:var(--muted);font-size:13px}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}.footer-title{color:var(--gold2);font-weight:800;margin-bottom:10px}
+    .footer-grid a{display:block;text-decoration:none;margin:6px 0}.motto{color:var(--gold2);font-weight:750}
+    .floating{position:fixed;right:18px;bottom:18px;z-index:999}.wa{background:#25d366;color:#07111f;border:0}
+    @media(max-width:950px){.hero{grid-template-columns:1fr}.feature-grid{grid-template-columns:repeat(2,1fr)}.industry-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(3,1fr)}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:680px){.nav{align-items:flex-start;padding:12px 0}.brand span{font-size:12px}nav{gap:9px}.hero{min-height:auto;padding:55px 0}.hero-logo{min-height:280px}.intro-grid,.business-grid,.feature-grid,.industry-grid,.web-grid,.updates,.contact-grid{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}section{padding:62px 0}.cta h2{font-size:30px}}
   </style>
 </head>
 <body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home"><img src="assets/om-krishna-group-logo.png" alt="OM Krishna Group logo"><span>OM KRISHNA GROUP</span></a>
+    <nav>
+      <a href="#businesses">Businesses</a>
+      <a href="#crm">CRM</a>
+      <a href="#web">Web Solutions</a>
+      <a href="#products">Products</a>
+      <a href="#updates">Updates</a>
+      <a href="family.html">Family Profiles</a>
+      <a href="login.html" class="nav-cta">Login</a>
+    </nav>
+  </div>
+</header>
 
-  <!-- Full-Screen Hero Section -->
-  <div class="hero-section">
-    <div class="hero-overlay-lighting"></div>
-    <h1 class="hero-heading">OM KRISHNA GROUP</h1>
-    <div class="hero-subheading">Official Website of Om Satyapal Yadav</div>
-    <div class="hero-tagline">Dream • Discipline • Dedication</div>
-    <div class="hero-buttons">
-      <a href="#profile-section" class="btn-hero btn-gold">View Profile</a>
-      <a href="#stats-section" class="btn-hero btn-outline">Career Statistics</a>
+<main>
+<section id="home">
+  <div class="container hero">
+    <div>
+      <div class="eyebrow">Emerging Business Group</div>
+      <h1>Building Businesses.<br><span>Creating Digital Solutions.</span></h1>
+      <p>OM Krishna Group is building practical business solutions, CRM systems, websites, digital products and new business ventures with a focus on useful technology and long-term growth.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#businesses">Explore Our Solutions</a>
+        <a class="btn btn-secondary" href="#contact">Start a Conversation</a>
+      </div>
+      <p class="motto">People • Progress • Prosperity</p>
+      <p style="font-size:13px">Together for a Brighter Tomorrow</p>
+    </div>
+    <div class="hero-logo">
+      <img src="assets/om-krishna-group-logo.png" alt="OM Krishna Group official logo">
     </div>
   </div>
-
-  <!-- Sticky Navbar -->
-  <header>
-    <div class="brand-title">OM & KRISHNA</div>
-    <nav>
-  <a href="#profile-section">Profile</a>
-  <a href="#stats-section">Statistics</a>
-  <a href="#portals">Portals</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#videos">Videos</a>
-  <a href="#contact">Contact</a>
-  <a href="chat.html" class="nav-chat">💬 Chat</a>
-</nav>
-  </header>
-
-  <div class="container">
-
-    <!-- Profile Switch Buttons -->
-    <div class="profile-switcher">
-      <button class="btn-hero btn-gold" onclick="switchProfile('om')">Om Profile</button>
-      <button class="btn-hero btn-outline" onclick="switchProfile('krishna')">Krishna Profile</button>
-    </div>
-
-    <!-- Active Player Profile Hero -->
-    <div id="profile-section" class="profile-hero-card">
-      <div class="avatar-wrapper">
-        <img id="profile-img" class="profile-avatar" src="https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d" alt="Profile Picture">
-      </div>
-      <h2 id="profile-name" class="player-name">Om Satyapal Yadav</h2>
-      
-      <div id="profile-badges" class="badges-container">
-        <span class="badge">Wicket-Keeper Batter</span>
-        <span class="badge">Left-Hand Opening Batter</span>
-        <span class="badge">Left-Arm Slow Spinner</span>
-        <span class="badge">Student Athlete</span>
-        <span class="badge">Future Team India Player</span>
-      </div>
-    </div>
-
-    <!-- Details Grid for OM -->
-    <div id="om-details" class="cards-grid">
-      <div class="card">
-        <h3 class="card-title">👤 Personal Information</h3>
-        <ul class="card-list">
-  <li><strong>Full Name:</strong> Om Satyapal Yadav</li>
-  <li><strong>Nick Name:</strong> Om Bhai</li>
-  <li><strong>Date of Birth:</strong> 05 March 2014</li>
-  <li><strong>Birth Place:</strong> Mumbai</li>
-  <li><strong>Current City:</strong> Mumbai</li>
-  <li><strong>Nationality:</strong> Indian</li>
-  <li><strong>Height:</strong> 57 inch</li>
-  <li><strong>Weight:</strong> 35 kg</li>
-  <li><strong>Languages:</strong> English, Hindi</li>
-</ul>
-      </div>
-
-      <div class="card">
-        <h3 class="card-title">🎓 Education</h3>
-        <ul class="card-list">
-          <li><strong>School:</strong> Seth Juggilal Poddar Academy</li>
-          <li><strong>Role:</strong> Student Athlete</li>
-        </ul>
-      </div>
-
-      <div class="card">
-    <h3 class="card-title">🏏 Cricket Profile</h3>
-    <ul class="card-list">
-        <li><strong>Primary Role:</strong> Wicket-Keeper</li>
-        <li><strong>Secondary Role:</strong> Opening Batter</li>
-        <li><strong>Batting Style:</strong> Left-Hand</li>
-        <li><strong>Bowling Style:</strong> Left-Arm Slow Spinner</li>
-        <li><strong>Throwing:</strong> Both Hands</li>
-        <li><strong>Fielding Position:</strong> Anywhere</li>
-        <li><strong>Wicket Keeper:</strong> Yes</li>
-        <li><strong>Jersey Number:</strong> #5</li>
-        <li><strong>Strongest Skills:</strong> Wicket Keeping, Batting</li>
-        <li><strong>Favourite Shot:</strong> Off-side</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3 class="card-title">🏏 Cricket Journey</h3>
-    <ul class="card-list">
-        <li><strong>Cricket Started:</strong> 2026</li>
-        <li><strong>Age When Started:</strong> 12</li>
-        <li><strong>Current Academy:</strong> Indian Gymkhana</li>
-        <li><strong>Previous Academy:</strong> Goregaon Sports Club</li>
-        <li><strong>Coach:</strong> Pillai Sir</li>
-        <li><strong>Practice Ground:</strong> Goregaon Sports Club</li>
-        <li><strong>Practice Days:</strong> Tuesday, Wednesday, Thursday & Friday</li>
-        <li><strong>Practice Time:</strong> 4:00 PM – 6:00 PM</li>
-        <li><strong>School Team:</strong> Yes</li>
-        <li><strong>Club Team:</strong> Yes</li>
-        <li><strong>MCA Registration:</strong> Yes</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3 class="card-title">🚀 Cricket Career Journey</h3>
-    <ul class="card-list">
-        <li><strong>Cricket Journey Started:</strong> 2026</li>
-        <li><strong>Current Focus:</strong> Wicket-Keeping & Opening Batting</li>
-        <li><strong>Training:</strong> Regular cricket practice and skill development</li>
-        <li><strong>Goal:</strong> Continuous improvement through matches and training</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3 class="card-title">🏆 Achievements</h3>
-    <ul class="card-list">
-        <li><strong>Highest Score:</strong> 130 Runs</li>
-        <li><strong>School Tournament:</strong> Award Received</li>
-        <li><strong>Captain / Vice-Captain:</strong> Yes</li>
-        <li><strong>MCA Registration:</strong> Yes</li>
-        <li><strong>Other Awards:</strong> To be updated</li>
-        <li><strong>Trophies:</strong> To be updated</li>
-        <li><strong>Medals:</strong> To be updated</li>
-    </ul>
-</div>
-
-<div id="stats-section" class="card">
-    <h3 class="card-title">📊 Statistics</h3>
-    <ul class="card-list">
-        <li><strong>Matches:</strong> To be updated</li>
-        <li><strong>Runs:</strong> To be updated</li>
-        <li><strong>Highest Score:</strong> To be updated</li>
-        <li><strong>Wicket-Keeping Dismissals:</strong> To be updated</li>
-        <li><strong>Bowling Wickets:</strong> To be updated</li>
-    </ul>
-</div>
-
-<div class="card skills-card">
-    <h3 class="card-title">⭐ Skills & Development</h3>
-
-    <div class="skill-item">
-        <div class="skill-header">
-            <strong>🏏 Batting</strong>
-            <span class="skill-score">10/10</span>
-        </div>
-        <div class="skill-bar">
-            <div class="skill-fill" style="width: 100%;"></div>
-        </div>
-    </div>
-
-    <div class="skill-item">
-        <div class="skill-header">
-            <strong>🧤 Wicket Keeping</strong>
-            <span class="skill-score">10/10</span>
-        </div>
-        <div class="skill-bar">
-            <div class="skill-fill" style="width: 100%;"></div>
-        </div>
-    </div>
-
-    <div class="skill-item">
-        <div class="skill-header">
-            <strong>🎯 Bowling</strong>
-            <span class="skill-score">10/10</span>
-        </div>
-        <div class="skill-bar">
-            <div class="skill-fill" style="width: 50%;"></div>
-        </div>
-    </div>
-
-    <div class="skill-item">
-        <div class="skill-header">
-            <strong>💪 Fitness</strong>
-            <span class="skill-score">10/10</span>
-        </div>
-        <div class="skill-bar">
-            <div class="skill-fill" style="width: 100%;"></div>
-        </div>
-    </div>
-
-    <div class="skill-item">
-        <div class="skill-header">
-            <strong>🏃 Running</strong>
-            <span class="skill-score">10/10</span>
-        </div>
-        <div class="skill-bar">
-            <div class="skill-fill" style="width: 100%;"></div>
-        </div>
-    </div>
-
-    <div class="skill-item">
-        <div class="skill-header">
-            <strong>👑 Leadership</strong>
-            <span class="skill-score">10/10</span>
-        </div>
-        <div class="skill-bar">
-            <div class="skill-fill" style="width: 100%;"></div>
-        </div>
-    </div>
-
-    <div class="skill-item">
-        <div class="skill-header">
-            <strong>🗣️ Communication</strong>
-            <span class="skill-score">10/10</span>
-        </div>
-        <div class="skill-bar">
-            <div class="skill-fill" style="width: 70%;"></div>
-        </div>
-    </div>
-
-    <p class="skills-note">
-        Skills ratings are personal development indicators and will be updated as Om's cricket journey progresses.
-    </p>
-</div>
-      
-      <div class="card">
-            <h3 class="card-title">💪 Fitness</h3>
-    <ul class="card-list">
-        <li><strong>Training Focus:</strong> Running, Agility, Reflex, Core Strength & Conditioning</li>
-        <li><strong>Running Distance:</strong> 500 metres</li>
-        <li><strong>Favourite Exercise:</strong> All</li>
-        <li><strong>Fitness Goal:</strong> Continuous improvement</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3 class="card-title">🎒 Equipment</h3>
-    <ul class="card-list">
-        <li><strong>Bat:</strong> SG</li>
-        <li><strong>Bat Weight:</strong> 1.2 kg</li>
-        <li><strong>Gloves:</strong> SG</li>
-        <li><strong>Pads:</strong> SG</li>
-        <li><strong>Shoes:</strong> Total</li>
-        <li><strong>Helmet:</strong> Total</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h3 class="card-title">🌟 Dream & Goals</h3>
-    <ul class="card-list">
-        <li><strong>Dream:</strong> To represent India in cricket</li>
-        <li><strong>Long-Term Goal:</strong> Become a professional cricketer</li>
-        <li><strong>Focus:</strong> Improve batting, wicket-keeping, bowling and fitness</li>
-        <li><strong>Values:</strong> Dream • Discipline • Dedication</li>
-    </ul>
-</div>
-    </div>
-
-    <!-- Om Activity Journal -->
-<section id="om-activity" class="card">
-
-    <h2 class="card-title">📅 Om's Activity Journal</h2>
-
-    <p class="activity-intro">
-        A record of Om's cricket training, matches, school activities,
-        tournaments, achievements and important moments.
-    </p>
-
-    <div class="activity-list">
-
-        <!-- Cricket Practice -->
-        <div class="activity-item">
-            <div class="activity-date">
-                <strong>2026</strong>
-                <span>ONGOING</span>
-            </div>
-
-            <div class="activity-content">
-                <h3>🏏 Cricket Practice</h3>
-                <p>
-                    Regular cricket practice, batting, wicket-keeping,
-                    bowling, fielding and skill-development sessions.
-                </p>
-                <span class="activity-tag">Cricket Training</span>
-            </div>
-        </div>
-
-        <!-- Match Practice -->
-        <div class="activity-item">
-            <div class="activity-date">
-                <strong>2026</strong>
-                <span>ONGOING</span>
-            </div>
-
-            <div class="activity-content">
-                <h3>🏏 Match Practice</h3>
-                <p>
-                    Match practice and performance records will be added
-                    as official data becomes available.
-                </p>
-                <span class="activity-tag">Matches</span>
-            </div>
-        </div>
-
-        <!-- School Activities -->
-        <div class="activity-item">
-            <div class="activity-date">
-                <strong>2026</strong>
-                <span>SCHOOL</span>
-            </div>
-
-            <div class="activity-content">
-                <h3>🎓 School Activities</h3>
-                <p>
-                    School cricket, competitions, team activities,
-                    events and other important school moments.
-                </p>
-                <span class="activity-tag">School</span>
-            </div>
-        </div>
-
-        <!-- Tournaments -->
-        <div class="activity-item">
-            <div class="activity-date">
-                <strong>2026</strong>
-                <span>ONGOING</span>
-            </div>
-
-            <div class="activity-content">
-                <h3>🏆 Tournaments & Awards</h3>
-                <p>
-                    Tournament participation, trophies, medals,
-                    awards and achievements will be recorded here.
-                </p>
-                <span class="activity-tag">Achievements</span>
-            </div>
-        </div>
-
-        <!-- Photos & Videos -->
-        <div class="activity-item">
-            <div class="activity-date">
-                <strong>MEDIA</strong>
-                <span>UPDATES</span>
-            </div>
-
-            <div class="activity-content">
-                <h3>📸 Photos & Videos</h3>
-                <p>
-                    Cricket practice, matches, school events,
-                    performances and achievement media.
-                </p>
-                <span class="activity-tag">Media</span>
-            </div>
-        </div>
-
-        <!-- Future Updates -->
-        <div class="activity-item">
-            <div class="activity-date">
-                <strong>+</strong>
-                <span>FUTURE</span>
-            </div>
-
-            <div class="activity-content">
-                <h3>📝 Latest Updates</h3>
-                <p>
-                    New activities and important updates from Om's
-                    cricket and student journey will be added here.
-                </p>
-                <span class="activity-tag">Updates</span>
-            </div>
-        </div>
-
-    </div>
-
 </section>
 
-    </div>  <!-- Om का पिछला card -->
-
-      <!-- Details Grid for KRISHNA (Hidden Initial) -->
-    <div id="krishna-details" class="cards-grid" style="display: none;">
-      <div class="card">
-        <h3 class="card-title">👤 Personal Information</h3>
-        <ul class="card-list">
-          <li><strong>Full Name:</strong> Krishna Satyapal Yadav</li>
-          <li><strong>DOB:</strong> 30 April 2011</li>
-          <li><strong>Location:</strong> Mumbai, Maharashtra, India</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3 class="card-title">🎓 Education & Sports</h3>
-        <ul class="card-list">
-  <li><strong>School:</strong> Seth Juggilal Poddar Academy</li>
-  <li><strong>Board:</strong> ICSE</li>
-  <li><strong>Current Class:</strong> 7th</li>
-  <li><strong>Favourite Subject:</strong> Mathematics</li>
-  <li><strong>School Team:</strong> Yes</li>
-</ul>
-      </div>
+<section>
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">Who We Are</div><h2>A growing group building its own ecosystem</h2><p>We focus on developing business solutions, digital platforms, products and future ventures around real-world requirements.</p></div>
+    <div class="intro-grid">
+      <div class="card"><div class="icon">🏗️</div><h3>Build</h3><p>Develop practical solutions around real business needs.</p></div>
+      <div class="card"><div class="icon">⚙️</div><h3>Customize</h3><p>Adapt workflows, technology and services to individual requirements.</p></div>
+      <div class="card"><div class="icon">🚀</div><h3>Grow</h3><p>Continuously develop new products, services and business opportunities.</p></div>
     </div>
-
-    <!-- Portals & Important External Links -->
-    <div id="portals" class="portal-box">
-      <h2 style="color: var(--gold-primary); margin-top: 0;">🔗 Important Links & Educational Portals</h2>
-      
-      <!-- Om Portals -->
-      <div id="om-links">
-        <a href="https://www.khanacademy.org" target="_blank" class="portal-btn">Khan Academy</a>
-        <a href="https://sjpa.edusprint.in/sjpa/Security" target="_blank" class="portal-btn">EduSprint Portal (Om)</a>
-      </div>
-
-      <!-- Krishna Portals -->
-      <div id="krishna-links" style="display: none;">
-        <a href="https://www.khanacademy.org" target="_blank" class="portal-btn">Khan Academy</a>
-        <a href="https://sgpis.edusprint.in/sgpis/Security" target="_blank" class="portal-btn">EduSprint Portal (Krishna)</a>
-      </div>
-    </div>
-
-    <!-- Media Sections -->
-    <div id="gallery" class="card card-full">
-      <h3 class="card-title">📸 Gallery</h3>
-      <div class="media-grid">
-        <div class="media-card">
-          <img src="https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d" alt="Om Practice" style="height: 220px; object-fit: cover;">
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Cricket Practice Session</p>
-        </div>
-      </div>
-    </div>
-
-    <div id="videos" class="card card-full" style="margin-top: 25px;">
-      <h3 class="card-title">🎥 Practice Videos</h3>
-      <div class="media-grid">
-        <div class="media-card">
-          <iframe height="200" src="https://www.youtube.com/embed/a0C4gcz322M" allowfullscreen></iframe>
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">YouTube Match Practice</p>
-        </div>
-        <div class="media-card">
-          <iframe height="200" src="https://drive.google.com/file/d/12cmTnkmqv8kR2s167XP0NTOduBgzvt-K/preview"></iframe>
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Google Drive Video</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Parent Message -->
-    <div class="card card-full" style="margin-top: 25px;">
-      <h3 class="card-title">❤️ Parents' Message</h3>
-      <p style="font-style: italic; color: var(--gold-light); line-height: 1.8;">
-        "Om's dedication, discipline, and endless love for cricket at such a young age fills our hearts with pride. We stand by him in every step of his journey towards achieving his dream of playing for Team India!"
-      </p>
-    </div>
-
-    <!-- Contact Section -->
-    <div id="contact" style="text-align: center; margin: 40px 0;">
-      <h2 style="color: var(--gold-primary);">💬 Connect With Us</h2>
-      <a href="https://wa.me/91YOUR_PHONE_NUMBER" target="_blank" class="portal-btn" style="background: #25D366; color: white;">WhatsApp Chat</a>
-      <a href="mailto:your-email@gmail.com" class="portal-btn" style="background: #ea4335; color: white;">Send Email</a>
-    </div>
-
   </div>
+</section>
 
-  <footer>
-    &copy; 2026 OM KRISHNA GROUP. Official Website. All Rights Reserved.
-  </footer>
-
-  <!-- Profile Switcher JS -->
-  <script>
-    const profiles = {
-      om: {
-        name: "Om Satyapal Yadav",
-        image: "https://lh3.googleusercontent.com/d/1Tu8gytxaAOUKSEs3mQXPaz8MsIXC9I_d",
-        badges: ["Wicket-Keeper Batter", "Left-Hand Opening Batter", "Left-Arm Slow Spinner", "Student Athlete", "Future Team India Player"]
-      },
-      krishna: {
-        name: "Krishna Satyapal Yadav",
-        image: "https://lh3.googleusercontent.com/d/1AtABb6c-_n87I3Lfx54HcEU0x8_IoE36",
-        badges: ["Young Emerging Player", "Student Athlete", "Cricket Learner"]
-      }
-    };
-
-    function switchProfile(person) {
-      const data = profiles[person];
-      if (data) {
-        document.getElementById('profile-name').innerText = data.name;
-        document.getElementById('profile-img').src = data.image;
-
-        const badgesContainer = document.getElementById('profile-badges');
-        badgesContainer.innerHTML = '';
-        data.badges.forEach(b => {
-          const span = document.createElement('span');
-          span.className = 'badge';
-          span.innerText = b;
-          badgesContainer.appendChild(span);
-        });
-
-        if (person === 'om') {
-          document.getElementById('om-details').style.display = 'grid';
-          document.getElementById('krishna-details').style.display = 'none';
-          document.getElementById('om-links').style.display = 'block';
-          document.getElementById('krishna-links').style.display = 'none';
-        } else {
-          document.getElementById('om-details').style.display = 'none';
-          document.getElementById('krishna-details').style.display = 'grid';
-          document.getElementById('om-links').style.display = 'none';
-          document.getElementById('krishna-links').style.display = 'block';
-        }
-      }
-    }
-  </script>
-  <!-- ================================
-     SUPABASE ADMIN LOGIN
-     ================================ -->
-
-<style>
-  .admin-login-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    padding: 10px 18px;
-    border-radius: 25px;
-    border: 1px solid #d4af37;
-    background: rgba(10, 11, 14, 0.90);
-    color: #d4af37;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 13px;
-  }
-
-  .admin-login-btn:hover {
-    background: #d4af37;
-    color: #000;
-  }
-
-  .login-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background: rgba(0, 0, 0, 0.85);
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .login-box {
-    width: 100%;
-    max-width: 400px;
-    background: #14171f;
-    border: 1px solid #d4af37;
-    border-radius: 18px;
-    padding: 30px;
-    box-sizing: border-box;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-  }
-
-  .login-box h2 {
-    text-align: center;
-    color: #d4af37;
-    margin-top: 0;
-  }
-
-  .login-box input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 13px;
-    margin: 8px 0 14px;
-    border-radius: 8px;
-    border: 1px solid #555;
-    background: #0a0b0e;
-    color: white;
-    font-size: 15px;
-  }
-
-  .login-submit {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728);
-    color: #000;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 15px;
-  }
-
-  .login-close {
-    width: 100%;
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 25px;
-    background: transparent;
-    color: white;
-    cursor: pointer;
-  }
-
-  #login-message {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-/* ================= CHAT BUTTON ================= */
-
-.nav-chat{
-    color:#d4af37 !important;
-    border:1px solid #d4af37;
-    padding:7px 13px;
-    border-radius:20px;
-    margin-left:18px !important;
-    transition:all .3s ease;
-}
-
-.nav-chat:hover{
-    background:#d4af37;
-    color:#000 !important;
-}
-
-
-/* ================= FLOATING CHAT ================= */
-
-.floating-chat-btn{
-    position:fixed;
-    bottom:70px;
-    right:20px;
-    z-index:9998;
-    padding:11px 20px;
-    border-radius:25px;
-    border:1px solid #d4af37;
-    background:#d4af37;
-    color:#000;
-    text-decoration:none;
-    cursor:pointer;
-    font-weight:700;
-    font-size:13px;
-    box-shadow:0 5px 20px rgba(0,0,0,.4);
-    transition:all .3s ease;
-}
-
-.floating-chat-btn:hover{
-    background:#f3e5ab;
-    transform:translateY(-2px);
-}
-
-</style>
-
-<a href="login.html" class="admin-login-btn">
-    🔐 Login / Member Area
-</a>
-
-<a href="chat.html" class="floating-chat-btn">
-    💬 Chat
-</a>
-
-<div id="adminLoginOverlay" class="login-overlay">  <div class="login-box">
-
-    <h2>🔐 Admin Login</h2>
-
-    <input
-      type="email"
-      id="adminEmail"
-      placeholder="Admin Email"
-      autocomplete="email"
-    >
-
-    <input
-      type="password"
-      id="adminPassword"
-      placeholder="Password"
-      autocomplete="current-password"
-    >
-
-    <button class="login-submit" onclick="adminLogin()">
-      Login
-    </button>
-
-    <button class="login-close" onclick="closeAdminLogin()">
-      Cancel
-    </button>
-
-    <div id="login-message"></div>
-
+<section id="businesses" class="highlight">
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">Our Businesses</div><h2>Business verticals built by OM Krishna Group</h2><p>Our business ecosystem is designed to grow as new solutions, products and ventures are developed.</p></div>
+    <div class="business-grid">
+      <article class="card business-card"><div class="icon">📊</div><h3>Business & Enterprise CRM Solutions</h3><p>Industry-focused CRM and business management solutions developed around the workflow of each business.</p><ul><li>Lead & customer management</li><li>Follow-ups and sales pipeline</li><li>Business data and inventory workflows</li><li>WhatsApp business data workflows</li><li>Reports, dashboards and permissions</li><li>Bulk import/export and custom workflows</li></ul><div class="push"><a class="link" href="#crm">Explore CRM Features →</a></div></article>
+      <article class="card business-card"><div class="icon">🌐</div><h3>Website & Digital Solutions</h3><p>Business-focused websites and web applications designed, developed and supported by OM Krishna Group.</p><ul><li>Personal and small business websites</li><li>Corporate and e-commerce websites</li><li>Education and real estate websites</li><li>Service business websites</li><li>Custom web applications</li><li>Website + CRM and automation</li></ul><div class="push"><a class="link" href="#web">Explore Web Solutions →</a></div></article>
+      <article id="products" class="card business-card"><div class="icon">📦</div><h3>Products & Brands</h3><p>Our own products, product categories and proprietary brands developed under the OM Krishna Group ecosystem.</p><ul><li>Consumer products</li><li>Business products</li><li>Corporate and customized products</li><li>E-commerce products</li><li>Future proprietary brands</li></ul><div class="push"><a class="link" href="#contact">Explore Products →</a></div></article>
+      <article class="card business-card"><div class="icon">🔭</div><h3>Future Ventures</h3><p>New businesses, services, products and technology-driven opportunities will be added as the group grows.</p><ul><li>New business ventures</li><li>New products and services</li><li>Technology solutions</li><li>New brands</li><li>Emerging opportunities</li></ul><div class="push"><a class="link" href="#contact">Coming Soon →</a></div></article>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<section id="crm">
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">CRM Solutions</div><h2>CRM built around your business</h2><p>Every business works differently. Our CRM solutions are designed around the workflow, team structure and operational requirements of the customer.</p></div>
+    <div class="feature-grid">
+      <div class="card feature"><div class="icon">🎯</div><h3>Lead Management</h3><p>Capture, organize and track leads.</p></div>
+      <div class="card feature"><div class="icon">👥</div><h3>Customer Management</h3><p>Keep customer information and history organized.</p></div>
+      <div class="card feature"><div class="icon">📅</div><h3>Follow-ups</h3><p>Manage follow-up dates, reminders and pending activities.</p></div>
+      <div class="card feature"><div class="icon">📈</div><h3>Sales Pipeline</h3><p>Track opportunities from lead to conversion.</p></div>
+      <div class="card feature"><div class="icon">💬</div><h3>WhatsApp Workflow</h3><p>Organize business information received through WhatsApp.</p></div>
+      <div class="card feature"><div class="icon">📥</div><h3>Bulk Data</h3><p>Import and manage large business datasets.</p></div>
+      <div class="card feature"><div class="icon">📊</div><h3>Reports & Dashboard</h3><p>See business activity and operational summaries.</p></div>
+      <div class="card feature"><div class="icon">🔐</div><h3>Users & Permissions</h3><p>Control access by role and responsibility.</p></div>
+      <div class="card feature"><div class="icon">✅</div><h3>Approval Workflow</h3><p>Route important updates through defined approvals.</p></div>
+      <div class="card feature"><div class="icon">📎</div><h3>Documents & Files</h3><p>Keep business documents connected to records.</p></div>
+      <div class="card feature"><div class="icon">🔎</div><h3>Search & Filters</h3><p>Find business records quickly using structured filters.</p></div>
+      <div class="card feature"><div class="icon">🧩</div><h3>Custom Workflow</h3><p>Configure the CRM around the actual business process.</p></div>
+    </div>
+    <div class="actions" style="justify-content:center"><a class="btn btn-primary" href="#contact">Request a CRM</a><a class="btn btn-secondary" href="#industries">See Industry Solutions</a></div>
+  </div>
+</section>
 
-<script>
+<section id="industries" class="highlight">
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">Industry Solutions</div><h2>CRM for different business workflows</h2><p>The CRM can be structured around the records, teams, stages and approvals used by each business.</p></div>
+    <div class="industry-grid">
+      <div class="card industry"><strong>Real Estate CRM</strong><span>Leads • Properties • Projects • Inventory • Site Visits • Follow-ups • Sales</span></div>
+      <div class="card industry"><strong>Insurance CRM</strong><span>Leads • Customers • Policies • Renewals • Follow-ups • Documents</span></div>
+      <div class="card industry"><strong>Loan & Financial CRM</strong><span>Leads • Applications • Customers • Documents • Status • Follow-ups</span></div>
+      <div class="card industry"><strong>DSA & Channel Partner CRM</strong><span>Partners • Leads • Applications • Commission • Performance</span></div>
+      <div class="card industry"><strong>E-Commerce CRM</strong><span>Customers • Products • Orders • Enquiries • Sales • Support</span></div>
+      <div class="card industry"><strong>Education CRM</strong><span>Enquiries • Students • Courses • Admissions • Follow-ups</span></div>
+      <div class="card industry"><strong>Small Business CRM</strong><span>Customers • Leads • Sales • Tasks • Follow-ups • Reports</span></div>
+      <div class="card industry"><strong>Service Business CRM</strong><span>Customers • Service Requests • Tasks • Follow-ups • Teams</span></div>
+    </div>
+  </div>
+</section>
 
-  /* ==========================================
-     SUPABASE CONFIGURATION
-     ========================================== */
+<section id="web">
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">Website & Digital Solutions</div><h2>Your business. Your website. Your digital presence.</h2><p>We develop websites and digital solutions according to business goals, audience and workflow.</p></div>
+    <div class="web-grid">
+      <div class="card"><h3>👤 Personal Websites</h3><p>Professional profile, portfolio and personal identity websites.</p></div>
+      <div class="card"><h3>🏪 Small Business Websites</h3><p>Business profile, services, enquiries and customer-focused websites.</p></div>
+      <div class="card"><h3>🏢 Corporate Websites</h3><p>Professional company websites with services, updates and enquiry management.</p></div>
+      <div class="card"><h3>🛒 E-Commerce Websites</h3><p>Online stores with products, customers, orders and business operations.</p></div>
+      <div class="card"><h3>🎓 Education Websites</h3><p>Education, course, student enquiry and information websites.</p></div>
+      <div class="card"><h3>🏠 Real Estate Websites</h3><p>Property, project, inventory, enquiry and lead-focused websites.</p></div>
+      <div class="card"><h3>🛠️ Service Business Websites</h3><p>Service information, enquiry, booking and customer workflows.</p></div>
+      <div class="card"><h3>⚡ Custom Web Applications</h3><p>Business-specific web applications designed around individual workflows.</p></div>
+      <div class="card"><h3>🔗 Website + CRM</h3><p>Connect website enquiries to CRM for lead capture, follow-ups and operations.</p></div>
+    </div>
+  </div>
+</section>
 
-  const SUPABASE_URL =
-  "https://keehbqlaxiojtkpldgry.supabase.co";
+<section class="highlight">
+  <div class="container">
+    <div class="cta">
+      <div class="eyebrow">Connected Business System</div>
+      <h2>Website + CRM</h2>
+      <p>Your website can do more than display information. Connect it with your CRM and turn enquiries into organized business opportunities.</p>
+      <div class="actions" style="justify-content:center"><a class="btn btn-primary" href="#contact">Build My Business System</a></div>
+    </div>
+  </div>
+</section>
 
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_lF6xTN15-1DNx_mszaZdJQ_QHlIj10T";
+<section>
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">How We Build</div><h2>From requirement to support</h2></div>
+    <div class="steps">
+      <div class="card step"><b>01</b><h3>Understand</h3><p>Understand the business and requirement.</p></div>
+      <div class="card step"><b>02</b><h3>Plan</h3><p>Structure the workflow and solution.</p></div>
+      <div class="card step"><b>03</b><h3>Build</h3><p>Develop the required system.</p></div>
+      <div class="card step"><b>04</b><h3>Test</h3><p>Verify business workflows.</p></div>
+      <div class="card step"><b>05</b><h3>Launch</h3><p>Bring the solution into operation.</p></div>
+      <div class="card step"><b>06</b><h3>Support</h3><p>Improve and support the solution.</p></div>
+    </div>
+  </div>
+</section>
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+<section id="updates">
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">Latest Updates</div><h2>What's happening at OM Krishna Group</h2><p>This section is ready to become a future admin-managed updates/news area.</p></div>
+    <div class="updates">
+      <div class="card"><h3>📊 Business Updates</h3><p>New business initiatives and operational updates.</p></div>
+      <div class="card"><h3>💻 Technology Updates</h3><p>New CRM, website and digital solution development updates.</p></div>
+      <div class="card"><h3>📦 Product Updates</h3><p>New products, categories and proprietary brand updates.</p></div>
+    </div>
+  </div>
+</section>
 
+<section>
+  <div class="container">
+    <div class="section-head"><div class="eyebrow">Why OM Krishna Group</div><h2>Business-focused. Practical. Scalable.</h2></div>
+    <div class="intro-grid">
+      <div class="card"><h3>Business-Focused Approach</h3><p>Technology starts with understanding the business requirement.</p></div>
+      <div class="card"><h3>Custom Solutions</h3><p>Solutions can be adapted to different workflows and operating models.</p></div>
+      <div class="card"><h3>Continuous Improvement</h3><p>Systems and products can evolve as the business grows.</p></div>
+    </div>
+  </div>
+</section>
 
-  /* ==========================================
-     OPEN / CLOSE LOGIN
-     ========================================== */
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="cta" style="text-align:left"><div class="eyebrow">Business Enquiry</div><h2>Have a business requirement?</h2><p>Tell us what you are trying to build. Whether you need a CRM, website, digital solution or custom business system, we can discuss the requirement.</p><div class="actions"><a class="btn btn-primary" href="mailto:omkrishna@omkrishnagroup.com?subject=Business%20Enquiry">Business Enquiry</a><a class="btn btn-secondary" href="https://wa.me/918828549348" target="_blank" rel="noopener">WhatsApp</a></div></div>
+      <div class="card">
+        <div class="contact-item"><div>📧</div><div><b>Email</b><span>omkrishna@omkrishnagroup.com</span></div></div>
+        <div class="contact-item" style="margin-top:20px"><div>📞</div><div><b>Business Contact</b><span>+91-8828549348</span></div></div>
+        <div class="contact-item" style="margin-top:20px"><div>💬</div><div><b>WhatsApp</b><span>+91-8828549348</span></div></div>
+        <div class="socials">
+          <a class="social" href="https://www.instagram.com/omkrishnagroupofficial/" target="_blank" rel="noopener">Instagram</a>
+          <span class="social" style="opacity:.5">Facebook — Coming Soon</span>
+          <span class="social" style="opacity:.5">LinkedIn — Coming Soon</span>
+          <span class="social" style="opacity:.5">YouTube — Coming Soon</span>
+          <span class="social" style="opacity:.5">X — Coming Soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function openAdminLogin() {
-    document.getElementById("adminLoginOverlay").style.display = "flex";
-    document.getElementById("login-message").innerText = "";
-  }
+<section>
+  <div class="container"><div class="cta"><div class="eyebrow">Future Vision</div><h2>Building for the Future</h2><p>OM Krishna Group is focused on building sustainable businesses, useful technology solutions, innovative products and new opportunities through continuous development and responsible growth.</p></div></div>
+</section>
+</main>
 
-  function closeAdminLogin() {
-    document.getElementById("adminLoginOverlay").style.display = "none";
-  }
+<footer>
+  <div class="container footer-grid">
+    <div><div class="footer-title">OM KRISHNA GROUP</div><p>Building Businesses. Creating Digital Solutions.</p><p class="motto">People • Progress • Prosperity</p><p>Together for a Brighter Tomorrow</p></div>
+    <div><div class="footer-title">Company</div><a href="#home">Home</a><a href="#businesses">Our Businesses</a><a href="#updates">Updates</a><a href="#contact">Contact</a><a href="family.html">Family Profiles</a></div>
+    <div><div class="footer-title">Solutions</div><a href="#crm">CRM Solutions</a><a href="#web">Web Solutions</a><a href="#web">Custom Web Applications</a><a href="#crm">Business Automation</a></div>
+    <div><div class="footer-title">Contact</div><a href="mailto:omkrishna@omkrishnagroup.com">omkrishna@omkrishnagroup.com</a><a href="tel:+918828549348">+91-8828549348</a><a href="https://www.instagram.com/omkrishnagroupofficial/" target="_blank" rel="noopener">Instagram</a></div>
+  </div>
+  <div class="container" style="border-top:1px solid var(--line);margin-top:28px;padding-top:18px">© 2026 OM Krishna Group. All Rights Reserved.</div>
+</footer>
 
-
-  /* ==========================================
-     ADMIN LOGIN
-     ========================================== */
-
-  async function adminLogin() {
-
-    const email =
-      document.getElementById("adminEmail").value.trim();
-
-    const password =
-      document.getElementById("adminPassword").value;
-
-    const message =
-      document.getElementById("login-message");
-
-    if (!email || !password) {
-      message.style.color = "#ff6b6b";
-      message.innerText =
-        "Please enter email and password.";
-      return;
-    }
-
-    message.style.color = "#d4af37";
-    message.innerText = "Logging in...";
-
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-
-    if (error) {
-
-      message.style.color = "#ff6b6b";
-      message.innerText =
-        "Login failed: " + error.message;
-
-      return;
-    }
-
-    if (data.user) {
-
-      message.style.color = "#4ade80";
-      message.innerText = "Login successful...";
-
-      setTimeout(function() {
-        window.location.href = "admin.html";
-      }, 800);
-    }
-  }
-
-
-  /* ==========================================
-     ENTER KEY LOGIN
-     ========================================== */
-
-  document
-    .getElementById("adminPassword")
-    .addEventListener("keydown", function(event) {
-
-      if (event.key === "Enter") {
-        adminLogin();
-      }
-
-    });
-
-</script>
+<a class="floating btn wa" href="https://wa.me/918828549348" target="_blank" rel="noopener">WhatsApp</a>
 </body>
 </html>
